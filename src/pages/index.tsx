@@ -4,7 +4,6 @@ const Index = () => {
   return (
     <>
       <ProjectsList />
-      <ProjectsAdd />
     </>
   );
 };
