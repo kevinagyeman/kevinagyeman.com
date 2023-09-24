@@ -1,12 +1,19 @@
-import { Timestamp, addDoc, collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
-import { ProjectData } from '../types/project-schema';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
+import { db } from "../firebase";
+import { ProjectData } from "../types/project-schema";
 
-const projects = collection(db, '/projects');
+const projectsCollection = collection(db, "/projects");
 
 export const projectService = {
   getAll: async () => {
-    const data = await getDocs(projects);
+    const data = await getDocs(projectsCollection);
     const result: ProjectData[] = data.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
@@ -16,9 +23,14 @@ export const projectService = {
   },
 
   create: async (project: ProjectData) => {
-    return await addDoc(projects, {
+    await addDoc(projectsCollection, {
       ...project,
       createdAt: new Date().toISOString(),
     });
+  },
+
+  delete: async (id: string | undefined) => {
+    const data = doc(projectsCollection, id);
+    await deleteDoc(data);
   },
 };

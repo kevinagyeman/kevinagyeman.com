@@ -1,7 +1,7 @@
 export type ProjectData = {
   id?: string;
   title: string;
-  info?: string;
+  shortDescription?: string;
   description?: string;
   image?: string[];
   link?: string;
