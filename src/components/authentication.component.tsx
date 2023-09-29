@@ -18,25 +18,12 @@ const Authentication = () => {
     }
   };
 
-  const signOut = async () => {
-    await auth.signOut();
-  };
-
-  if (user) {
-    return (
-      <>
-        <h1>SEI LOGGATO</h1>
-        <button onClick={() => signOut()}>logout</button>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <h1>NON SEI LOGGATO</h1>
-        <button onClick={() => signIn()}>Login</button>
-      </>
-    );
-  }
+  return (
+    <>
+      <h1>NON SEI LOGGATO</h1>
+      <button onClick={() => signIn()}>Login</button>
+    </>
+  );
 };
 
 export default Authentication;
