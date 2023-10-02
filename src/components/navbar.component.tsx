@@ -1,16 +1,25 @@
-import { Fragment, useContext } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ModeToggle } from "./ui/mode-toggle";
-import { auth } from "@/firebase";
+import { useTheme } from "@/components/ui/theme-provider";
 import { AuthContext } from "@/context/auth-context";
+import { auth } from "@/firebase";
+import i18n from "@/i18n";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Moon, Sun } from "lucide-react";
+import { Fragment, useContext, useState } from "react";
+import { Button } from "./ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Calendar2", href: "#", current: false },
+  { name: "Home", href: "/", current: true },
+  { name: "Projects", href: "/projects", current: false },
+  { name: "Contact", href: "/contact", current: false },
 ];
 
 function classNames(...classes: any) {
@@ -19,6 +28,19 @@ function classNames(...classes: any) {
 
 const Navbar = () => {
   const user = useContext(AuthContext);
+  const { setTheme } = useTheme();
+  const [language, setLanguage] = useState<string>(i18n.language);
+
+  const selectLanguage = (e: string) => {
+    const valueSelected = e.valueOf();
+    i18n.changeLanguage(valueSelected);
+    setLanguage(valueSelected);
+  };
+
+  const changeTheme = () => {
+    const rootClassList = window.document.documentElement.classList;
+    rootClassList.contains("dark") ? setTheme("light") : setTheme("dark");
+  };
 
   const signOut = async () => {
     await auth.signOut();
@@ -48,33 +70,49 @@ const Navbar = () => {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
+                    className="light:fill-black h-8 w-auto"
+                    src="src/assets/img/logo.svg"
+                    alt="Kevin Agyeman Logo"
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <a
-                        key={item.name}
                         href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium",
-                        )}
+                        key={item.name}
                         aria-current={item.current ? "page" : undefined}
                       >
-                        {item.name}
+                        <Button variant="ghost">{item.name}</Button>
                       </a>
                     ))}
                   </div>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <ModeToggle />
+                <Button variant="outline" size="icon" onClick={changeTheme}>
+                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                </Button>
+
+                <div className="pl-2">
+                  <Select
+                    onValueChange={(e) => {
+                      selectLanguage(e);
+                    }}
+                    value={language}
+                  >
+                    <SelectTrigger className="w-[65px]">
+                      <SelectValue placeholder="Select a a language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="it">IT</SelectItem>
+                        <SelectItem value="en">EN</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">

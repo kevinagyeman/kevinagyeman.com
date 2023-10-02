@@ -14,7 +14,7 @@ function App() {
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Navbar />
         <Routes>
-          <Route path="*" element={<Index />} />
+          <Route path="/" element={<Index />} />
           <Route path="/login" element={user ? <Dashboard /> : <Login />} />
           <Route path="/dashboard" element={user ? <Dashboard /> : <Index />} />
         </Routes>
