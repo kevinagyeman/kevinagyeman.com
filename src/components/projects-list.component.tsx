@@ -1,5 +1,5 @@
-import { Expand, Info, Trash } from "lucide-react";
-import { ReactElement, useEffect, useState } from "react";
+import { Expand, Info, Maximize, Maximize2, Plus, Trash } from "lucide-react";
+import { ReactElement, useContext, useEffect, useState } from "react";
 import { projectService } from "../services/project.service";
 import { ProjectData } from "../types/project-schema";
 import { Button } from "./ui/button";
@@ -31,8 +31,10 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { AuthContext } from "@/context/auth-context";
 
 const ProjectsList = () => {
+  const user = useContext(AuthContext);
   const [projects, setProjects] = useState<ProjectData[]>([]);
 
   const getProjects = async () => {
@@ -50,8 +52,11 @@ const ProjectsList = () => {
   }, []);
   return (
     <>
-      <AdminProjectsList projects={projects} projectSetter={setProjects} />
-      <UserProjectsList projects={projects} projectSetter={setProjects} />
+      {user ? (
+        <AdminProjectsList projects={projects} projectSetter={setProjects} />
+      ) : (
+        <UserProjectsList projects={projects} projectSetter={setProjects} />
+      )}
     </>
   );
 };
@@ -110,19 +115,26 @@ const AdminProjectsList = ({
 const UserProjectsList = ({ projects }: ProjectsProps): ReactElement => {
   return (
     <>
-      <div className="container mt-5 grid gap-5 lg:grid-cols-3">
+      <div className="container mt-5 grid gap-5 lg:max-w-[50%] lg:grid-cols-2">
+        <div>
+          <h2 className="mb-2 scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+            Projects
+          </h2>
+          <p className=" text-muted-foreground">
+            A modal dialog that interrupts the user with important content and
+            expects a response.
+          </p>
+        </div>
+
         {projects?.map((project: ProjectData, index: number) => (
           <Card key={index}>
             <CardHeader>
               <CardTitle>{project.title} </CardTitle>
               <CardDescription>{project.shortDescription}</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p>{project.description}</p>
-            </CardContent>
-            <CardFooter>
-              <Button>
-                <Expand className="mr-2 h-4 w-4" /> more details
+            <CardFooter className="float-right">
+              <Button variant="secondary" size="icon" className="rounded-full">
+                <Maximize2 className="h-4 w-4" />
               </Button>
             </CardFooter>
           </Card>

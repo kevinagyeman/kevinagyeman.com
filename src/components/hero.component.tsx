@@ -1,21 +1,29 @@
+import { ArrowDown, Linkedin } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Button } from "./ui/button";
 
 const Hero = () => {
   const { t } = useTranslation();
 
   return (
     <>
-      <div className="container text-center">
-        <code className="relative my-3 rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-          @radix-ui/react-alert-dialog
-        </code>
-        <h1 className="scroll-m-20 py-3 text-4xl font-extrabold tracking-tight lg:text-8xl">
-          {t("title")}
+      <div className="container mx-auto  lg:max-w-[50%] lg:py-16">
+        <h1 className="scroll-m-20 py-3 text-4xl font-extrabold tracking-tight lg:text-7xl">
+          Kevin Agyeman
         </h1>
-        <p className="py-3 text-xl text-muted-foreground lg:text-3xl">
+        <p className="py-3 text-xl text-muted-foreground lg:text-2xl">
           A modal dialog that interrupts the user with important content and
           expects a response.
         </p>
+        <div className="mt-3 flex space-x-2">
+          <Button variant="secondary">
+            Contact <ArrowDown className="ml-2 h-4 w-4" />
+          </Button>
+          <Button variant="outline">
+            Linkedin
+            <Linkedin className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </>
   );

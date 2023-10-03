@@ -6,6 +6,7 @@ import { AuthContext } from "./context/auth-context";
 import Index from "./pages";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
+import Footer from "./components/footer.component";
 
 function App() {
   const user = useContext(AuthContext);
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={user ? <Dashboard /> : <Login />} />
           <Route path="/dashboard" element={user ? <Dashboard /> : <Index />} />
         </Routes>
+        <Footer />
       </ThemeProvider>
     </>
   );

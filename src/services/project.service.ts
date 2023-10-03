@@ -4,7 +4,6 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  orderBy,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { ProjectData } from "../types/project-schema";
