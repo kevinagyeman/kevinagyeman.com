@@ -1,3 +1,6 @@
 {
-  "title": "TESTO INGLESE"
+  "contactCard": {
+    "title": "Contacts",
+    "subtitle": "Contact me, you can send me an email"
+  }
 }

@@ -1,3 +1,6 @@
 {
-  "title": "TESTO ITALIANO"
+  "contactCard": {
+    "title": "Contatti",
+    "subtitle": "Contattami, puoi mandarmi una mail"
+  }
 }

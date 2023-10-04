@@ -1,27 +1,46 @@
 import {
+  DocumentData,
+  QuerySnapshot,
   addDoc,
   collection,
   deleteDoc,
   doc,
   getDoc,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { ProjectData } from "../types/project-schema";
 
 const projectsCollection = collection(db, "/projects");
 
+const mappedProjects = (data: QuerySnapshot<DocumentData, DocumentData>) => {
+  const result: ProjectData[] = data.docs.map((doc) => ({
+    ...doc.data(),
+    id: doc.id,
+    title: doc.data().title,
+  }));
+  return result;
+};
+
 export const projectService = {
   getAll: async () => {
     try {
       const data = await getDocs(projectsCollection);
-      const result: ProjectData[] = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-        title: doc.data().title,
-      }));
-      return result;
+      return mappedProjects(data);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  getAllDraftsPublished: async (published: boolean) => {
+    try {
+      const data = await getDocs(
+        query(projectsCollection, where("isPublished", "==", published)),
+      );
+      return mappedProjects(data);
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +66,10 @@ export const projectService = {
     }
   },
 
-  update: async (projectId: string | undefined, project: ProjectData) => {
+  update: async (
+    projectId: string | undefined,
+    project: ProjectData | undefined,
+  ) => {
     try {
       const data = doc(projectsCollection, projectId);
       await updateDoc(data, {
@@ -68,17 +90,5 @@ export const projectService = {
     } catch (error) {
       console.error(error);
     }
-  },
-
-  getById2: (projectId: string | undefined) => {
-    const data = getDoc(doc(projectsCollection, projectId));
-    data
-      .then((res) => {
-        console.log(res.data());
-        return res.data();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
   },
 };
