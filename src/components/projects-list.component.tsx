@@ -37,13 +37,10 @@ const ProjectsList = () => {
   const user = useContext(AuthContext);
   const [projects, setProjects] = useState<ProjectData[]>([]);
 
-  const getProjects = async () => {
-    try {
-      await projectService.getAll();
-      // setProjects(result);
-    } catch (e) {
-      console.log(e);
-    }
+  const getProjects = () => {
+    const data = projectService.getAll();
+    console.log(data);
+    //setProjects(data);
   };
 
   useEffect(() => {

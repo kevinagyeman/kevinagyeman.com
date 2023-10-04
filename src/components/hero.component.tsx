@@ -6,7 +6,7 @@ const Hero = () => {
     <>
       <div className="container mx-auto  lg:max-w-[50%] lg:py-16">
         <h1 className="scroll-m-20 py-3 text-4xl font-extrabold tracking-tight lg:text-7xl">
-          Kevin Agyeman
+          Kevin Agyeman2
         </h1>
         <p className="py-3 text-xl text-muted-foreground lg:text-2xl">
           A modal dialog that interrupts the user with important content and
