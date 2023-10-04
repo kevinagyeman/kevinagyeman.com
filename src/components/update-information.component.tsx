@@ -1,14 +1,9 @@
 import { informationService } from "@/services/information.service";
 import { InformationData } from "@/types/information-schema";
 import React, { useState } from "react";
-import { projectService } from "../services/project.service";
-import { ProjectData } from "../types/project-schema";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
-import { ListPlus, Plus } from "lucide-react";
 
 const UpdateInformation = () => {
   const [information, setInformation] = useState<InformationData>({

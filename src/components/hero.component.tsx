@@ -1,10 +1,7 @@
 import { ArrowDown, Linkedin } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import { Button } from "./ui/button";
 
 const Hero = () => {
-  const { t } = useTranslation();
-
   return (
     <>
       <div className="container mx-auto  lg:max-w-[50%] lg:py-16">

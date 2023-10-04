@@ -1,11 +1,4 @@
-import {
-  DocumentData,
-  DocumentSnapshot,
-  collection,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { InformationData } from "../types/information-schema";
 

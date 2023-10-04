@@ -1,7 +1,6 @@
-import ProjectsAdd from "@/components/projects-add.component";
-import ProjectsList from "../components/projects-list.component";
-import Hero from "@/components/hero.component";
 import Contact from "@/components/contact.component";
+import Hero from "@/components/hero.component";
+import ProjectsList from "../components/projects-list.component";
 const Index = () => {
   return (
     <>

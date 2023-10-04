@@ -39,8 +39,8 @@ const ProjectsList = () => {
 
   const getProjects = async () => {
     try {
-      const result = await projectService.getAll();
-      setProjects(result);
+      await projectService.getAll();
+      // setProjects(result);
     } catch (e) {
       console.log(e);
     }
@@ -166,18 +166,15 @@ type DeleteModalProps = {
   projectSetter: React.Dispatch<React.SetStateAction<ProjectData[]>>;
 };
 
-const DeleteModal = ({
-  projectId,
-  projectSetter,
-}: DeleteModalProps): ReactElement => {
-  const getProjects = async () => {
-    try {
-      const result = await projectService.getAll();
-      projectSetter(result);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+const DeleteModal = ({ projectId }: DeleteModalProps): ReactElement => {
+  // const getProjects = async () => {
+  //   try {
+  //     const result = await projectService.getAll();
+  //     projectSetter(result);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   return (
     <>
       <AlertDialog>
@@ -199,7 +196,6 @@ const DeleteModal = ({
             <AlertDialogAction
               onClick={() => {
                 projectService.delete(projectId);
-                getProjects();
               }}
             >
               Continue

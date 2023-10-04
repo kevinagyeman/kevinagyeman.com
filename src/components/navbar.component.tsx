@@ -1,11 +1,10 @@
 import { useTheme } from "@/components/ui/theme-provider";
-import { AuthContext } from "@/context/auth-context";
 import { auth } from "@/firebase";
 import i18n from "@/i18n";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Moon, Sun } from "lucide-react";
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useState } from "react";
 import { Button } from "./ui/button";
 import {
   Select,
@@ -27,7 +26,6 @@ function classNames(...classes: any) {
 }
 
 const Navbar = () => {
-  const user = useContext(AuthContext);
   const { setTheme } = useTheme();
   const [language, setLanguage] = useState<string>(i18n.language);
 

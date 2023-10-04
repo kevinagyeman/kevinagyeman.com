@@ -1,16 +1,13 @@
-import React from "react";
+import { Copy, Send } from "lucide-react";
+import { Button } from "./ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Button } from "./ui/button";
-import { Copy, Send } from "lucide-react";
 import { Input } from "./ui/input";
-import { Separator } from "./ui/separator";
 
 const Contact = () => {
   return (
