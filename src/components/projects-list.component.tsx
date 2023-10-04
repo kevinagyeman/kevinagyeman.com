@@ -1,17 +1,10 @@
-import { Expand, Info, Maximize, Maximize2, Plus, Trash } from "lucide-react";
+import { AuthContext } from "@/context/auth-context";
+import { Info, Maximize2, Trash } from "lucide-react";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { projectService } from "../services/project.service";
 import { ProjectData } from "../types/project-schema";
-import { Button } from "./ui/button";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
+import ProjectsAdd from "./projects-add.component";
+import ProjectsUpdate from "./projects-update.component";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,15 +16,22 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
+import { Button } from "./ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { AuthContext } from "@/context/auth-context";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
 
 const ProjectsList = () => {
   const user = useContext(AuthContext);
@@ -48,7 +48,6 @@ const ProjectsList = () => {
 
   useEffect(() => {
     getProjects();
-    console.log("progetti", projects);
   }, []);
   return (
     <>
@@ -74,38 +73,56 @@ const AdminProjectsList = ({
 }: ProjectsProps): ReactElement => {
   return (
     <>
-      <div className="container">
-        <div className="rounded-lg border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Id</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Short description</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {projects.map((project: ProjectData, index: number) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">{project.id}</TableCell>
-                  <TableCell>{project.title}</TableCell>
-                  <TableCell>{project.shortDescription}</TableCell>
-                  <TableCell>{project.description}</TableCell>
-                  <TableCell>
-                    <Button variant="secondary" size="icon" className="mr-2">
-                      <Info className="h-4 w-4" />
-                    </Button>
-                    <DeleteModal
-                      projectId={project.id}
-                      projectSetter={projectSetter}
-                    />
-                  </TableCell>
+      <div className="container py-10">
+        <div className="rounded-md border p-8">
+          <div className="pb-5">
+            <h3 className="scroll-m-20 text-3xl font-semibold tracking-tight">
+              Dashboard
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              manage your projects
+            </p>
+            <ProjectsAdd />
+          </div>
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Id</TableHead>
+                  <TableHead className="p-0">Title</TableHead>
+                  <TableHead>Short description</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {projects.map((project: ProjectData, index: number) => (
+                  <TableRow key={index}>
+                    <TableCell className="py-1 font-medium">
+                      {project.id}
+                    </TableCell>
+                    <TableCell className="py-1">{project.title}</TableCell>
+                    <TableCell className="py-1">
+                      {project.shortDescription}
+                    </TableCell>
+                    <TableCell className="py-1">
+                      {project.description}
+                    </TableCell>
+                    <TableCell className="py-1">
+                      <Button variant="ghost" size="icon">
+                        <Info className="h-4 w-4" />
+                      </Button>
+                      <ProjectsUpdate projectId={project.id} />
+                      <DeleteModal
+                        projectId={project.id}
+                        projectSetter={projectSetter}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </div>
     </>
@@ -165,7 +182,7 @@ const DeleteModal = ({
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="secondary" size="icon">
+          <Button variant="ghost" size="icon">
             <Trash className="h-4 w-4" />
           </Button>
         </AlertDialogTrigger>

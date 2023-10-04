@@ -1,4 +1,3 @@
-import ProjectsAdd from "@/components/projects-add.component";
 import ProjectsList from "@/components/projects-list.component";
 
 const Dashboard = () => {
@@ -13,7 +12,6 @@ const Dashboard = () => {
           expects a response.
         </p>
       </div>
-      <ProjectsAdd />
       <ProjectsList />
     </>
   );

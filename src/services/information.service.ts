@@ -18,7 +18,13 @@ export const informationService = {
     await updateDoc(docRef, informationData);
   },
 
-  get: async () => {
+  get: () => {
+    getDoc(docRef).then((res) => {
+      return res.data();
+    });
+  },
+
+  getTest: async () => {
     const data = await getDoc(docRef);
     if (data.exists()) {
       return data.data();

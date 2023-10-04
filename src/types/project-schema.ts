@@ -3,7 +3,7 @@ export type ProjectData = {
   title: string;
   shortDescription?: string;
   description?: string;
-  image?: string[];
+  imageLink?: string;
   link?: string;
   createdAt?: string;
   updatedAt?: string;

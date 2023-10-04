@@ -1,49 +1,56 @@
-import { ReactElement, useState } from "react";
-import { projectService } from "../services/project.service";
-import { ProjectData } from "../types/project-schema";
-import { Button } from "./ui/button";
+import React, { ReactElement, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { ProjectData } from "@/types/project-schema";
+import { projectService } from "@/services/project.service";
 import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { Pencil } from "lucide-react";
 
-const ProjectsAdd = () => {
+const ProjectsUpdate = ({ projectId }: ProjectId) => {
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="my-5" variant="secondary">
-            Add project
+          <Button variant="ghost">
+            <Pencil className="h-4 w-4" />
           </Button>
         </DialogTrigger>
         <DialogContent>
-          <Form />
+          <Form projectId={projectId} />
         </DialogContent>
       </Dialog>
     </>
   );
 };
 
-export default ProjectsAdd;
+export default ProjectsUpdate;
 
-const Form = (): ReactElement => {
+type ProjectId = {
+  projectId: string | undefined;
+};
+
+const Form = ({ projectId }: ProjectId): ReactElement => {
   const [project, setProject] = useState<ProjectData>({
     title: "",
   });
 
-  const addProject = async (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault();
-      await projectService.create(project);
-    } catch (e) {
-      console.log(e);
-    }
+  const updateProject = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    projectService.update(projectId, project);
+  };
+
+  const getProject = () => {
+    projectService.getById(projectId);
+    console.log(projectService.getById(projectId));
   };
 
   return (
     <>
-      <h1 className="text-4xl font-bold">Add project</h1>
-      <form onSubmit={addProject}>
+      <button onClick={getProject}>get project</button>
+      <h1 className="text-4xl font-bold">update project</h1>
+      <form onSubmit={updateProject}>
         <div className="mb-2">
           <Label>Title</Label>
           <Input
@@ -99,7 +106,7 @@ const Form = (): ReactElement => {
           />
         </div>
         <Button type="submit" className="mt-3 w-full">
-          Add
+          Update
         </Button>
       </form>
     </>
