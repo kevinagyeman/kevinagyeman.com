@@ -1,12 +1,12 @@
 import { projectService } from "@/services/project.service";
-import { Edit, Info, Pencil } from "lucide-react";
+import { Info } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
 import { Switch } from "./ui/switch";
+import { Textarea } from "./ui/textarea";
 
 type ProjectId = {
   projectId?: string;
