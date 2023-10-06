@@ -1,20 +1,16 @@
 import { AuthContext } from "@/context/auth-context";
-import { CreditCard, LogOut, Maximize2, User } from "lucide-react";
+import { CreditCard, LogOut, User } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { projectService } from "../services/project.service";
 import { ProjectData } from "../types/project-schema";
 import ProjectsAdd from "./projects-add.component";
 import DeleteModal from "./projects-delete.component";
+import ProjectsInfo from "./projects-info.component";
 import ProjectsUpdate from "./projects-update.component";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,6 +30,7 @@ import {
 } from "./ui/table";
 
 const ProjectsList = () => {
+  const { t } = useTranslation();
   const user = useContext(AuthContext);
   const [projects, setProjects] = useState<ProjectData[] | undefined>([]);
 
@@ -101,7 +98,6 @@ const ProjectsList = () => {
                     <TableHead className="w-[100px]">Id</TableHead>
                     <TableHead className="p-0">Title</TableHead>
                     <TableHead>Short description</TableHead>
-                    <TableHead>Description</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
@@ -117,9 +113,6 @@ const ProjectsList = () => {
                         {project.shortDescription}
                       </TableCell>
                       <TableCell className="py-1">
-                        {project.description}
-                      </TableCell>
-                      <TableCell className="py-1">
                         {project.isPublished ? (
                           <Badge variant="secondary">Pubblicato</Badge>
                         ) : (
@@ -127,8 +120,10 @@ const ProjectsList = () => {
                         )}
                       </TableCell>
                       <TableCell className="py-1">
-                        <ProjectsUpdate projectId={project.id} />
-                        <DeleteModal projectId={project.id} />
+                        {project.id && (
+                          <ProjectsUpdate projectId={project.id} />
+                        )}
+                        {project.id && <DeleteModal projectId={project.id} />}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -138,35 +133,36 @@ const ProjectsList = () => {
           </div>
         </div>
       ) : (
-        <div className="container mt-5 grid gap-5 lg:max-w-[50%] lg:grid-cols-2">
-          <div>
+        <>
+          <div className="container  lg:max-w-[50%]">
             <h2 className="mb-2 scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-              Projects
+              {t("projectSection.title")}
             </h2>
             <p className=" text-muted-foreground">
-              A modal dialog that interrupts the user with important content and
-              expects a response.
+              {t("projectSection.sentence")}
             </p>
-          </div>
-
-          {projects?.map((project: ProjectData, index: number) => (
-            <Card key={index}>
-              <CardHeader>
-                <CardTitle>{project.title} </CardTitle>
-                <CardDescription>{project.shortDescription}</CardDescription>
-              </CardHeader>
-              <CardFooter className="float-right">
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="rounded-full"
+            <div className="mt-5 grid gap-5 lg:grid-cols-2">
+              {projects?.map((project: ProjectData, index: number) => (
+                <Card
+                  key={index}
+                  className="flex flex-row items-center justify-between"
                 >
-                  <Maximize2 className="h-4 w-4" />
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+                  <CardHeader>
+                    <CardTitle>{project.title}</CardTitle>
+                    <CardDescription>
+                      {project.shortDescription}
+                    </CardDescription>
+                  </CardHeader>
+                  <div className="pr-0">
+                    {project.id ? (
+                      <ProjectsInfo projectId={project.id} />
+                    ) : null}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </>
       )}
     </>
   );

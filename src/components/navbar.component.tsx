@@ -69,7 +69,7 @@ const Navbar = () => {
                 <div className="flex flex-shrink-0 items-center">
                   <img
                     className="light:fill-black h-8 w-auto"
-                    src="./assets/img/logo.svg"
+                    src="src/assets/img/logo.svg"
                     alt="Kevin Agyeman Logo"
                   />
                 </div>

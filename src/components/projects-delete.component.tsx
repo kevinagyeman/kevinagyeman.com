@@ -15,7 +15,7 @@ import {
 import { Button } from "./ui/button";
 
 type ProjectId = {
-  projectId?: string;
+  projectId: string;
 };
 
 const DeleteModal = ({ projectId }: ProjectId): ReactElement => {

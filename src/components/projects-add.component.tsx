@@ -60,6 +60,7 @@ const ProjectsAdd = () => {
                 onChange={(e) => {
                   setProject({ ...project, shortDescription: e.target.value });
                 }}
+                maxLength={150}
               />
             </div>
             <div className="mb-2">

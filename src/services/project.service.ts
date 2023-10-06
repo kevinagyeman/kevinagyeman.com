@@ -81,7 +81,7 @@ export const projectService = {
     }
   },
 
-  getById: async (projectId: string | undefined) => {
+  getById: async (projectId: string) => {
     try {
       const data = await getDoc(doc(projectsCollection, projectId));
       if (data.exists()) {

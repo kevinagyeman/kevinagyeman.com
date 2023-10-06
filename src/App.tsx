@@ -13,13 +13,13 @@ function App() {
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Navbar />
+        {location.pathname !== "/login" && <Navbar />}
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/login" element={user ? <Dashboard /> : <Login />} />
           <Route path="/dashboard" element={user ? <Dashboard /> : <Index />} />
         </Routes>
-        <Footer />
+        {location.pathname !== "/login" && <Footer />}
       </ThemeProvider>
     </>
   );

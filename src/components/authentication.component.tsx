@@ -23,16 +23,17 @@ const Authentication = () => {
   return (
     <>
       <div className="flex h-screen w-full flex-col items-center justify-center align-middle">
-        <div className="w-64">
+        <div className="w-80  rounded-lg border p-6">
           <h3 className="mb-3 scroll-m-20 text-2xl font-semibold tracking-tight">
             Login
           </h3>
-          <form onSubmit={signIn}>
+          <form onSubmit={(e) => signIn(e)}>
             <div className="mb-2">
               <Label>Email</Label>
               <Input
                 type="email"
                 placeholder="Email"
+                name="Email"
                 onChange={(e) => {
                   setUser({ ...user, email: e.target.value });
                 }}
@@ -43,6 +44,7 @@ const Authentication = () => {
               <Input
                 type="text"
                 placeholder="Password"
+                name="Password"
                 onChange={(e) => {
                   setUser({ ...user, password: e.target.value });
                 }}
