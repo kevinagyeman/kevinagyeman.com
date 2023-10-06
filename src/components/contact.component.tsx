@@ -14,7 +14,7 @@ const Contact = () => {
   const { t } = useTranslation();
   return (
     <>
-      <div className="container pb-24 pt-5 lg:max-w-[50%]">
+      <div className="container mt-5 pb-24 lg:max-w-[50%]">
         <Card>
           <CardHeader>
             <CardTitle>{t("contactCard.title")}</CardTitle>

@@ -5,8 +5,7 @@ export type InformationData = {
   role?: string;
   summary?: string;
   profileImageLink?: string;
-  links?: String;
-  skills?: string[];
+  skills?: string;
   additionalInfo?: string;
   createdAt?: string;
   updatedAt?: string;

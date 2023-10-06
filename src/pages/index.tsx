@@ -1,6 +1,6 @@
 import Contact from "@/components/contact.component";
 import Hero from "@/components/hero.component";
-import ProjectsList from "../components/projects-list.component";
+import ProjectsList from "@/components/project/projects-list.component";
 const Index = () => {
   return (
     <>

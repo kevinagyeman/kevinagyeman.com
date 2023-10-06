@@ -4,23 +4,30 @@ import { InformationData } from "../types/information-schema";
 
 const informationCollection = collection(db, "/information");
 const informationDocumentId = "CfbOBq4jIbn0qTeL3hfH";
-const docRef = doc(informationCollection, informationDocumentId);
 
 export const informationService = {
-  update: async (informationData: InformationData) => {
-    await updateDoc(docRef, informationData);
+  update: async (information: InformationData) => {
+    try {
+      const data = doc(informationCollection, informationDocumentId);
+      await updateDoc(data, {
+        ...information,
+        updatedAt: new Date().toISOString(),
+      });
+    } catch (error) {
+      console.error(error);
+    }
   },
 
-  get: () => {
-    getDoc(docRef).then((res) => {
-      return res.data();
-    });
-  },
-
-  getTest: async () => {
-    const data = await getDoc(docRef);
-    if (data.exists()) {
-      return data.data();
+  getById: async () => {
+    try {
+      const data = await getDoc(
+        doc(informationCollection, informationDocumentId),
+      );
+      if (data.exists()) {
+        return data.data();
+      }
+    } catch (error) {
+      console.error(error);
     }
   },
 };

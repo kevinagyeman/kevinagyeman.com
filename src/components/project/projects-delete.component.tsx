@@ -1,6 +1,6 @@
 import { Trash } from "lucide-react";
 import { ReactElement } from "react";
-import { projectService } from "../services/project.service";
+import { projectService } from "../../services/project.service";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,8 +11,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./ui/alert-dialog";
-import { Button } from "./ui/button";
+} from "./../ui/alert-dialog";
+import { Button } from "./../ui/button";
 
 type ProjectId = {
   projectId: string;

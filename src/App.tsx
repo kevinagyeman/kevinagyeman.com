@@ -1,15 +1,16 @@
 import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
+import Footer from "./components/footer.component";
 import Navbar from "./components/navbar.component";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import { AuthContext } from "./context/auth-context";
 import Index from "./pages";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
-import Footer from "./components/footer.component";
 
-function App() {
+const App = () => {
   const user = useContext(AuthContext);
+
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -23,6 +24,6 @@ function App() {
       </ThemeProvider>
     </>
   );
-}
+};
 
 export default App;
