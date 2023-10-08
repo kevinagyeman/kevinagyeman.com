@@ -1,18 +1,23 @@
 import {
   DocumentData,
+  FieldPath,
+  OrderByDirection,
   QuerySnapshot,
+  WhereFilterOp,
   addDoc,
   collection,
   deleteDoc,
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { ProjectData } from "../types/project-schema";
+import { orderBySchema, whereSchema } from "@/types/query-schema";
 
 const projectsCollection = collection(db, "/projects");
 
@@ -26,21 +31,26 @@ const mappedProjects = (data: QuerySnapshot<DocumentData, DocumentData>) => {
 };
 
 export const projectService = {
-  getAll: async () => {
+  getAll: async (orderByValue: orderBySchema, whereValue?: whereSchema) => {
     try {
-      const data = await getDocs(projectsCollection);
-      return mappedProjects(data);
-    } catch (error) {
-      console.error(error);
-    }
-  },
-
-  getAllDraftsPublished: async (published: boolean) => {
-    try {
-      const data = await getDocs(
-        query(projectsCollection, where("isPublished", "==", published)),
+      const orderByQuery = orderBy(
+        orderByValue.fieldPath,
+        orderByValue.directionStr,
       );
-      return mappedProjects(data);
+      if (whereValue) {
+        const whereQuery = where(
+          whereValue.fieldPath,
+          whereValue.opStr,
+          whereValue.value,
+        );
+        const data = await getDocs(
+          query(projectsCollection, whereQuery, orderByQuery),
+        );
+        return mappedProjects(data);
+      } else {
+        const data = await getDocs(query(projectsCollection, orderByQuery));
+        return mappedProjects(data);
+      }
     } catch (error) {
       console.error(error);
     }

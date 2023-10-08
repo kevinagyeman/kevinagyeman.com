@@ -1,5 +1,5 @@
 import InfomationElement from "@/components/information/information-element.component";
-import ProjectsList from "@/components/project/projects-list.component";
+import ProjectsListAdmin from "@/components/project/projects-list-admin.component";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Dashboard = () => {
@@ -19,7 +19,7 @@ const Dashboard = () => {
             <TabsTrigger value="information">Informazioni</TabsTrigger>
           </TabsList>
           <TabsContent value="projects">
-            <ProjectsList />
+            <ProjectsListAdmin />
           </TabsContent>
           <TabsContent value="information">
             <InfomationElement />

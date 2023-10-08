@@ -37,6 +37,19 @@ const InformationForm = ({
           />
         </div>
         <div className="mb-2">
+          <Label>ijreiofjor EMAIL</Label>
+          <Input
+            required={true}
+            type="text"
+            placeholder={"ewijieuwiu"}
+            value={information.email || ""}
+            onChange={(e) => {
+              informationSetter({ ...information, email: e.target.value });
+            }}
+            disabled={isDisabled}
+          />
+        </div>
+        <div className="mb-2">
           <Label>{t("informationForm.surname")}</Label>
           <Input
             type="text"

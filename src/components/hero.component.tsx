@@ -1,25 +1,30 @@
-import { ArrowDown, Linkedin } from "lucide-react";
-import { Button } from "./ui/button";
+import { InformationData } from "@/types/information-schema";
+import { Badge } from "./ui/badge";
 
-const Hero = () => {
+type InformationProps = {
+  information?: InformationData;
+  skillsArray?: string[];
+};
+
+const Hero = ({ information, skillsArray }: InformationProps) => {
   return (
     <>
-      <div className="container mx-auto  lg:max-w-[50%] lg:py-16">
-        <h1 className="scroll-m-20 py-3 text-4xl font-extrabold tracking-tight lg:text-7xl">
-          Kevin Agyeman2
+      <div className="container mx-auto  mb-8 lg:max-w-[50%]">
+        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+          {information?.role}
+        </code>
+        <h1 className="scroll-m-20  py-3 text-5xl font-extrabold tracking-tight  lg:text-6xl">
+          {information?.name} {information?.surname}
         </h1>
-        <p className="py-3 text-xl text-muted-foreground lg:text-2xl">
-          A modal dialog that interrupts the user with important content and
-          expects a response.
+        <p className="text-l py-2 text-muted-foreground lg:text-xl">
+          {information?.summary}
         </p>
-        <div className="mt-3 flex space-x-2">
-          <Button variant="secondary">
-            Contact <ArrowDown className="ml-2 h-4 w-4" />
-          </Button>
-          <Button variant="outline">
-            Linkedin
-            <Linkedin className="ml-2 h-4 w-4" />
-          </Button>
+        <div className="mt-3">
+          {skillsArray?.map((skill, index) => (
+            <Badge variant="secondary" className="mr-2" key={index}>
+              {skill}
+            </Badge>
+          ))}
         </div>
       </div>
     </>

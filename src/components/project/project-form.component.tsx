@@ -1,5 +1,5 @@
 import { ProjectData } from "@/types/project-schema";
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -88,21 +88,41 @@ const ProjectForm = ({
             disabled={isDisabled}
           />
         </div>
-        <div className="mb-2">
-          <Label>Image Link</Label>
-          <Input
-            type="text"
-            placeholder="title"
-            value={project?.imageLink || ""}
-            onChange={(e) => {
-              projectSetter({ ...project, imageLink: e.target.value });
-            }}
-            disabled={isDisabled}
-          />
-        </div>
       </form>
     </>
   );
 };
 
 export default ProjectForm;
+
+type InputData = {
+  label?: string;
+  type?: React.HTMLInputTypeAttribute;
+  value?: string | number | readonly string[];
+  disabled?: boolean;
+  required?: boolean;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+};
+
+const CustomInput = ({
+  label,
+  type,
+  value,
+  disabled,
+  required,
+  onChange,
+}: InputData) => {
+  return (
+    <div className="">
+      <Label>{label}</Label>
+      <Input
+        type={type}
+        placeholder={label}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+        required={required}
+      />
+    </div>
+  );
+};

@@ -4,7 +4,7 @@ import i18n from "@/i18n";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Moon, Sun } from "lucide-react";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Button } from "./ui/button";
 import {
   Select,
@@ -14,11 +14,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { AuthContext } from "@/context/auth-context";
+import { useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Projects", href: "/#projects", current: false },
   { name: "Contact", href: "/#contact", current: false },
+  { name: "Dashboard", href: "/dashboard", current: false },
 ];
 
 function classNames(...classes: any) {
@@ -28,6 +31,8 @@ function classNames(...classes: any) {
 const Navbar = () => {
   const { setTheme } = useTheme();
   const [language, setLanguage] = useState<string>(i18n.language);
+  const user = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const selectLanguage = (e: string) => {
     const valueSelected = e.valueOf();
@@ -42,6 +47,7 @@ const Navbar = () => {
 
   const signOut = async () => {
     await auth.signOut();
+    navigate("/");
   };
 
   return (
@@ -67,11 +73,13 @@ const Navbar = () => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="light:fill-black h-8 w-auto"
-                    src="src/assets/img/logo.svg"
-                    alt="Kevin Agyeman Logo"
-                  />
+                  <a href="/">
+                    <img
+                      className="h-8 w-auto"
+                      src="src/assets/img/logo-light.svg"
+                      alt="Kevin Agyeman Logo Light"
+                    />
+                  </a>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -105,8 +113,18 @@ const Navbar = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem value="it">IT</SelectItem>
-                        <SelectItem value="en">EN</SelectItem>
+                        <SelectItem value="it">
+                          <img
+                            src="src/assets/img/italy.png"
+                            className="h-4 w-4"
+                          />
+                        </SelectItem>
+                        <SelectItem value="en">
+                          <img
+                            src="src/assets/img/united-kingdom.png"
+                            className="h-4 w-4"
+                          />
+                        </SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -120,7 +138,7 @@ const Navbar = () => {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src="https://media.licdn.com/dms/image/C4D03AQEavaj22cXyTg/profile-displayphoto-shrink_800_800/0/1537222123446?e=1701907200&v=beta&t=ob0K8RV-VoP54eBQ2px4EQdFruhSNLHNTB6Phbh0qdU"
                         alt=""
                       />
                     </Menu.Button>
@@ -134,47 +152,37 @@ const Navbar = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700",
-                            )}
-                          >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="/login"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700",
-                            )}
-                          >
-                            login
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            onClick={() => signOut()}
-                            href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700",
-                            )}
-                          >
-                            Sign out
-                          </a>
-                        )}
-                      </Menu.Item>
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md border bg-zinc-950 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      {user ? (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              onClick={() => signOut()}
+                              href="#"
+                              className={classNames(
+                                active ? "bg-zinc-800" : "",
+                                "block px-4 py-2 text-sm text-destructive",
+                              )}
+                            >
+                              Sign out
+                            </a>
+                          )}
+                        </Menu.Item>
+                      ) : (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="/login"
+                              className={classNames(
+                                active ? "bg-zinc-800" : "",
+                                "block px-4 py-2 text-sm text-zinc-50",
+                              )}
+                            >
+                              login
+                            </a>
+                          )}
+                        </Menu.Item>
+                      )}
                     </Menu.Items>
                   </Transition>
                 </Menu>

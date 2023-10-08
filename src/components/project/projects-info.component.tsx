@@ -31,7 +31,7 @@ const ProjectsInfo = ({ projectId }: ProjectId) => {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" onClick={() => getSingleProject()}>
-          <ChevronLeft className="h-7 w-7" />
+          <ChevronLeft className="h-7 w-7 " />
         </Button>
       </SheetTrigger>
       <SheetContent className="flex h-screen w-full flex-col">

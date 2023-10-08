@@ -9,18 +9,18 @@ import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 
 const App = () => {
-  const user = useContext(AuthContext);
+  const admin = useContext(AuthContext);
 
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        {location.pathname !== "/login" && <Navbar />}
+        <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/login" element={user ? <Dashboard /> : <Login />} />
-          <Route path="/dashboard" element={user ? <Dashboard /> : <Index />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          {!admin && <Route path="/login" element={<Login />} />}
         </Routes>
-        {location.pathname !== "/login" && <Footer />}
+        <Footer />
       </ThemeProvider>
     </>
   );

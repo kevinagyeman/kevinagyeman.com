@@ -9,17 +9,30 @@ const ProjectsAdd = () => {
   const [project, setProject] = useState<ProjectData>({
     title: "",
   });
+  const [open, setOpen] = useState<boolean>(false);
 
   const addProject = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await projectService.create(project);
+    try {
+      e.preventDefault();
+      await projectService.create(project);
+      setOpen(false);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <>
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <Button variant="secondary">Aggiungi progetto</Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            Aggiungi progetto
+          </Button>
         </SheetTrigger>
         <SheetContent className="flex h-screen w-full flex-col">
           <div className="mt-5 max-h-max  flex-grow space-y-5 overflow-y-auto px-1">
@@ -32,7 +45,7 @@ const ProjectsAdd = () => {
           </div>
           <div className="flex space-x-2 border-t">
             <Button type="submit" className="mt-3 w-full" form="form">
-              crea
+              Crea Progetto
             </Button>
           </div>
         </SheetContent>

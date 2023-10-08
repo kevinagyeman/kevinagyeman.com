@@ -6,6 +6,7 @@ export type InformationData = {
   summary?: string;
   profileImageLink?: string;
   skills?: string;
+  email?: string;
   additionalInfo?: string;
   createdAt?: string;
   updatedAt?: string;

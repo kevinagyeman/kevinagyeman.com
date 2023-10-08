@@ -18,10 +18,14 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const updateProject = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await projectService.update(projectId, project);
-    setOpen(false);
-    setIsInputDisabled(true);
+    try {
+      e.preventDefault();
+      await projectService.update(projectId, project);
+      setOpen(false);
+      setIsInputDisabled(true);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const getSingleProject = async () => {
