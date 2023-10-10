@@ -1,26 +1,38 @@
 import { projectService } from "@/services/project.service";
+import { projectDataState, projectsListState } from "@/store/projects-store";
 import { ProjectData } from "@/types/project-schema";
 import { Info } from "lucide-react";
 import React, { useState } from "react";
-import ProjectForm from "./project-form.component";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import ProjectForm from "./project-form.component";
 
 type ProjectId = {
   projectId: string;
 };
 
 const ProjectsUpdate = ({ projectId }: ProjectId) => {
-  const [project, setProject] = useState<ProjectData>({
-    title: "",
-  });
+  const [project, setProject] = useRecoilState<ProjectData>(projectDataState);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
+  const setProjects = useSetRecoilState<ProjectData[]>(projectsListState);
 
   const updateProject = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       await projectService.update(projectId, project);
+      setProjects((prev: ProjectData[]) => {
+        return prev.map((projectValue: ProjectData) => {
+          if (project.id === projectValue.id) {
+            return {
+              ...projectValue,
+              ...project,
+            };
+          }
+          return projectValue;
+        });
+      });
       setOpen(false);
       setIsInputDisabled(true);
     } catch (e) {
@@ -31,7 +43,11 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
   const getSingleProject = async () => {
     const data = await projectService.getById(projectId);
     if (data) {
-      const currentProject: ProjectData = { ...data, title: data.title };
+      const currentProject: ProjectData = {
+        ...data,
+        title: data.title,
+        id: projectId,
+      };
       setProject(currentProject);
       setOpen(true);
     }

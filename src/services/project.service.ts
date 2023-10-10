@@ -61,6 +61,7 @@ export const projectService = {
       await addDoc(projectsCollection, {
         ...project,
         createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       console.error(error);

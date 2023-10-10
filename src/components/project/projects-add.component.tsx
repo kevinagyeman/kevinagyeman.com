@@ -4,17 +4,29 @@ import { ProjectData } from "../../types/project-schema";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import ProjectForm from "./project-form.component";
+import { useSetRecoilState } from "recoil";
+import { projectsListState } from "@/store/projects-store";
+import { orderBySchema } from "@/types/query-schema";
 
 const ProjectsAdd = () => {
   const [project, setProject] = useState<ProjectData>({
     title: "",
   });
+  const setProjects = useSetRecoilState<ProjectData[]>(projectsListState);
   const [open, setOpen] = useState<boolean>(false);
+  const [orderBy] = useState<orderBySchema>({
+    fieldPath: "createdAt",
+    directionStr: "desc",
+  });
 
   const addProject = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       await projectService.create(project);
+      const data = await projectService.getAll(orderBy);
+      if (data) {
+        setProjects(data);
+      }
       setOpen(false);
     } catch (e) {
       console.log(e);

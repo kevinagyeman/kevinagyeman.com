@@ -1,5 +1,8 @@
+import { projectsListState } from "@/store/projects-store";
+import { ProjectData } from "@/types/project-schema";
 import { Trash } from "lucide-react";
 import { ReactElement } from "react";
+import { useSetRecoilState } from "recoil";
 import { projectService } from "../../services/project.service";
 import {
   AlertDialog,
@@ -19,8 +22,17 @@ type ProjectId = {
 };
 
 const DeleteModal = ({ projectId }: ProjectId): ReactElement => {
+  const setProjects = useSetRecoilState<ProjectData[]>(projectsListState);
+
   const deleteProject = async () => {
-    await projectService.delete(projectId);
+    try {
+      await projectService.delete(projectId);
+      setProjects((prev: ProjectData[]) => {
+        return prev.filter((project: ProjectData) => project.id !== projectId);
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
