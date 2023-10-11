@@ -1,9 +1,9 @@
 import { ProjectData } from "@/types/project-schema";
-import React, { InputHTMLAttributes } from "react";
-import { Textarea } from "../ui/textarea";
+import React from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
+import { Textarea } from "../ui/textarea";
 
 type ProjectFormData = {
   project: ProjectData;
@@ -95,34 +95,34 @@ const ProjectForm = ({
 
 export default ProjectForm;
 
-type InputData = {
-  label?: string;
-  type?: React.HTMLInputTypeAttribute;
-  value?: string | number | readonly string[];
-  disabled?: boolean;
-  required?: boolean;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-};
+// type InputData = {
+//   label?: string;
+//   type?: React.HTMLInputTypeAttribute;
+//   value?: string | number | readonly string[];
+//   disabled?: boolean;
+//   required?: boolean;
+//   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+// };
 
-const CustomInput = ({
-  label,
-  type,
-  value,
-  disabled,
-  required,
-  onChange,
-}: InputData) => {
-  return (
-    <div className="">
-      <Label>{label}</Label>
-      <Input
-        type={type}
-        placeholder={label}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        required={required}
-      />
-    </div>
-  );
-};
+// const CustomInput = ({
+//   label,
+//   type,
+//   value,
+//   disabled,
+//   required,
+//   onChange,
+// }: InputData) => {
+//   return (
+//     <div className="">
+//       <Label>{label}</Label>
+//       <Input
+//         type={type}
+//         placeholder={label}
+//         value={value}
+//         onChange={onChange}
+//         disabled={disabled}
+//         required={required}
+//       />
+//     </div>
+//   );
+// };

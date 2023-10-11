@@ -1,12 +1,12 @@
+import { projectsListState } from "@/store/projects-store";
 import { orderBySchema, whereSchema } from "@/types/query-schema";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useRecoilState } from "recoil";
 import { projectService } from "../../services/project.service";
 import { ProjectData } from "../../types/project-schema";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import ProjectsInfo from "./projects-info.component";
-import { useRecoilState } from "recoil";
-import { projectsListState } from "@/store/projects-store";
 
 const ProjectsListUser = () => {
   const { t } = useTranslation();

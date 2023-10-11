@@ -1,9 +1,7 @@
+import { orderBySchema, whereSchema } from "@/types/query-schema";
 import {
   DocumentData,
-  FieldPath,
-  OrderByDirection,
   QuerySnapshot,
-  WhereFilterOp,
   addDoc,
   collection,
   deleteDoc,
@@ -17,7 +15,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { ProjectData } from "../types/project-schema";
-import { orderBySchema, whereSchema } from "@/types/query-schema";
 
 const projectsCollection = collection(db, "/projects");
 

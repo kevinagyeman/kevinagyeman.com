@@ -1,7 +1,7 @@
 import { projectService } from "@/services/project.service";
 import { projectDataState, projectsListState } from "@/store/projects-store";
 import { ProjectData } from "@/types/project-schema";
-import { Info, Maximize2 } from "lucide-react";
+import { Maximize2 } from "lucide-react";
 import React, { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "../ui/button";
