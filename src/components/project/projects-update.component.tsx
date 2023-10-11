@@ -1,7 +1,7 @@
 import { projectService } from "@/services/project.service";
 import { projectDataState, projectsListState } from "@/store/projects-store";
 import { ProjectData } from "@/types/project-schema";
-import { Info } from "lucide-react";
+import { Info, Maximize2 } from "lucide-react";
 import React, { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "../ui/button";
@@ -72,7 +72,7 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
       >
         <SheetTrigger asChild>
           <Button variant="ghost" onClick={() => getSingleProject()}>
-            <Info className="h-4 w-4" />
+            <Maximize2 className="h-4 w-4" />
           </Button>
         </SheetTrigger>
         <SheetContent className="flex h-screen w-full flex-col">

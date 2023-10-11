@@ -41,6 +41,7 @@ const ProjectsInfo = ({ projectId }: ProjectId) => {
           <p className="text-sm text-muted-foreground">
             {project.shortDescription}
           </p>
+          <p className="text-sm text-muted-foreground">{project.description}</p>
         </div>
         <div className="flex space-x-2">
           <Button variant={"secondary"} className="w-3/4">

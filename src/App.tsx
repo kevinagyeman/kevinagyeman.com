@@ -14,13 +14,15 @@ const App = () => {
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          {!admin && <Route path="/login" element={<Login />} />}
-        </Routes>
-        <Footer />
+        <div className="container max-w-[500px]">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            {!admin && <Route path="/login" element={<Login />} />}
+          </Routes>
+          <Footer />
+        </div>
       </ThemeProvider>
     </>
   );

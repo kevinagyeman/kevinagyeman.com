@@ -1,30 +1,44 @@
 import { informationService } from "@/services/information.service";
+import { informationDataState } from "@/store/information-store";
 import { InformationData } from "@/types/information-schema";
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import InformationForm from "./information-form.component";
 
 const InformationUpdate = () => {
-  const [information, setInformation] = useState<InformationData>({
-    name: "",
-  });
+  const [information, setInformation] =
+    useRecoilState<InformationData>(informationDataState);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
 
   const updateInformation = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await informationService.update(information);
-    setOpen(false);
-    setIsInputDisabled(true);
+    try {
+      e.preventDefault();
+      await informationService.update(information);
+      console.log(information);
+
+      setOpen(false);
+      setIsInputDisabled(true);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const getInformation = async () => {
-    const data = await informationService.getById();
-    if (data) {
-      const currentInformation: InformationData = { ...data, name: data.name };
-      setInformation(currentInformation);
-      setOpen(true);
+    try {
+      const data = await informationService.getById();
+      if (data) {
+        const currentInformation: InformationData = {
+          ...data,
+          name: data.name,
+        };
+        setInformation(currentInformation);
+        setOpen(true);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -46,8 +60,12 @@ const InformationUpdate = () => {
         }}
       >
         <SheetTrigger asChild>
-          <Button variant="secondary" onClick={() => getInformation()}>
-            modifica informazioni
+          <Button
+            variant="secondary"
+            className="w-full"
+            onClick={() => getInformation()}
+          >
+            Modifica informazioni
           </Button>
         </SheetTrigger>
         <SheetContent className="flex h-screen w-full flex-col">

@@ -19,7 +19,7 @@ const Contact = ({ information }: InformationProps) => {
   const { t } = useTranslation();
   return (
     <>
-      <div className="container mt-5 pb-5 lg:max-w-[50%]">
+      <div className="mt-5 pb-5">
         <Card>
           <CardHeader>
             <CardTitle>{t("contactCard.title")}</CardTitle>

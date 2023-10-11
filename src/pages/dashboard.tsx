@@ -5,27 +5,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const Dashboard = () => {
   return (
     <>
-      <div className="container">
+      <div className="text-center">
         <h1 className="scroll-m-20 text-3xl font-bold tracking-tight lg:text-5xl">
           Dashboard
         </h1>
         <p className="mb-5 mt-3 text-muted-foreground">
           Enter your email address.
         </p>
-
-        <Tabs defaultValue="projects">
-          <TabsList className="grid w-[250px] grid-cols-2">
-            <TabsTrigger value="projects">Progetti</TabsTrigger>
-            <TabsTrigger value="information">Informazioni</TabsTrigger>
-          </TabsList>
-          <TabsContent value="projects">
-            <ProjectsListAdmin />
-          </TabsContent>
-          <TabsContent value="information">
-            <InfomationElement />
-          </TabsContent>
-        </Tabs>
       </div>
+      <Tabs defaultValue="projects">
+        <TabsList className="mb-10 grid grid-cols-2">
+          <TabsTrigger value="projects">Progetti</TabsTrigger>
+          <TabsTrigger value="information">Informazioni</TabsTrigger>
+        </TabsList>
+        <TabsContent value="projects">
+          <ProjectsListAdmin />
+        </TabsContent>
+        <TabsContent value="information">
+          <InfomationElement />
+        </TabsContent>
+      </Tabs>
     </>
   );
 };

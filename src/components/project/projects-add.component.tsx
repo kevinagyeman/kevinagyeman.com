@@ -39,6 +39,7 @@ const ProjectsAdd = () => {
         <SheetTrigger asChild>
           <Button
             variant="secondary"
+            className="w-full"
             onClick={() => {
               setOpen(true);
             }}
