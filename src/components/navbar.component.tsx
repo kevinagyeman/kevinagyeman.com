@@ -25,8 +25,12 @@ import {
 const Navbar = () => {
   const { setTheme } = useTheme();
   const [language, setLanguage] = useState<string>(i18n.language);
-  const user = useContext(AuthContext);
+  const admin = useContext(AuthContext);
   const navigate = useNavigate();
+  const rootClassList = window.document.documentElement.classList;
+  const [logoSrc, setLogoSrc] = useState<string>(
+    "src/assets/img/logo-light.svg",
+  );
 
   const selectLanguage = (e: string) => {
     const valueSelected = e.valueOf();
@@ -35,8 +39,13 @@ const Navbar = () => {
   };
 
   const changeTheme = () => {
-    const rootClassList = window.document.documentElement.classList;
-    rootClassList.contains("dark") ? setTheme("light") : setTheme("dark");
+    if (rootClassList.contains("dark")) {
+      setTheme("light");
+      setLogoSrc("src/assets/img/logo-dark.svg");
+    } else {
+      setTheme("dark");
+      setLogoSrc("src/assets/img/logo-light.svg");
+    }
   };
 
   const signOut = async () => {
@@ -48,11 +57,7 @@ const Navbar = () => {
     <>
       <div className=" sticky top-0 z-50 mb-5 flex items-center justify-between border-b py-5 dark:bg-zinc-950 lg:max-w-[500px]">
         <a href="/">
-          <img
-            className="h-8 w-auto"
-            src="src/assets/img/logo-light.svg"
-            alt="Kevin Agyeman Logo Light"
-          />
+          <img className="h-8 w-auto" src={logoSrc} alt="Logo" />
         </a>
         <div className="flex items-center">
           <Button variant="outline" size="icon" onClick={changeTheme}>
@@ -93,7 +98,7 @@ const Navbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuGroup>
-                {user ? (
+                {admin ? (
                   <>
                     <DropdownMenuItem
                       onClick={() => (window.location.href = "/dashboard")}

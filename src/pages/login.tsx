@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [user, setUser] = useState<AdminData>({
+  const [admin, setUser] = useState<AdminData>({
     email: "",
     password: "",
   });
@@ -17,7 +17,7 @@ const Login = () => {
   const signIn = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      await signInWithEmailAndPassword(auth, user.email, user.password);
+      await signInWithEmailAndPassword(auth, admin.email, admin.password);
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
@@ -39,7 +39,7 @@ const Login = () => {
                 placeholder="Email"
                 name="Email"
                 onChange={(e) => {
-                  setUser({ ...user, email: e.target.value });
+                  setUser({ ...admin, email: e.target.value });
                 }}
               />
             </div>
@@ -50,14 +50,14 @@ const Login = () => {
                 placeholder="Password"
                 name="Password"
                 onChange={(e) => {
-                  setUser({ ...user, password: e.target.value });
+                  setUser({ ...admin, password: e.target.value });
                 }}
               />
             </div>
             <Button
               type="submit"
               className="mt-3 w-full"
-              disabled={!user.email || !user.password}
+              disabled={!admin.email || !admin.password}
             >
               Login
             </Button>

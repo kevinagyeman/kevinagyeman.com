@@ -18,7 +18,7 @@ const App = () => {
           <Navbar />
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            {admin && <Route path="/dashboard" element={<Dashboard />} />}
             {!admin && <Route path="/login" element={<Login />} />}
           </Routes>
           <Footer />
