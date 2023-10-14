@@ -17,8 +17,6 @@ const InformationUpdate = () => {
     try {
       e.preventDefault();
       await informationService.update(information);
-      console.log(information);
-
       setOpen(false);
       setIsInputDisabled(true);
     } catch (e) {

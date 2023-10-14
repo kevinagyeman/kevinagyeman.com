@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import logo from "@/assets/img/italy.png";
 
 const Navbar = () => {
   const { setTheme } = useTheme();
@@ -76,7 +77,7 @@ const Navbar = () => {
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="it">
-                  <img src="src/assets/img/italy.png" className="h-4 w-4" />
+                  <img src={logo} className="h-4 w-4" />
                 </SelectItem>
                 <SelectItem value="en">
                   <img

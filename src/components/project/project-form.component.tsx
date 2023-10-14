@@ -18,6 +18,27 @@ const ProjectForm = ({
   projectSetter,
   submitFunction,
 }: ProjectFormData) => {
+  // type InputData = {
+  //   label: string;
+  //   type?: React.HTMLInputTypeAttribute;
+  //   value?: string | number | readonly string[];
+  //   disabled?: boolean;
+  //   required?: boolean;
+  //   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  // };
+
+  // const formFields: InputData[] = [
+  //   {
+  //     label: "f",
+  //     type: "fff",
+  //     value: "3443",
+  //     disabled: true,
+  //     required: true,
+  //     onChange: (e) => {
+  //       projectSetter({ ...project, link: e.target.value });
+  //     },
+  //   },
+  // ];
   return (
     <>
       <form onSubmit={(e) => submitFunction(e)} id="form">
@@ -76,18 +97,15 @@ const ProjectForm = ({
             rows={14}
           ></Textarea>
         </div>
-        <div className="mb-2">
-          <Label>Link</Label>
-          <Input
-            type="text"
-            placeholder="title"
-            value={project?.link || ""}
-            onChange={(e) => {
-              projectSetter({ ...project, link: e.target.value });
-            }}
-            disabled={isDisabled}
-          />
-        </div>
+        {/* <CustomInput
+          label={"Link"}
+          type={"text"}
+          value={project?.link || ""}
+          onChange={(e) => {
+            projectSetter({ ...project, link: e.target.value });
+          }}
+          disabled={isDisabled}
+        /> */}
       </form>
     </>
   );
@@ -96,7 +114,7 @@ const ProjectForm = ({
 export default ProjectForm;
 
 // type InputData = {
-//   label?: string;
+//   label: string;
 //   type?: React.HTMLInputTypeAttribute;
 //   value?: string | number | readonly string[];
 //   disabled?: boolean;
