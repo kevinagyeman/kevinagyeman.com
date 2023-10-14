@@ -21,7 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import logo from "@/assets/img/italy.png";
+import flagItaly from "@/assets/img/italy.png";
+import flagUK from "@/assets/img/united-kingdom.png";
+import logoWhite from "@/assets/img/logo-light.svg";
+import logoBlack from "@/assets/img/logo-dark.svg";
 
 const Navbar = () => {
   const { setTheme } = useTheme();
@@ -29,9 +32,7 @@ const Navbar = () => {
   const admin = useContext(AuthContext);
   const navigate = useNavigate();
   const rootClassList = window.document.documentElement.classList;
-  const [logoSrc, setLogoSrc] = useState<string>(
-    "src/assets/img/logo-light.svg",
-  );
+  const [logoSrc, setLogoSrc] = useState<string>(logoWhite);
 
   const selectLanguage = (e: string) => {
     const valueSelected = e.valueOf();
@@ -42,10 +43,10 @@ const Navbar = () => {
   const changeTheme = () => {
     if (rootClassList.contains("dark")) {
       setTheme("light");
-      setLogoSrc("src/assets/img/logo-dark.svg");
+      setLogoSrc(logoBlack);
     } else {
       setTheme("dark");
-      setLogoSrc("src/assets/img/logo-light.svg");
+      setLogoSrc(logoWhite);
     }
   };
 
@@ -77,13 +78,10 @@ const Navbar = () => {
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="it">
-                  <img src={logo} className="h-4 w-4" />
+                  <img src={flagItaly} className="h-4 w-4" />
                 </SelectItem>
                 <SelectItem value="en">
-                  <img
-                    src="src/assets/img/united-kingdom.png"
-                    className="h-4 w-4"
-                  />
+                  <img src={flagUK} className="h-4 w-4" />
                 </SelectItem>
               </SelectGroup>
             </SelectContent>

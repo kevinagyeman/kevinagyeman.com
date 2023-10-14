@@ -12,12 +12,12 @@ type ProjectFormData = {
   submitFunction(e: React.FormEvent<HTMLFormElement>): Promise<void>;
 };
 
-const ProjectForm = ({
+export default function ProjectForm({
   project,
   isDisabled,
   projectSetter,
   submitFunction,
-}: ProjectFormData) => {
+}: ProjectFormData) {
   // type InputData = {
   //   label: string;
   //   type?: React.HTMLInputTypeAttribute;
@@ -109,9 +109,7 @@ const ProjectForm = ({
       </form>
     </>
   );
-};
-
-export default ProjectForm;
+}
 
 // type InputData = {
 //   label: string;
