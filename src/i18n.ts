@@ -23,9 +23,6 @@ i18n
     fallbackLng: "en",
     debug: true,
 
-    ns: ["header"],
-    defaultNS: "header",
-
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
