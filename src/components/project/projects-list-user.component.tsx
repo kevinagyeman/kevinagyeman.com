@@ -45,7 +45,7 @@ const ProjectsListUser = () => {
       <h2 className="mb-2 scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
         {t("projectSection.title")}
       </h2>
-      <p className=" text-muted-foreground">{t("contactCard")}</p>
+      <p className=" text-muted-foreground">{t("projectSection.sentence")}</p>
       {projects?.map((project: ProjectData, index: number) => (
         <Card
           key={index}
