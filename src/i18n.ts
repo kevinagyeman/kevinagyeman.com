@@ -20,7 +20,6 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    ns: ["common"],
     fallbackLng: "en",
     debug: false,
 
@@ -29,7 +28,7 @@ i18n
     },
 
     backend: {
-      loadPath: "./public/i18n/{{lng}}.json",
+      loadPath: "./src/assets/i18n/{{lng}}.json",
     },
   });
 
