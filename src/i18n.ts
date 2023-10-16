@@ -29,6 +29,8 @@ i18n
 
     backend: {
       loadPath: "/public/i18n/{{lng}}.json",
+      loader: "json-loader",
+      type: "javascript/auto",
     },
   });
 
