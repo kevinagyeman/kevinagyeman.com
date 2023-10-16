@@ -4,11 +4,12 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { AdminData } from "../types/admin-schema";
 
 const Authentication = () => {
-  const [user, setUser] = useState<any>({
-    email: null,
-    password: null,
+  const [user, setUser] = useState<AdminData>({
+    email: "",
+    password: "",
   });
 
   const signIn = async (e: React.FormEvent<HTMLFormElement>) => {

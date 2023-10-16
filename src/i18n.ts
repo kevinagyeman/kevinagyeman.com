@@ -3,6 +3,7 @@ import { initReactI18next } from "react-i18next";
 
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
+
 // don't want to use this?
 // have a look at the Quick start guide
 // for passing in lng and translations on init
@@ -22,8 +23,9 @@ i18n
   .init({
     fallbackLng: "en",
     debug: true,
+
     backend: {
-      loadPath: "/public/i18n/{{lng}}.json",
+      loadPath: "https://kevinagyeman-com.vercel.app/i18n/{{lng}}.json",
     },
   });
 
