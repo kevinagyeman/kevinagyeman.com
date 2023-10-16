@@ -23,7 +23,7 @@ i18n
     fallbackLng: "en",
     debug: true,
     backend: {
-      loadPath: "/public/{{lng}}.json",
+      loadPath: "/public/i18n/{{lng}}.json",
     },
   });
 
