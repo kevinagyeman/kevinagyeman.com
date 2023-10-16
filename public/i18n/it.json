@@ -1,19 +1,19 @@
 {
-  "contactCard": {
-    "title": "Contatti",
-    "subtitle": "Contattami, puoi mandarmi una mail"
+  "contactCard":{
+     "title":"Contatti",
+     "subtitle":"Contattami, puoi mandarmi una mail"
   },
-  "projectSection": {
-    "title": "Progetti",
-    "sentence": "Un elenco dei miei progetti e delle mie esperienze lavorative"
+  "projectSection":{
+     "title":"Progetti",
+     "sentence":"Un elenco dei miei progetti e delle mie esperienze lavorative"
   },
-  "informationForm": {
-    "name": "Nome",
-    "surname": "Cognome",
-    "role": "Ruolo",
-    "summary": "Sommario",
-    "profileImageLink": "Link immagine del profilo",
-    "skills": "Skills",
-    "additionalInfo": "Informazioni aggiuntive"
+  "informationForm":{
+     "name":"Nome",
+     "surname":"Cognome",
+     "role":"Ruolo",
+     "summary":"Sommario",
+     "profileImageLink":"Link immagine del profilo",
+     "skills":"Skills",
+     "additionalInfo":"Informazioni aggiuntive"
   }
 }
