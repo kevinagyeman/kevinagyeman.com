@@ -20,6 +20,8 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
+    ns: ["it", "en"],
+    defaultNS: "en",
     fallbackLng: "en",
     debug: true,
 
@@ -29,8 +31,6 @@ i18n
 
     backend: {
       loadPath: "/public/i18n/{{lng}}.json",
-      loader: "json-loader",
-      type: "javascript/auto",
     },
   });
 
