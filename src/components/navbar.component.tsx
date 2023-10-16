@@ -1,10 +1,7 @@
-import flagItaly from "@/assets/img/italy.png";
-import logoBlack from "@/assets/img/logo-dark.svg";
-import logoWhite from "@/assets/img/logo-light.svg";
-import flagUK from "@/assets/img/united-kingdom.png";
 import { useTheme } from "@/components/ui/theme-provider";
 import { AuthContext } from "@/context/auth-context";
 import { auth } from "@/firebase";
+import i18n from "@/i18n";
 import { Moon, Sun } from "lucide-react";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,10 +21,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import flagItaly from "@/assets/img/italy.png";
+import flagUK from "@/assets/img/united-kingdom.png";
+import logoWhite from "@/assets/img/logo-light.svg";
+import logoBlack from "@/assets/img/logo-dark.svg";
 
 const Navbar = () => {
   const { setTheme } = useTheme();
-  // const [language, setLanguage] = useState<string>(i18n.language);
+  const [language, setLanguage] = useState<string>(i18n.language);
   const admin = useContext(AuthContext);
   const navigate = useNavigate();
   const rootClassList = window.document.documentElement.classList;
@@ -35,9 +36,8 @@ const Navbar = () => {
 
   const selectLanguage = (e: string) => {
     const valueSelected = e.valueOf();
-    valueSelected;
-    // i18n.changeLanguage(valueSelected);
-    // setLanguage(valueSelected);
+    i18n.changeLanguage(valueSelected);
+    setLanguage(valueSelected);
   };
 
   const changeTheme = () => {
@@ -70,7 +70,7 @@ const Navbar = () => {
             onValueChange={(e) => {
               selectLanguage(e);
             }}
-            // value={language}
+            value={language}
           >
             <SelectTrigger className="ml-2 w-[65px]">
               <SelectValue placeholder="Select a a language" />
