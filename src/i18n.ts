@@ -25,7 +25,7 @@ i18n
     debug: true,
 
     backend: {
-      loadPath: "https://kevinagyeman-com.vercel.app/i18n/{{lng}}.json",
+      loadPath: "/i18n/{{lng}}.json",
     },
   });
 
