@@ -23,7 +23,7 @@ i18n
     fallbackLng: "en",
     debug: true,
     backend: {
-      loadPath: "/public/i18n/{{lng}}.json",
+      loadPath: "https://kevinagyeman-com.vercel.app/public/i18n/{{lng}}.json",
     },
   });
 
