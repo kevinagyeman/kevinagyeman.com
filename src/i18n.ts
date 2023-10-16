@@ -22,8 +22,6 @@ i18n
   .init({
     fallbackLng: "en",
     debug: true,
-    ns: ["en", "it"],
-    defaultNS: "en",
     backend: {
       loadPath: "/public/i18n/{{lng}}.json",
     },
