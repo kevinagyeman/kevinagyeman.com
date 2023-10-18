@@ -15,5 +15,13 @@
     "profileImageLink": "Link immagine del profilo",
     "skills": "Skills",
     "additionalInfo": "Informazioni aggiuntive"
-  }
+  },
+  "footer": {
+    "credit": "Fatto da Me | © "
+  },
+  "hero": {
+    "contactButton": "Contatti",
+    "readMoreButton": "leggi di più"
+  },
+  "projectsSheetButton": "Back to projects"
 }

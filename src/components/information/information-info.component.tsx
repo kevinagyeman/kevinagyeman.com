@@ -9,12 +9,15 @@ import { informationService } from "@/services/information.service";
 import { informationDataState } from "@/store/information-store";
 import { InformationData } from "@/types/information-schema";
 import { ChevronRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
+import { splitByLanguage } from "@/utils/utils";
 
 const InformationInfo = () => {
   const [information, setInformation] =
     useRecoilState<InformationData>(informationDataState);
+  const { t } = useTranslation();
 
   const getInformation = async () => {
     try {
@@ -35,7 +38,7 @@ const InformationInfo = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" onClick={() => getInformation()}>
-          Leggi di più
+          {t("hero.readMoreButton")}
           <ChevronRight className="ml-2 h-5 w-5" />
         </Button>
       </SheetTrigger>
@@ -54,7 +57,9 @@ const InformationInfo = () => {
           <code className="relative rounded bg-muted px-[0.4rem] py-[0.2rem] font-mono text-sm">
             {information?.role}
           </code>
-          <p className="text-sm text-muted-foreground">{information.summary}</p>
+          <p className="text-sm text-muted-foreground">
+            {splitByLanguage(`${information?.summary}`)}
+          </p>
           <p className="text-sm">{information.additionalInfo}</p>
           <div className="mt-3 pb-8">
             {information?.skills

@@ -9,6 +9,8 @@ import { projectService } from "@/services/project.service";
 import { ProjectData } from "@/types/project-schema";
 import { ReactNode, useState } from "react";
 import { Badge } from "../ui/badge";
+import { ChevronLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 type ProjectInfoProps = {
   projectId: string;
@@ -20,6 +22,8 @@ const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
     title: "",
   });
 
+  const { t } = useTranslation();
+
   const getSingleProject = async () => {
     const data = await projectService.getById(projectId);
     if (data) {
@@ -30,7 +34,7 @@ const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
 
   return (
     <Sheet>
-      <SheetTrigger asChild onClick={() => getSingleProject()}>
+      <SheetTrigger onClick={() => getSingleProject()} asChild>
         {children}
       </SheetTrigger>
       <SheetContent className="flex h-screen w-full flex-col">
@@ -41,7 +45,7 @@ const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
             {project.shortDescription}
           </p>
           <img src={project.imageLink} className="w-full" />
-          <p className="text-sm text-muted-foreground">{project.description}</p>
+          <p className="text-sm">{project.description}</p>
           <div className="mt-2">
             {project.skills?.split(",")?.map((skill: string, index: number) => (
               <Badge variant="secondary" className="mr-2 mt-2" key={index}>
@@ -51,12 +55,10 @@ const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
           </div>
         </div>
         <div className="flex space-x-2">
-          <Button variant={"secondary"} className="w-3/4">
-            Contatti
-          </Button>
           <SheetClose asChild>
-            <Button variant={"outline"} className="w-1/4">
-              Chiudi
+            <Button variant={"secondary"} className="w-full">
+              <ChevronLeft className="mr-2 h-4 w-4" />{" "}
+              {t("projectsSheetButton")}
             </Button>
           </SheetClose>
         </div>

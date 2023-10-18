@@ -1,4 +1,6 @@
+import { InformationData } from "@/types/information-schema";
 import { Copy, Send } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -8,27 +10,15 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Input } from "./ui/input";
-import { useTranslation } from "react-i18next";
-import { InformationData } from "@/types/information-schema";
-import { useToast } from "./ui/use-toast";
-import { Toaster } from "./ui/toaster";
 type InformationProps = {
   information?: InformationData;
 };
 
 const Contact = ({ information }: InformationProps) => {
   const { t } = useTranslation();
-  const { toast } = useToast();
 
   const copyText = () => {
-    try {
-      navigator.clipboard.writeText(`${information?.email || ""}`);
-      toast({
-        description: "Email copiata!",
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    navigator.clipboard.writeText(`${information?.email || ""}`);
   };
 
   const sendEmail = () => {
@@ -37,7 +27,7 @@ const Contact = ({ information }: InformationProps) => {
 
   return (
     <>
-      <div className="mt-5 pb-5">
+      <div className="mt-5 pb-5" id="contacts">
         <Card>
           <CardHeader>
             <CardTitle>{t("contactCard.title")}</CardTitle>
@@ -64,7 +54,6 @@ const Contact = ({ information }: InformationProps) => {
           </CardContent>
         </Card>
       </div>
-      <Toaster />
     </>
   );
 };

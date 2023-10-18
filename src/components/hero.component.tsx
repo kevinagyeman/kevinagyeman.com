@@ -1,5 +1,7 @@
 import { InformationData } from "@/types/information-schema";
+import { splitByLanguage } from "@/utils/utils";
 import { Send } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import InformationInfo from "./information/information-info.component";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -9,6 +11,8 @@ type InformationProps = {
 };
 
 const Hero = ({ information }: InformationProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="mx-auto  mb-8">
@@ -19,7 +23,7 @@ const Hero = ({ information }: InformationProps) => {
           {information?.name} {information?.surname}
         </h1>
         <p className="text-l mt-2 text-muted-foreground lg:text-xl">
-          {information?.summary}
+          {splitByLanguage(`${information?.summary}`)}
         </p>
         <div className="mt-2">
           {information?.skills
@@ -32,9 +36,11 @@ const Hero = ({ information }: InformationProps) => {
             ))}
         </div>
         <div className="mt-6">
-          <Button variant={"secondary"} className="mr-2">
-            Contatti
-            <Send className="ml-2 h-4 w-4" />
+          <Button className="mr-2" variant={"secondary"} asChild>
+            <a href="#contacts">
+              {t("hero.contactButton")}
+              <Send className="ml-2 h-4 w-4" />
+            </a>
           </Button>
           <InformationInfo />
         </div>
