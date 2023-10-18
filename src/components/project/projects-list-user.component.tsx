@@ -51,7 +51,10 @@ export default function ProjectsListUser() {
         <div className="cursor-pointer" key={index}>
           {project.id && (
             <ProjectsInfo projectId={project.id}>
-              <Card className="my-3 flex flex-row items-center justify-between  transition ease-in-out hover:scale-110 hover:bg-zinc-100 dark:hover:bg-zinc-900">
+              <Card
+                className="my-3 flex flex-row items-center justify-between  lg:transition 
+              lg:ease-in-out lg:hover:scale-110 lg:hover:bg-zinc-100 lg:dark:hover:bg-zinc-900"
+              >
                 <CardHeader>
                   <CardTitle>{project.title}</CardTitle>
                   <CardDescription>{project.shortDescription}</CardDescription>
