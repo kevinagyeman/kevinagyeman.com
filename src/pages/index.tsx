@@ -6,18 +6,11 @@ import { InformationData } from "@/types/information-schema";
 import { useEffect, useState } from "react";
 const Index = () => {
   const [information, setInformation] = useState<InformationData>();
-  const [skillsArray, setSkillsArray] = useState<string[]>();
-
-  const arraySkills = (informationObject: InformationData) => {
-    const skillsSplitted = informationObject.skills?.split(",");
-    setSkillsArray(skillsSplitted);
-  };
 
   const getInformation = async () => {
     const data = await informationService.getById();
     if (data) {
       const currentInformation: InformationData = { ...data, name: data.name };
-      arraySkills(currentInformation);
       setInformation(currentInformation);
     }
   };
@@ -28,7 +21,7 @@ const Index = () => {
   return (
     <>
       <section id="home">
-        <Hero skillsArray={skillsArray} information={information} />
+        <Hero information={information} />
       </section>
       <section id="projects">
         <ProjectsListUser />

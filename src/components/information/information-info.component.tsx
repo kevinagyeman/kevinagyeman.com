@@ -8,15 +8,13 @@ import {
 import { informationService } from "@/services/information.service";
 import { informationDataState } from "@/store/information-store";
 import { InformationData } from "@/types/information-schema";
-import { ChevronLeft } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
-import { useState } from "react";
 
 const InformationInfo = () => {
   const [information, setInformation] =
     useRecoilState<InformationData>(informationDataState);
-  const [skillsArray, setSkillsArray] = useState<string[]>();
 
   const getInformation = async () => {
     try {
@@ -27,23 +25,18 @@ const InformationInfo = () => {
           name: data.name,
         };
         setInformation(currentInformation);
-        arraySkills(currentInformation);
       }
     } catch (e) {
       console.log(e);
     }
   };
 
-  const arraySkills = (informationObject: InformationData) => {
-    const skillsSplitted = informationObject.skills?.split(",");
-    setSkillsArray(skillsSplitted);
-  };
-
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" onClick={() => getInformation()}>
-          <ChevronLeft className="h-7 w-7 " />
+        <Button variant="outline" onClick={() => getInformation()}>
+          Leggi di più
+          <ChevronRight className="ml-2 h-5 w-5" />
         </Button>
       </SheetTrigger>
       <SheetContent className="flex h-screen w-full flex-col">
@@ -58,17 +51,19 @@ const InformationInfo = () => {
           <div className="pb-3 text-lg font-semibold">
             {information.name} {information.surname}
           </div>
-          <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+          <code className="relative rounded bg-muted px-[0.4rem] py-[0.2rem] font-mono text-sm">
             {information?.role}
           </code>
           <p className="text-sm text-muted-foreground">{information.summary}</p>
           <p className="text-sm">{information.additionalInfo}</p>
           <div className="mt-3 pb-8">
-            {skillsArray?.map((skill: string, index: number) => (
-              <Badge variant="secondary" className="mr-2" key={index}>
-                {skill}
-              </Badge>
-            ))}
+            {information?.skills
+              ?.split(",")
+              ?.map((skill: string, index: number) => (
+                <Badge variant="secondary" className="mr-2 mt-2" key={index}>
+                  {skill}
+                </Badge>
+              ))}
           </div>
           <a href="#" className="">
             {information.email}

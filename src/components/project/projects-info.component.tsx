@@ -7,14 +7,15 @@ import {
 } from "@/components/ui/sheet";
 import { projectService } from "@/services/project.service";
 import { ProjectData } from "@/types/project-schema";
-import { ChevronLeft } from "lucide-react";
-import { useState } from "react";
+import { Check } from "lucide-react";
+import { ReactNode, useState } from "react";
 
-type ProjectId = {
+type ProjectInfoProps = {
   projectId: string;
+  children: ReactNode;
 };
 
-const ProjectsInfo = ({ projectId }: ProjectId) => {
+const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
   const [project, setProject] = useState<ProjectData>({
     title: "",
   });
@@ -29,10 +30,8 @@ const ProjectsInfo = ({ projectId }: ProjectId) => {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" onClick={() => getSingleProject()}>
-          <ChevronLeft className="h-7 w-7 " />
-        </Button>
+      <SheetTrigger asChild onClick={() => getSingleProject()}>
+        {children}
       </SheetTrigger>
       <SheetContent className="flex h-screen w-full flex-col">
         <p className="text-sm text-muted-foreground">{project.title}</p>
@@ -42,6 +41,14 @@ const ProjectsInfo = ({ projectId }: ProjectId) => {
             {project.shortDescription}
           </p>
           <p className="text-sm text-muted-foreground">{project.description}</p>
+          <div className="flex gap-3">
+            {project.skills?.split(",")?.map((skill: string, index: number) => (
+              <small key={index} className="flex items-center gap-1">
+                <Check className="h-3 w-3" />
+                {skill}
+              </small>
+            ))}
+          </div>
         </div>
         <div className="flex space-x-2">
           <Button variant={"secondary"} className="w-3/4">

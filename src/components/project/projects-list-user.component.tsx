@@ -1,5 +1,6 @@
 import { projectsListState } from "@/store/projects-store";
 import { orderBySchema, whereSchema } from "@/types/query-schema";
+import { CheckCircle, ChevronRight } from "lucide-react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
@@ -8,7 +9,7 @@ import { ProjectData } from "../../types/project-schema";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import ProjectsInfo from "./projects-info.component";
 
-const ProjectsListUser = () => {
+export default function ProjectsListUser() {
   const { t } = useTranslation();
   const [projects, setProjects] =
     useRecoilState<ProjectData[]>(projectsListState);
@@ -47,21 +48,32 @@ const ProjectsListUser = () => {
       </h2>
       <p className="text-muted-foreground">{t("projectSection.sentence")}</p>
       {projects?.map((project: ProjectData, index: number) => (
-        <Card
-          key={index}
-          className="my-3 flex flex-row items-center justify-between"
-        >
-          <CardHeader>
-            <CardTitle>{project.title}</CardTitle>
-            <CardDescription>{project.shortDescription}</CardDescription>
-          </CardHeader>
-          <div className="pr-0">
-            {project.id ? <ProjectsInfo projectId={project.id} /> : null}
-          </div>
-        </Card>
+        <div className="cursor-pointer" key={index}>
+          {project.id && (
+            <ProjectsInfo projectId={project.id}>
+              <Card className="my-3 flex flex-row items-center justify-between  transition ease-in-out hover:scale-110 hover:bg-zinc-100 dark:hover:bg-zinc-900">
+                <CardHeader>
+                  <CardTitle>{project.title}</CardTitle>
+                  <CardDescription>{project.shortDescription}</CardDescription>
+                  <div className="flex gap-3">
+                    {project.skills
+                      ?.split(",")
+                      ?.map((skill: string, index: number) => (
+                        <small key={index} className="flex items-center gap-1">
+                          <CheckCircle className="h-3 w-3" />
+                          {skill}
+                        </small>
+                      ))}
+                  </div>
+                </CardHeader>
+                <div className="pr-0">
+                  <ChevronRight style={{ color: "grey" }} />
+                </div>
+              </Card>
+            </ProjectsInfo>
+          )}
+        </div>
       ))}
     </>
   );
-};
-
-export default ProjectsListUser;
+}

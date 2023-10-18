@@ -20,6 +20,7 @@ const App = () => {
             <Route path="/" element={<Index />} />
             {admin && <Route path="/dashboard" element={<Dashboard />} />}
             {!admin && <Route path="/login" element={<Login />} />}
+            <Route path="*" element={"Pagina non trovata"} />
           </Routes>
           <Footer />
         </div>

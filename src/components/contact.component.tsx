@@ -10,13 +10,31 @@ import {
 import { Input } from "./ui/input";
 import { useTranslation } from "react-i18next";
 import { InformationData } from "@/types/information-schema";
-
+import { useToast } from "./ui/use-toast";
+import { Toaster } from "./ui/toaster";
 type InformationProps = {
   information?: InformationData;
 };
 
 const Contact = ({ information }: InformationProps) => {
   const { t } = useTranslation();
+  const { toast } = useToast();
+
+  const copyText = () => {
+    try {
+      navigator.clipboard.writeText(`${information?.email || ""}`);
+      toast({
+        description: "Email copiata!",
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const sendEmail = () => {
+    window.location.href = `mailto:${information?.email || ""}`;
+  };
+
   return (
     <>
       <div className="mt-5 pb-5">
@@ -31,19 +49,22 @@ const Contact = ({ information }: InformationProps) => {
               <Button
                 variant="secondary"
                 className="shrink-0"
-                onClick={() => {
-                  navigator.clipboard.writeText("");
-                }}
+                onClick={() => copyText()}
               >
                 <Copy className="h-4 w-4" />
               </Button>
-              <Button variant="secondary" className="shrink-0">
+              <Button
+                variant="secondary"
+                className="shrink-0"
+                onClick={() => sendEmail()}
+              >
                 <Send className="h-4 w-4" />
               </Button>
             </div>
           </CardContent>
         </Card>
       </div>
+      <Toaster />
     </>
   );
 };

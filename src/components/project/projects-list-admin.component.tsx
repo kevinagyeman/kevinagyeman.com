@@ -224,6 +224,7 @@ const ProjectsListAdmin = () => {
           <p className="mt-2 text-sm text-muted-foreground">
             {project.shortDescription || "-"}
           </p>
+          <p className="mt-2 text-sm">{project.skills || "-"}</p>
           <div className="mb-3 mt-2 flex h-5 items-center space-x-4 text-sm">
             <div>
               Updated At: {moment(project.updatedAt).format("DD/MM/YYYY H:mm")}

@@ -3,7 +3,7 @@ import { AuthContext } from "@/context/auth-context";
 import { auth } from "@/firebase";
 import i18n from "@/i18n";
 import { Moon, Sun } from "lucide-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import {
@@ -32,7 +32,9 @@ const Navbar = () => {
   const admin = useContext(AuthContext);
   const navigate = useNavigate();
   const rootClassList = window.document.documentElement.classList;
-  const [logoSrc, setLogoSrc] = useState<string>(logoWhite);
+  const [logoSrc, setLogoSrc] = useState<string>();
+  const profileImage =
+    "https://media.licdn.com/dms/image/C4D03AQEavaj22cXyTg/profile-displayphoto-shrink_800_800/0/1537222123446?e=1701907200&v=beta&t=ob0K8RV-VoP54eBQ2px4EQdFruhSNLHNTB6Phbh0qdU";
 
   const selectLanguage = (e: string) => {
     const valueSelected = e.valueOf();
@@ -55,9 +57,15 @@ const Navbar = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    rootClassList.contains("dark")
+      ? setLogoSrc(logoWhite)
+      : setLogoSrc(logoBlack);
+  }, []);
+
   return (
     <>
-      <div className=" sticky top-0 z-50 mb-5 flex items-center justify-between border-b py-5 dark:bg-zinc-950 lg:max-w-[500px]">
+      <div className="sticky top-0 z-50 mb-5 flex items-center justify-between border-b bg-white/80 py-5 backdrop-blur-sm dark:bg-zinc-950/80 lg:max-w-[500px]">
         <a href="/">
           <img className="h-8 w-auto" src={logoSrc} alt="Logo" />
         </a>
@@ -89,11 +97,15 @@ const Navbar = () => {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <img
-                className="ml-2 h-8 w-8 rounded-full"
-                src="https://media.licdn.com/dms/image/C4D03AQEavaj22cXyTg/profile-displayphoto-shrink_800_800/0/1537222123446?e=1701907200&v=beta&t=ob0K8RV-VoP54eBQ2px4EQdFruhSNLHNTB6Phbh0qdU"
-                alt=""
-              />
+              {admin ? (
+                <img
+                  className="ml-2 h-8 w-8 rounded-full"
+                  src={profileImage}
+                  alt="profile"
+                />
+              ) : (
+                <div className="ml-2 h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-900"></div>
+              )}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuGroup>
