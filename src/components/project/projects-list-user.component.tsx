@@ -1,6 +1,6 @@
 import { projectsListState } from "@/store/projects-store";
 import { orderBySchema, whereSchema } from "@/types/query-schema";
-import { CheckCircle, ChevronRight } from "lucide-react";
+import { Check, ChevronRight } from "lucide-react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
@@ -58,12 +58,13 @@ export default function ProjectsListUser() {
                 <CardHeader>
                   <CardTitle>{project.title}</CardTitle>
                   <CardDescription>{project.shortDescription}</CardDescription>
-                  <div className="flex gap-3">
+                  <div className="flex flex-wrap gap-3">
                     {project.skills
                       ?.split(",")
-                      ?.map((skill: string, index: number) => (
+                      ?.slice(0, 4)
+                      .map((skill: string, index: number) => (
                         <small key={index} className="flex items-center gap-1">
-                          <CheckCircle className="h-3 w-3" />
+                          <Check className="h-3 w-3" />
                           {skill}
                         </small>
                       ))}

@@ -7,8 +7,8 @@ import {
 } from "@/components/ui/sheet";
 import { projectService } from "@/services/project.service";
 import { ProjectData } from "@/types/project-schema";
-import { Check } from "lucide-react";
 import { ReactNode, useState } from "react";
+import { Badge } from "../ui/badge";
 
 type ProjectInfoProps = {
   projectId: string;
@@ -40,13 +40,13 @@ const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
           <p className="text-sm text-muted-foreground">
             {project.shortDescription}
           </p>
+          <img src={project.imageLink} className="w-full" />
           <p className="text-sm text-muted-foreground">{project.description}</p>
-          <div className="flex gap-3">
+          <div className="mt-2">
             {project.skills?.split(",")?.map((skill: string, index: number) => (
-              <small key={index} className="flex items-center gap-1">
-                <Check className="h-3 w-3" />
+              <Badge variant="secondary" className="mr-2 mt-2" key={index}>
                 {skill}
-              </small>
+              </Badge>
             ))}
           </div>
         </div>
