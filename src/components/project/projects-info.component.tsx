@@ -60,7 +60,9 @@ export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
         <div className="flex space-x-2">
           {project.link && (
             <Button variant={"secondary"} className="w-3/4">
-              <a href={project.link}>Scopri di più</a>
+              <a href={project.link} target="_blank">
+                Scopri di più
+              </a>
             </Button>
           )}
           <SheetClose asChild>
