@@ -10,7 +10,6 @@ import { projectSchema } from "@/types/project-schema";
 import { splitSkills } from "@/utils/utils";
 import { Maximize2 } from "lucide-react";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Badge } from "../ui/badge";
 
 type ProjectInfoProps = {
@@ -22,7 +21,7 @@ export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
     title: "",
   });
 
-  const { t } = useTranslation();
+  //const { t } = useTranslation();
 
   const getSingleProject = async () => {
     const data = await projectService.getById(projectId);
