@@ -1,6 +1,7 @@
 import { projectsListState } from "@/store/projects-store";
 import { orderBySchema, whereSchema } from "@/types/query-schema";
-import { Check, Plus, Maximize2 } from "lucide-react";
+import { splitSkills } from "@/utils/utils";
+import { Check } from "lucide-react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
@@ -8,8 +9,6 @@ import { projectService } from "../../services/project.service";
 import { projectSchema } from "../../types/project-schema";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import ProjectsInfo from "./projects-info.component";
-import { splitSkills } from "@/utils/utils";
-import { Button } from "../ui/button";
 
 export default function ProjectsListUser() {
   const { t } = useTranslation();
