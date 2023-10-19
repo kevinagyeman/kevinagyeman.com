@@ -7,12 +7,11 @@ import {
 } from "@/components/ui/sheet";
 import { projectService } from "@/services/project.service";
 import { projectSchema } from "@/types/project-schema";
-import { ReactNode, useState } from "react";
-import { Badge } from "../ui/badge";
-import { ChevronLeft } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import { splitSkills } from "@/utils/utils";
-import { Check, Plus, Maximize2 } from "lucide-react";
+import { Maximize2 } from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Badge } from "../ui/badge";
 
 type ProjectInfoProps = {
   projectId: string;

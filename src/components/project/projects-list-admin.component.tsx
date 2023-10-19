@@ -1,6 +1,7 @@
 import { projectsListState } from "@/store/projects-store";
 import { orderBySchema, whereSchema } from "@/types/query-schema";
-import { ArrowDownUp, FilterX, Search, Check } from "lucide-react";
+import { splitSkills } from "@/utils/utils";
+import { ArrowDownUp, Check, FilterX, Search } from "lucide-react";
 import moment from "moment";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
@@ -17,11 +18,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Separator } from "../ui/separator";
 import ProjectsAdd from "./projects-add.component";
 import DeleteModal from "./projects-delete.component";
 import ProjectsUpdate from "./projects-update.component";
-import { splitSkills } from "@/utils/utils";
 
 const ProjectsListAdmin = () => {
   const [projects, setProjects] =
