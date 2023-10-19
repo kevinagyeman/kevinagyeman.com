@@ -1,18 +1,18 @@
-import { ProjectData } from "@/types/project-schema";
+import { projectSchema } from "@/types/project-schema";
 import { atom } from "recoil";
 
-const projectData: ProjectData = {
+const projectSchema: projectSchema = {
   title: "",
 };
 
-export const initProjectData: ProjectData = projectData;
+export const initProjectData: projectSchema = projectSchema;
 
 export const projectDataState = atom({
   key: "projectDataState",
-  default: projectData,
+  default: projectSchema,
 });
 
-const projectsList: ProjectData[] = [];
+const projectsList: projectSchema[] = [];
 
 export const projectsListState = atom({
   key: "projectsListState",

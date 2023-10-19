@@ -10,3 +10,15 @@ export const splitByLanguage = (string: string): string => {
     return itString;
   }
 };
+
+export const splitSkills = (
+  string: string,
+  numberOfEelementsDisplayed?: number,
+): string[] => {
+  const splittedString = string.split(",");
+  if (!numberOfEelementsDisplayed) {
+    return splittedString;
+  } else {
+    return splittedString.slice(0, numberOfEelementsDisplayed);
+  }
+};

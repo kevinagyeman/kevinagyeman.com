@@ -135,7 +135,6 @@ const InformationForm = ({
               });
             }}
             disabled={isDisabled}
-            maxLength={150}
             rows={4}
           ></Textarea>
         </div>

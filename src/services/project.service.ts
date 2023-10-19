@@ -14,12 +14,12 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { ProjectData } from "../types/project-schema";
+import { projectSchema } from "../types/project-schema";
 
 const projectsCollection = collection(db, "/projects");
 
 const mappedProjects = (data: QuerySnapshot<DocumentData, DocumentData>) => {
-  const result: ProjectData[] = data.docs.map((doc) => ({
+  const result: projectSchema[] = data.docs.map((doc) => ({
     ...doc.data(),
     id: doc.id,
     title: doc.data().title,
@@ -53,7 +53,7 @@ export const projectService = {
     }
   },
 
-  create: async (project: ProjectData) => {
+  create: async (project: projectSchema) => {
     try {
       await addDoc(projectsCollection, {
         ...project,
@@ -76,7 +76,7 @@ export const projectService = {
 
   update: async (
     projectId: string | undefined,
-    project: ProjectData | undefined,
+    project: projectSchema | undefined,
   ) => {
     try {
       const data = doc(projectsCollection, projectId);

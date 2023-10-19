@@ -12,7 +12,7 @@ import { ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
-import { splitByLanguage } from "@/utils/utils";
+import { splitByLanguage, splitSkills } from "@/utils/utils";
 
 const InformationInfo = () => {
   const [information, setInformation] =
@@ -42,7 +42,7 @@ const InformationInfo = () => {
           <ChevronRight className="ml-2 h-5 w-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex h-screen w-full flex-col">
+      <SheetContent className="flex w-full flex-col">
         <p className="text-sm text-muted-foreground">
           {information.name} {information.surname}
         </p>
@@ -62,13 +62,13 @@ const InformationInfo = () => {
           </p>
           <p className="text-sm">{information.additionalInfo}</p>
           <div className="mt-3 pb-8">
-            {information?.skills
-              ?.split(",")
-              ?.map((skill: string, index: number) => (
+            {splitSkills(`${information?.skills}`).map(
+              (skill: string, index: number) => (
                 <Badge variant="secondary" className="mr-2 mt-2" key={index}>
                   {skill}
                 </Badge>
-              ))}
+              ),
+            )}
           </div>
           <a href="#" className="">
             {information.email}

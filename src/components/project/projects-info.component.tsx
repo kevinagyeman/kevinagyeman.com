@@ -6,19 +6,20 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { projectService } from "@/services/project.service";
-import { ProjectData } from "@/types/project-schema";
+import { projectSchema } from "@/types/project-schema";
 import { ReactNode, useState } from "react";
 import { Badge } from "../ui/badge";
 import { ChevronLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { splitSkills } from "@/utils/utils";
+import { Check, Plus, Maximize2 } from "lucide-react";
 
 type ProjectInfoProps = {
   projectId: string;
-  children: ReactNode;
 };
 
-const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
-  const [project, setProject] = useState<ProjectData>({
+export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
+  const [project, setProject] = useState<projectSchema>({
     title: "",
   });
 
@@ -27,7 +28,7 @@ const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
   const getSingleProject = async () => {
     const data = await projectService.getById(projectId);
     if (data) {
-      const currentProject: ProjectData = { ...data, title: data.title };
+      const currentProject: projectSchema = { ...data, title: data.title };
       setProject(currentProject);
     }
   };
@@ -35,11 +36,13 @@ const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
   return (
     <Sheet>
       <SheetTrigger onClick={() => getSingleProject()} asChild>
-        {children}
+        <Button variant={"ghost"} className="ml-auto rounded-full" size="icon">
+          <Maximize2 className="h-4 w-4" />
+        </Button>
       </SheetTrigger>
-      <SheetContent className="flex h-screen w-full flex-col">
+      <SheetContent className="flex w-full flex-col">
         <p className="text-sm text-muted-foreground">{project.title}</p>
-        <div className="mt-5 max-h-max  flex-grow space-y-5 overflow-y-auto">
+        <div className="mt-5 flex flex-1 flex-col space-y-5 overflow-y-auto">
           <div className="text-lg font-semibold">{project.title}</div>
           <p className="text-sm text-muted-foreground">
             {project.shortDescription}
@@ -47,7 +50,7 @@ const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
           <img src={project.imageLink} className="w-full" />
           <p className="text-sm">{project.description}</p>
           <div className="mt-2">
-            {project.skills?.split(",")?.map((skill: string, index: number) => (
+            {splitSkills(`${project?.skills}`, 5).map((skill, index) => (
               <Badge variant="secondary" className="mr-2 mt-2" key={index}>
                 {skill}
               </Badge>
@@ -55,16 +58,18 @@ const ProjectsInfo = ({ projectId, children }: ProjectInfoProps) => {
           </div>
         </div>
         <div className="flex space-x-2">
+          {project.link && (
+            <Button variant={"secondary"} className="w-3/4">
+              <a href={project.link}>Scopri di più</a>
+            </Button>
+          )}
           <SheetClose asChild>
-            <Button variant={"secondary"} className="w-full">
-              <ChevronLeft className="mr-2 h-4 w-4" />{" "}
-              {t("projectsSheetButton")}
+            <Button variant={"outline"} className="w-1/4">
+              Chiudi
             </Button>
           </SheetClose>
         </div>
       </SheetContent>
     </Sheet>
   );
-};
-
-export default ProjectsInfo;
+}

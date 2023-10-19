@@ -1,6 +1,6 @@
 import { projectService } from "@/services/project.service";
 import { projectDataState, projectsListState } from "@/store/projects-store";
-import { ProjectData } from "@/types/project-schema";
+import { projectSchema } from "@/types/project-schema";
 import { Maximize2 } from "lucide-react";
 import React, { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -13,17 +13,17 @@ type ProjectId = {
 };
 
 const ProjectsUpdate = ({ projectId }: ProjectId) => {
-  const [project, setProject] = useRecoilState<ProjectData>(projectDataState);
+  const [project, setProject] = useRecoilState<projectSchema>(projectDataState);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
-  const setProjects = useSetRecoilState<ProjectData[]>(projectsListState);
+  const setProjects = useSetRecoilState<projectSchema[]>(projectsListState);
 
   const updateProject = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       await projectService.update(projectId, project);
-      setProjects((prev: ProjectData[]) => {
-        return prev.map((projectValue: ProjectData) => {
+      setProjects((prev: projectSchema[]) => {
+        return prev.map((projectValue: projectSchema) => {
           if (project.id === projectValue.id) {
             return {
               ...projectValue,
@@ -43,7 +43,7 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
   const getSingleProject = async () => {
     const data = await projectService.getById(projectId);
     if (data) {
-      const currentProject: ProjectData = {
+      const currentProject: projectSchema = {
         ...data,
         title: data.title,
         id: projectId,
@@ -71,11 +71,16 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
         }}
       >
         <SheetTrigger asChild>
-          <Button variant="ghost" onClick={() => getSingleProject()}>
-            <Maximize2 className="h-4 w-4" />
+          <Button
+            variant="secondary"
+            className="w-full"
+            onClick={() => getSingleProject()}
+          >
+            Expand / Edit
+            <Maximize2 className="ml-2 h-4 w-4" />
           </Button>
         </SheetTrigger>
-        <SheetContent className="flex h-screen w-full flex-col">
+        <SheetContent className="flex w-full flex-col">
           <div className="border-b pb-4">
             <Button
               variant="secondary"

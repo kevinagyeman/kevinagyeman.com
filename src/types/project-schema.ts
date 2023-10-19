@@ -1,4 +1,4 @@
-export type ProjectData = {
+export type projectSchema = {
   id?: string;
   title: string;
   shortDescription?: string;

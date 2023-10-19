@@ -1,4 +1,4 @@
-import { ProjectData } from "@/types/project-schema";
+import { projectSchema } from "@/types/project-schema";
 import React from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -6,9 +6,9 @@ import { Switch } from "../ui/switch";
 import { Textarea } from "../ui/textarea";
 
 type ProjectFormData = {
-  project: ProjectData;
+  project: projectSchema;
   isDisabled: boolean;
-  projectSetter: React.Dispatch<React.SetStateAction<ProjectData>>;
+  projectSetter: React.Dispatch<React.SetStateAction<projectSchema>>;
   submitFunction(e: React.FormEvent<HTMLFormElement>): Promise<void>;
 };
 

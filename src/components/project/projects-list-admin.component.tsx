@@ -1,11 +1,11 @@
 import { projectsListState } from "@/store/projects-store";
 import { orderBySchema, whereSchema } from "@/types/query-schema";
-import { ArrowDownUp, FilterX, Search } from "lucide-react";
+import { ArrowDownUp, FilterX, Search, Check } from "lucide-react";
 import moment from "moment";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { projectService } from "../../services/project.service";
-import { ProjectData } from "../../types/project-schema";
+import { projectSchema } from "../../types/project-schema";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import {
@@ -21,10 +21,11 @@ import { Separator } from "../ui/separator";
 import ProjectsAdd from "./projects-add.component";
 import DeleteModal from "./projects-delete.component";
 import ProjectsUpdate from "./projects-update.component";
+import { splitSkills } from "@/utils/utils";
 
 const ProjectsListAdmin = () => {
   const [projects, setProjects] =
-    useRecoilState<ProjectData[]>(projectsListState);
+    useRecoilState<projectSchema[]>(projectsListState);
 
   const getProjects = async (
     orderByValue: orderBySchema,
@@ -216,35 +217,41 @@ const ProjectsListAdmin = () => {
       </div>
       <Divider title={"Projects"} />
 
-      {projects.map((project: ProjectData, index: number) => (
+      {projects.map((project: projectSchema, index: number) => (
         <div className="mb-4" key={index}>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          <div>
+            {project.isPublished ? (
+              <Badge variant="secondary">Pubblicato</Badge>
+            ) : (
+              <Badge variant="outline">Bozza</Badge>
+            )}
+          </div>
+          <h4 className="text-l font-semibold tracking-tight">
             {project.title}
           </h4>
           <p className="mt-2 text-sm text-muted-foreground">
             {project.shortDescription || "-"}
           </p>
-          <p className="mt-2 text-sm">{project.skills || "-"}</p>
-          <div className="mb-3 mt-2 flex h-5 items-center space-x-4 text-sm">
-            <div>
-              Updated At: {moment(project.updatedAt).format("DD/MM/YYYY H:mm")}
-            </div>
-            <Separator orientation="vertical" />
-            <div>
-              Updated At: {moment(project.createdAt).format("DD/MM/YYYY H:mm")}
-            </div>
+          <div className="flex flex-wrap gap-x-3 gap-y-0">
+            {splitSkills(`${project.skills}`).map(
+              (skill: string, index: number) => (
+                <small key={index} className="flex items-center gap-1">
+                  <Check className="h-3 w-3" />
+                  {skill}
+                </small>
+              ),
+            )}
           </div>
-          {project.id && <ProjectsUpdate projectId={project.id} />}
-          {project.id && <DeleteModal projectId={project.id} />}
-          {project.isPublished ? (
-            <Badge variant="secondary" className="ml-2">
-              Pubblicato
-            </Badge>
-          ) : (
-            <Badge variant="outline" className="ml-2">
-              Bozza
-            </Badge>
-          )}
+          <p className="text-xs text-muted-foreground">
+            Updated At: {moment(project.updatedAt).format("DD/MM/YYYY H:mm")}
+            <br />
+            Updated At: {moment(project.createdAt).format("DD/MM/YYYY H:mm")}
+          </p>
+          <div className="flex gap-x-3">
+            {project.id && <ProjectsUpdate projectId={project.id} />}
+            {project.id && <DeleteModal projectId={project.id} />}
+          </div>
+
           <hr className="my-3" />
         </div>
       ))}

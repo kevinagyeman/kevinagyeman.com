@@ -1,5 +1,5 @@
 import { InformationData } from "@/types/information-schema";
-import { splitByLanguage } from "@/utils/utils";
+import { splitByLanguage, splitSkills } from "@/utils/utils";
 import { Send } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import InformationInfo from "./information/information-info.component";
@@ -26,14 +26,11 @@ const Hero = ({ information }: InformationProps) => {
           {splitByLanguage(`${information?.summary}`)}
         </p>
         <div className="mt-2">
-          {information?.skills
-            ?.split(",")
-            .slice(0, 5)
-            .map((skill, index) => (
-              <Badge variant="secondary" className="mr-2" key={index}>
-                {skill}
-              </Badge>
-            ))}
+          {splitSkills(`${information?.skills}`, 5).map((skill, index) => (
+            <Badge variant="secondary" className="mr-2" key={index}>
+              {skill}
+            </Badge>
+          ))}
         </div>
         <div className="mt-6">
           <Button className="mr-2" variant={"secondary"} asChild>

@@ -2,16 +2,16 @@ import { projectsListState } from "@/store/projects-store";
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { projectService } from "../../services/project.service";
-import { ProjectData } from "../../types/project-schema";
+import { projectSchema } from "../../types/project-schema";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import ProjectForm from "./project-form.component";
 
 export default function ProjectsAdd() {
-  const [project, setProject] = useState<ProjectData>({
+  const [project, setProject] = useState<projectSchema>({
     title: "",
   });
-  const setProjects = useSetRecoilState<ProjectData[]>(projectsListState);
+  const setProjects = useSetRecoilState<projectSchema[]>(projectsListState);
   const [open, setOpen] = useState<boolean>(false);
 
   const addProject = async (e: React.FormEvent<HTMLFormElement>) => {

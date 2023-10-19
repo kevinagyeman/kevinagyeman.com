@@ -1,5 +1,5 @@
 import { projectsListState } from "@/store/projects-store";
-import { ProjectData } from "@/types/project-schema";
+import { projectSchema } from "@/types/project-schema";
 import { Trash } from "lucide-react";
 import { ReactElement } from "react";
 import { useSetRecoilState } from "recoil";
@@ -22,13 +22,15 @@ type ProjectId = {
 };
 
 const DeleteModal = ({ projectId }: ProjectId): ReactElement => {
-  const setProjects = useSetRecoilState<ProjectData[]>(projectsListState);
+  const setProjects = useSetRecoilState<projectSchema[]>(projectsListState);
 
   const deleteProject = async () => {
     try {
       await projectService.delete(projectId);
-      setProjects((prev: ProjectData[]) => {
-        return prev.filter((project: ProjectData) => project.id !== projectId);
+      setProjects((prev: projectSchema[]) => {
+        return prev.filter(
+          (project: projectSchema) => project.id !== projectId,
+        );
       });
     } catch (e) {
       console.log(e);
@@ -39,7 +41,7 @@ const DeleteModal = ({ projectId }: ProjectId): ReactElement => {
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="ghost" size="icon">
+          <Button variant="outline" size="icon">
             <Trash className="h-4 w-4" />
           </Button>
         </AlertDialogTrigger>
@@ -48,13 +50,13 @@ const DeleteModal = ({ projectId }: ProjectId): ReactElement => {
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              project and remove your data from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={deleteProject}>
-              Continue
+              Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
