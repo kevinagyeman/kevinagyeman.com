@@ -7,6 +7,11 @@ import { AuthContext } from "./context/auth-context";
 import Index from "./pages";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
+import Project from "./pages/project";
+import Information from "./pages/information";
+import ProjectAdd from "./pages/project-add";
+import ProjectEdit from "./pages/project-edit";
+import InformationEdit from "./pages/information-edit";
 
 const App = () => {
   const admin = useContext(AuthContext);
@@ -14,16 +19,34 @@ const App = () => {
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Navbar />
+
         <div className="container max-w-[500px]">
-          <Navbar />
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route index element={<Index />} />
             {admin && <Route path="/dashboard" element={<Dashboard />} />}
+            {admin && (
+              <Route path="/dashboard/project-add" element={<ProjectAdd />} />
+            )}
+            {admin && (
+              <Route
+                path="/dashboard/project-edit/:id"
+                element={<ProjectEdit />}
+              />
+            )}
+            {admin && (
+              <Route
+                path="/dashboard/information-edit"
+                element={<InformationEdit />}
+              />
+            )}
             {!admin && <Route path="/login" element={<Login />} />}
+            <Route path="/project/:id" element={<Project />} />
+            <Route path="/information" element={<Information />} />
             <Route path="*" element={"Pagina non trovata"} />
           </Routes>
-          <Footer />
         </div>
+        <Footer />
       </ThemeProvider>
     </>
   );

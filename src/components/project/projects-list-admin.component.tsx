@@ -9,6 +9,7 @@ import { projectService } from "../../services/project.service";
 import { projectSchema } from "../../types/project-schema";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import Divider from "../ui/divider";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,9 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import ProjectsAdd from "./projects-add.component";
 import DeleteModal from "./projects-delete.component";
-import ProjectsUpdate from "./projects-update.component";
 
 const ProjectsListAdmin = () => {
   const [projects, setProjects] =
@@ -49,7 +48,9 @@ const ProjectsListAdmin = () => {
 
   return (
     <>
-      <ProjectsAdd />
+      <Button variant="secondary" className="w-full" size={"lg"} asChild>
+        <a href={`/dashboard/project-add`}>Add New Project</a>
+      </Button>
       <Divider title={"Filters"} />
       <div className="flex flex-wrap justify-center gap-2">
         <DropdownMenu>
@@ -217,22 +218,23 @@ const ProjectsListAdmin = () => {
       <Divider title={"Projects"} />
 
       {projects.map((project: projectSchema, index: number) => (
-        <div className="mb-4" key={index}>
+        <div
+          className="mb-4 flex flex-col space-y-2 rounded-lg border p-6"
+          key={index}
+        >
           <div>
             {project.isPublished ? (
-              <Badge variant="secondary">Pubblicato</Badge>
+              <Badge variant="secondary">Published</Badge>
             ) : (
-              <Badge variant="outline">Bozza</Badge>
+              <Badge variant="outline">Draft</Badge>
             )}
           </div>
-          <h4 className="text-l font-semibold tracking-tight">
-            {project.title}
-          </h4>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="text-l font-semibold">{project.title}</p>
+          <p className="text-sm text-muted-foreground">
             {project.shortDescription || "-"}
           </p>
           <div className="flex flex-wrap gap-x-3 gap-y-0">
-            {splitSkills(`${project.skills}`).map(
+            {splitSkills(`${project.skills}`, 3).map(
               (skill: string, index: number) => (
                 <small key={index} className="flex items-center gap-1">
                   <Check className="h-3 w-3" />
@@ -244,14 +246,14 @@ const ProjectsListAdmin = () => {
           <p className="text-xs text-muted-foreground">
             Updated At: {moment(project.updatedAt).format("DD/MM/YYYY H:mm")}
             <br />
-            Updated At: {moment(project.createdAt).format("DD/MM/YYYY H:mm")}
+            Created At: {moment(project.createdAt).format("DD/MM/YYYY H:mm")}
           </p>
-          <div className="flex gap-x-3">
-            {project.id && <ProjectsUpdate projectId={project.id} />}
+          <div className="flex gap-x-3 pt-3">
+            <Button variant={"secondary"} className="w-full" asChild>
+              <a href={`/dashboard/project-edit/${project.id}`}>View Project</a>
+            </Button>
             {project.id && <DeleteModal projectId={project.id} />}
           </div>
-
-          <hr className="my-3" />
         </div>
       ))}
     </>
@@ -259,22 +261,3 @@ const ProjectsListAdmin = () => {
 };
 
 export default ProjectsListAdmin;
-
-type DividerProps = {
-  title: string;
-};
-
-const Divider = ({ title }: DividerProps) => {
-  return (
-    <div className="relative py-4">
-      <div className="absolute inset-0 flex items-center">
-        <span className="w-full border-t" />
-      </div>
-      <div className="relative flex justify-center text-xs uppercase">
-        <span className="bg-background px-2 text-muted-foreground">
-          {title}
-        </span>
-      </div>
-    </div>
-  );
-};

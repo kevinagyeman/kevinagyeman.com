@@ -1,6 +1,6 @@
+import { FormFieldSchema } from "@/types/form-field-schema";
 import { InformationData } from "@/types/information-schema";
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
@@ -18,126 +18,121 @@ const InformationForm = ({
   informationSetter,
   submitFunction,
 }: InformationFormData) => {
-  const { t } = useTranslation();
+  const formFields: FormFieldSchema[] = [
+    {
+      label: "Name",
+      type: "text",
+      value: information?.name,
+      disabled: isDisabled,
+      required: false,
+      onChange: (e) => {
+        informationSetter({ ...information, name: e.target.value });
+      },
+    },
+    {
+      label: "Surname",
+      type: "text",
+      value: information?.surname,
+      disabled: isDisabled,
+      required: false,
+      onChange: (e) => {
+        informationSetter({ ...information, surname: e.target.value });
+      },
+    },
+    {
+      label: "Email",
+      type: "text",
+      value: information?.email,
+      disabled: isDisabled,
+      required: false,
+      onChange: (e) => {
+        informationSetter({ ...information, email: e.target.value });
+      },
+    },
+    {
+      label: "Profile Image Link",
+      type: "text",
+      value: information?.profileImageLink,
+      disabled: isDisabled,
+      required: false,
+      onChange: (e) => {
+        informationSetter({ ...information, profileImageLink: e.target.value });
+      },
+    },
+
+    {
+      label: "Role",
+      type: "text",
+      value: information?.role,
+      disabled: isDisabled,
+      required: false,
+      onChange: (e) => {
+        informationSetter({ ...information, role: e.target.value });
+      },
+    },
+    {
+      label: "Skills",
+      type: "textarea",
+      value: information?.skills,
+      disabled: isDisabled,
+      required: false,
+      onChange: (e) => {
+        informationSetter({ ...information, skills: e.target.value });
+      },
+    },
+    {
+      label: "Summary",
+      type: "textarea",
+      value: information?.summary,
+      disabled: isDisabled,
+      required: false,
+      onChange: (e) => {
+        informationSetter({ ...information, summary: e.target.value });
+      },
+    },
+    {
+      label: "Additional Information",
+      type: "textarea",
+      value: information?.additionalInfo,
+      disabled: isDisabled,
+      required: false,
+      onChange: (e) => {
+        informationSetter({ ...information, additionalInfo: e.target.value });
+      },
+    },
+  ];
 
   return (
     <>
       <form onSubmit={(e) => submitFunction(e)} id="form">
-        <div className="mb-2">
-          <Label>{t("informationForm.name")}</Label>
-          <Input
-            required={true}
-            type="text"
-            placeholder={t("informationForm.name")}
-            value={information.name || ""}
-            onChange={(e) => {
-              informationSetter({ ...information, name: e.target.value });
-            }}
-            disabled={isDisabled}
-          />
-        </div>
-        <div className="mb-2">
-          <Label>ijreiofjor EMAIL</Label>
-          <Input
-            required={true}
-            type="text"
-            placeholder={"ewijieuwiu"}
-            value={information.email || ""}
-            onChange={(e) => {
-              informationSetter({ ...information, email: e.target.value });
-            }}
-            disabled={isDisabled}
-          />
-        </div>
-        <div className="mb-2">
-          <Label>{t("informationForm.surname")}</Label>
-          <Input
-            type="text"
-            placeholder={t("informationForm.surname")}
-            value={information.surname || ""}
-            onChange={(e) => {
-              informationSetter({ ...information, surname: e.target.value });
-            }}
-            disabled={isDisabled}
-          />
-        </div>
-        <div className="mb-2">
-          <Label>{t("informationForm.role")}</Label>
-          <Input
-            type="text"
-            placeholder={t("informationForm.role")}
-            value={information.role || ""}
-            onChange={(e) => {
-              informationSetter({ ...information, role: e.target.value });
-            }}
-            disabled={isDisabled}
-          />
-        </div>
-        <div className="mb-2">
-          <Label>{t("informationForm.summary")}</Label>
-          <Textarea
-            placeholder={t("informationForm.summary")}
-            value={information.summary || undefined}
-            onChange={(e) => {
-              informationSetter({
-                ...information,
-                summary: e.target.value,
-              });
-            }}
-            disabled={isDisabled}
-            maxLength={150}
-            rows={4}
-          ></Textarea>
-        </div>
-        <div className="mb-2">
-          <Label>{t("informationForm.profileImageLink")}</Label>
-          <Input
-            type="text"
-            placeholder={t("informationForm.profileImageLink")}
-            value={information.profileImageLink || ""}
-            onChange={(e) => {
-              informationSetter({
-                ...information,
-                profileImageLink: e.target.value,
-              });
-            }}
-            disabled={isDisabled}
-          />
-        </div>
-        <div className="mb-2">
-          <Label>{t("informationForm.skills")}</Label>
-          <Textarea
-            placeholder={t("informationForm.skills")}
-            value={information.skills || undefined}
-            onChange={(e) => {
-              informationSetter({
-                ...information,
-                skills: e.target.value,
-              });
-            }}
-            disabled={isDisabled}
-            maxLength={150}
-            rows={4}
-          ></Textarea>
-          <small className="text-muted-foreground">
-            Separa con una virgola per ogni skill
-          </small>
-        </div>
-        <div className="mb-2">
-          <Label>{t("informationForm.additionalInfo")}</Label>
-          <Textarea
-            placeholder={t("informationForm.additionalInfo")}
-            value={information.additionalInfo || undefined}
-            onChange={(e) => {
-              informationSetter({
-                ...information,
-                additionalInfo: e.target.value,
-              });
-            }}
-            disabled={isDisabled}
-            rows={4}
-          ></Textarea>
-        </div>
+        {formFields.map((field: FormFieldSchema, index: number) => (
+          <div className="my-5" key={index}>
+            {field.type === "text" ? (
+              <>
+                <Label>{field.label}</Label>
+                <Input
+                  required={field.required}
+                  type={field.type}
+                  placeholder={field.label}
+                  value={field.value}
+                  onChange={field.onChange}
+                  disabled={field.disabled}
+                />
+              </>
+            ) : (
+              <>
+                <Label>{field.label}</Label>
+                <Textarea
+                  placeholder={field.label}
+                  value={field.value}
+                  onChange={field.onChange}
+                  disabled={field.disabled}
+                  rows={14}
+                ></Textarea>
+              </>
+            )}
+          </div>
+        ))}
       </form>
     </>
   );

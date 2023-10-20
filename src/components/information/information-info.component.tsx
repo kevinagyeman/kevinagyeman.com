@@ -1,23 +1,16 @@
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { informationService } from "@/services/information.service";
 import { informationDataState } from "@/store/information-store";
 import { InformationData } from "@/types/information-schema";
-import { ChevronRight } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { splitByLanguage, splitSkills } from "@/utils/utils";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
-import { splitByLanguage, splitSkills } from "@/utils/utils";
 
 const InformationInfo = () => {
   const [information, setInformation] =
     useRecoilState<InformationData>(informationDataState);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const getInformation = async () => {
     try {
@@ -34,58 +27,50 @@ const InformationInfo = () => {
     }
   };
 
+  useEffect(() => {
+    getInformation();
+  }, []);
+
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline" onClick={() => getInformation()}>
-          {t("hero.readMoreButton")}
-          <ChevronRight className="ml-2 h-5 w-5" />
-        </Button>
-      </SheetTrigger>
-      <SheetContent className="flex w-full flex-col">
-        <p className="text-sm text-muted-foreground">
-          {information.name} {information.surname}
-        </p>
-        <div className="mt-5 max-h-max  flex-grow space-y-5 overflow-y-auto">
+    <>
+      <div className="flex flex-col space-y-6">
+        <div>
           <img
             src={information?.profileImageLink}
-            className="mb-5 h-32 rounded-full"
+            className="h-44 rounded-full"
           />
-          <div className="pb-3 text-lg font-semibold">
-            {information.name} {information.surname}
-          </div>
+        </div>
+        <h2 className="text-3xl font-semibold">
+          {information.name} {information.surname}
+        </h2>
+        <div>
           <code className="relative rounded bg-muted px-[0.4rem] py-[0.2rem] font-mono text-sm">
             {information?.role}
           </code>
-          <p className="text-sm text-muted-foreground">
-            {splitByLanguage(`${information?.summary}`)}
-          </p>
-          <p className="text-sm">{information.additionalInfo}</p>
-          <div className="mt-3 pb-8">
-            {splitSkills(`${information?.skills}`).map(
-              (skill: string, index: number) => (
-                <Badge variant="secondary" className="mr-2 mt-2" key={index}>
-                  {skill}
-                </Badge>
-              ),
-            )}
-          </div>
-          <a href="#" className="">
-            {information.email}
-          </a>
+        </div>
+        <p className="text-xl text-muted-foreground">
+          {splitByLanguage(`${information?.summary}`)}
+        </p>
+        <p className="text-xl">{information.additionalInfo}</p>
+        <div>
+          {splitSkills(`${information?.skills}`).map(
+            (skill: string, index: number) => (
+              <Badge variant="secondary" className="mr-2 mt-2" key={index}>
+                {skill}
+              </Badge>
+            ),
+          )}
         </div>
         <div className="flex space-x-2">
-          <Button variant={"secondary"} className="w-3/4">
+          <Button variant={"secondary"} className="w-3/4" size={"lg"}>
             Contatti
           </Button>
-          <SheetClose asChild>
-            <Button variant={"outline"} className="w-1/4">
-              Chiudi
-            </Button>
-          </SheetClose>
+          <Button variant={"outline"} className="w-1/4" size={"lg"} asChild>
+            <a href="/">Indietro</a>
+          </Button>
         </div>
-      </SheetContent>
-    </Sheet>
+      </div>
+    </>
   );
 };
 

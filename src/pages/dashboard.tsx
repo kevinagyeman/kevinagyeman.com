@@ -10,13 +10,13 @@ const Dashboard = () => {
           Dashboard
         </h1>
         <p className="mb-5 mt-3 text-muted-foreground">
-          Enter your email address.
+          Edit data about website
         </p>
       </div>
       <Tabs defaultValue="projects">
         <TabsList className="mb-10 grid grid-cols-2">
-          <TabsTrigger value="projects">Progetti</TabsTrigger>
-          <TabsTrigger value="information">Informazioni</TabsTrigger>
+          <TabsTrigger value="projects">Projects</TabsTrigger>
+          <TabsTrigger value="information">Information</TabsTrigger>
         </TabsList>
         <TabsContent value="projects">
           <ProjectsListAdmin />

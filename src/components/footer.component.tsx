@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <>
       <footer>
-        <div className="mb-5 flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+        <div className="container mt-5 flex h-24 items-center justify-between gap-4">
           <div className="flex gap-2">
             <Button variant="ghost" size="icon" className="rounded-full">
               <a href="https://github.com/kevinagyeman" target="_blank">

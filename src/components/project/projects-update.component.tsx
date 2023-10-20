@@ -1,21 +1,19 @@
 import { projectService } from "@/services/project.service";
 import { projectDataState, projectsListState } from "@/store/projects-store";
 import { projectSchema } from "@/types/project-schema";
-import { Maximize2 } from "lucide-react";
-import React, { useState } from "react";
+import { ArrowLeft } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "../ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import ProjectForm from "./project-form.component";
 
 type ProjectId = {
-  projectId: string;
+  projectId: any;
 };
 
 const ProjectsUpdate = ({ projectId }: ProjectId) => {
   const [project, setProject] = useRecoilState<projectSchema>(projectDataState);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
-  const [open, setOpen] = useState<boolean>(false);
   const setProjects = useSetRecoilState<projectSchema[]>(projectsListState);
 
   const updateProject = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +31,6 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
           return projectValue;
         });
       });
-      setOpen(false);
       setIsInputDisabled(true);
     } catch (e) {
       console.log(e);
@@ -49,7 +46,6 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
         id: projectId,
       };
       setProject(currentProject);
-      setOpen(true);
     }
   };
 
@@ -62,56 +58,49 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
     }
   };
 
+  useEffect(() => {
+    getSingleProject();
+  }, []);
+
   return (
     <>
-      <Sheet
-        open={open}
-        onOpenChange={() => {
-          setOpen(false), setIsInputDisabled(true);
-        }}
+      <div className="my-8 flex flex-row gap-x-3">
+        <Button
+          variant="secondary"
+          onClick={() => {
+            editProjectButton();
+          }}
+        >
+          {isInputDisabled ? "Edit" : "Undo"}
+        </Button>
+        <Button type="submit" disabled={isInputDisabled} form="form">
+          Update
+        </Button>
+        <Button
+          variant="outline"
+          size={"icon"}
+          className="ml-auto w-[50px]"
+          asChild
+        >
+          <a href="/dashboard">
+            <ArrowLeft className="h-4 w-4" />
+          </a>
+        </Button>
+      </div>
+      <ProjectForm
+        isDisabled={isInputDisabled}
+        projectSetter={setProject}
+        submitFunction={updateProject}
+        project={project}
+      />
+      <Button
+        type="submit"
+        className="mt-3 w-full"
+        disabled={isInputDisabled}
+        form="form"
       >
-        <SheetTrigger asChild>
-          <Button
-            variant="secondary"
-            className="w-full"
-            onClick={() => getSingleProject()}
-          >
-            Expand / Edit
-            <Maximize2 className="ml-2 h-4 w-4" />
-          </Button>
-        </SheetTrigger>
-        <SheetContent className="flex w-full flex-col">
-          <div className="border-b pb-4">
-            <Button
-              variant="secondary"
-              onClick={() => {
-                editProjectButton();
-              }}
-              className="w-40"
-            >
-              {isInputDisabled ? "Modifica progetto" : "Annulla modifiche"}
-            </Button>
-          </div>
-          <div className="mt-5 max-h-max  flex-grow space-y-5 overflow-y-auto px-1">
-            <ProjectForm
-              isDisabled={isInputDisabled}
-              projectSetter={setProject}
-              submitFunction={updateProject}
-              project={project}
-            />
-          </div>
-          <div className="flex space-x-2 border-t">
-            <Button
-              type="submit"
-              className="mt-3 w-full"
-              disabled={isInputDisabled}
-              form="form"
-            >
-              Update
-            </Button>
-          </div>
-        </SheetContent>
-      </Sheet>
+        Update
+      </Button>
     </>
   );
 };

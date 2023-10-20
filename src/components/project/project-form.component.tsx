@@ -4,6 +4,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { Textarea } from "../ui/textarea";
+import { FormFieldSchema } from "@/types/form-field-schema";
 
 type ProjectFormData = {
   project: projectSchema;
@@ -18,20 +19,7 @@ export default function ProjectForm({
   projectSetter,
   submitFunction,
 }: ProjectFormData) {
-  type FieldData = {
-    label: string;
-    type?: React.HTMLInputTypeAttribute;
-    value?: string | number | readonly string[];
-    disabled?: boolean;
-    required?: boolean;
-    onChange(
-      e:
-        | React.ChangeEvent<HTMLInputElement>
-        | React.ChangeEvent<HTMLTextAreaElement>,
-    ): void;
-  };
-
-  const formFields: FieldData[] = [
+  const formFields: FormFieldSchema[] = [
     {
       label: "Title",
       type: "text",
@@ -107,11 +95,11 @@ export default function ProjectForm({
             disabled={isDisabled}
           />
           <Label htmlFor="status-mode">
-            {project?.isPublished ? "Pubblicato" : "Bozza"}
+            {project?.isPublished ? "Published" : "Draft"}
           </Label>
         </div>
 
-        {formFields.map((field: FieldData, index: number) => (
+        {formFields.map((field: FormFieldSchema, index: number) => (
           <div className="my-5" key={index}>
             {field.type === "text" ? (
               <>

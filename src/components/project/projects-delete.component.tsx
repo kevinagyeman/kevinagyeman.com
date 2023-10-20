@@ -41,7 +41,7 @@ const DeleteModal = ({ projectId }: ProjectId): ReactElement => {
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" className="w-[50px]">
             <Trash className="h-4 w-4" />
           </Button>
         </AlertDialogTrigger>

@@ -65,7 +65,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="sticky top-0 z-50 mb-5 flex items-center justify-between border-b bg-white/80 py-5 backdrop-blur-sm dark:bg-zinc-950/80 lg:max-w-[500px]">
+      <div className="container sticky top-0 z-50 mb-5 flex items-center justify-between border-b bg-white/80 py-5 backdrop-blur-sm dark:bg-zinc-950/80">
         <a href="/">
           <img className="h-8 w-auto" src={logoSrc} alt="Logo" />
         </a>
