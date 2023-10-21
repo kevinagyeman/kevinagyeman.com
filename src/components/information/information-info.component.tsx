@@ -3,6 +3,7 @@ import { informationService } from "@/services/information.service";
 import { informationDataState } from "@/store/information-store";
 import { InformationData } from "@/types/information-schema";
 import { splitByLanguage, splitSkills } from "@/utils/utils";
+import { ArrowDownToLine, ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
@@ -62,11 +63,15 @@ const InformationInfo = () => {
           )}
         </div>
         <div className="flex space-x-2">
-          <Button variant={"secondary"} className="w-3/4" size={"lg"}>
-            Contatti
+          <Button variant={"secondary"} className="w-full" size={"lg"} asChild>
+            <a href="/">
+              Scarica CV <ArrowDownToLine className="ml-2 h-5 w-5" />
+            </a>
           </Button>
-          <Button variant={"outline"} className="w-1/4" size={"lg"} asChild>
-            <a href="/">Indietro</a>
+          <Button variant={"outline"} size={"lg"} asChild>
+            <a href="/">
+              <ArrowLeft className="h-5 w-5" />
+            </a>
           </Button>
         </div>
       </div>

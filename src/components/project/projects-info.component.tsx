@@ -4,6 +4,7 @@ import { projectSchema } from "@/types/project-schema";
 import { splitSkills } from "@/utils/utils";
 import { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
+import { ArrowLeft } from "lucide-react";
 
 type ProjectInfoProps = {
   projectId: any;
@@ -58,14 +59,21 @@ export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
             )}
             <div className="flex space-x-2">
               {project.link && (
-                <Button variant={"secondary"} className="w-3/4" asChild>
+                <Button
+                  variant={"secondary"}
+                  className="w-full"
+                  size={"lg"}
+                  asChild
+                >
                   <a href={project.link} target="_blank">
                     Scopri di più
                   </a>
                 </Button>
               )}
-              <Button variant={"outline"} className="w-1/4" asChild>
-                <a href="/">Indietro</a>
+              <Button variant={"outline"} size={"lg"} asChild>
+                <a href="/">
+                  <ArrowLeft className="h-5 w-5" />
+                </a>
               </Button>
             </div>
           </div>
