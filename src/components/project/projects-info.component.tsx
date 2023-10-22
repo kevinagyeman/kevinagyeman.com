@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { projectDataState } from "@/store/projects-store";
 import { ProjectSchema } from "@/types/project-schema";
 import { getSingleProject, splitByLanguage, splitSkills } from "@/utils/utils";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
@@ -22,8 +22,8 @@ export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
 
   return (
     <>
-      {project.title === "" ? (
-        "dd"
+      {project.id === "" ? (
+        "progetto non trovato"
       ) : (
         <>
           <div className="flex flex-col space-y-8">
@@ -44,7 +44,7 @@ export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
               {project.link && (
                 <Button variant={"secondary"} className="w-full" size={"lg"} asChild>
                   <a href={project.link} target="_blank">
-                    {t("hero.readMoreButton")}
+                    {t("hero.readMoreButton")} <ArrowUpRight className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
               )}

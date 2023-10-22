@@ -43,7 +43,7 @@ const InformationInfo = () => {
         <div className="flex space-x-2">
           {information.additionalLink && (
             <Button variant={"secondary"} className="w-full" size={"lg"} asChild>
-              <a href={information.additionalLink}>
+              <a href={information.additionalLink} target="_blank">
                 {t("readCv")} <ArrowUpRight className="ml-2 h-5 w-5" />
               </a>
             </Button>
