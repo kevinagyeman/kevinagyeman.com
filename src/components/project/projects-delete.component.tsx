@@ -1,7 +1,6 @@
 import { projectsListState } from "@/store/projects-store";
-import { projectSchema } from "@/types/project-schema";
+import { ProjectSchema } from "@/types/project-schema";
 import { Trash } from "lucide-react";
-import { ReactElement } from "react";
 import { useSetRecoilState } from "recoil";
 import { projectService } from "../../services/project.service";
 import {
@@ -21,16 +20,14 @@ type ProjectId = {
   projectId: string;
 };
 
-const DeleteModal = ({ projectId }: ProjectId): ReactElement => {
-  const setProjects = useSetRecoilState<projectSchema[]>(projectsListState);
+export default function DeleteModal({ projectId }: ProjectId) {
+  const setProjects = useSetRecoilState<ProjectSchema[]>(projectsListState);
 
   const deleteProject = async () => {
     try {
       await projectService.delete(projectId);
-      setProjects((prev: projectSchema[]) => {
-        return prev.filter(
-          (project: projectSchema) => project.id !== projectId,
-        );
+      setProjects((prev: ProjectSchema[]) => {
+        return prev.filter((project: ProjectSchema) => project.id !== projectId);
       });
     } catch (e) {
       console.log(e);
@@ -49,20 +46,16 @@ const DeleteModal = ({ projectId }: ProjectId): ReactElement => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              project and remove your data from our servers.
+              This action cannot be undone. This will permanently delete your project and remove your data from our
+              servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={deleteProject}>
-              Delete
-            </AlertDialogAction>
+            <AlertDialogAction onClick={deleteProject}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>
   );
-};
-
-export default DeleteModal;
+}

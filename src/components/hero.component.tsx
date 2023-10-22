@@ -4,13 +4,12 @@ import { ChevronRight, Send } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { informationDataState } from "@/store/information-store";
+import { useRecoilValue } from "recoil";
 
-type InformationProps = {
-  information?: InformationData;
-};
-
-const Hero = ({ information }: InformationProps) => {
+const Hero = () => {
   const { t } = useTranslation();
+  const information = useRecoilValue<InformationData>(informationDataState);
 
   return (
     <>

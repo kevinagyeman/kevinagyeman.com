@@ -1,27 +1,28 @@
 import { projectService } from "@/services/project.service";
 import { projectDataState, projectsListState } from "@/store/projects-store";
-import { projectSchema } from "@/types/project-schema";
+import { ProjectSchema } from "@/types/project-schema";
 import { ArrowLeft } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "../ui/button";
 import ProjectForm from "./project-form.component";
+import { getSingleProject } from "@/utils/utils";
 
 type ProjectId = {
   projectId: any;
 };
 
 const ProjectsUpdate = ({ projectId }: ProjectId) => {
-  const [project, setProject] = useRecoilState<projectSchema>(projectDataState);
+  const [project, setProject] = useRecoilState<ProjectSchema>(projectDataState);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
-  const setProjects = useSetRecoilState<projectSchema[]>(projectsListState);
+  const setProjects = useSetRecoilState<ProjectSchema[]>(projectsListState);
 
   const updateProject = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       await projectService.update(projectId, project);
-      setProjects((prev: projectSchema[]) => {
-        return prev.map((projectValue: projectSchema) => {
+      setProjects((prev: ProjectSchema[]) => {
+        return prev.map((projectValue: ProjectSchema) => {
           if (project.id === projectValue.id) {
             return {
               ...projectValue,
@@ -37,29 +38,17 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
     }
   };
 
-  const getSingleProject = async () => {
-    const data = await projectService.getById(projectId);
-    if (data) {
-      const currentProject: projectSchema = {
-        ...data,
-        title: data.title,
-        id: projectId,
-      };
-      setProject(currentProject);
-    }
-  };
-
   const editProjectButton = () => {
     if (isInputDisabled) {
       setIsInputDisabled(false);
     } else {
-      getSingleProject();
+      getSingleProject(projectId, setProject);
       setIsInputDisabled(true);
     }
   };
 
   useEffect(() => {
-    getSingleProject();
+    getSingleProject(projectId, setProject);
   }, []);
 
   return (
@@ -76,12 +65,7 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
         <Button type="submit" disabled={isInputDisabled} form="form">
           Update
         </Button>
-        <Button
-          variant="outline"
-          size={"icon"}
-          className="ml-auto w-[50px]"
-          asChild
-        >
+        <Button variant="outline" size={"icon"} className="ml-auto w-[50px]" asChild>
           <a href="/dashboard">
             <ArrowLeft className="h-4 w-4" />
           </a>
@@ -93,12 +77,7 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
         submitFunction={updateProject}
         project={project}
       />
-      <Button
-        type="submit"
-        className="mt-3 w-full"
-        disabled={isInputDisabled}
-        form="form"
-      >
+      <Button type="submit" className="mt-3 w-full" disabled={isInputDisabled} form="form">
         Update
       </Button>
     </>

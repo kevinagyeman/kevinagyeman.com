@@ -1,4 +1,4 @@
-import { projectSchema } from "@/types/project-schema";
+import { ProjectSchema } from "@/types/project-schema";
 import React from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -7,23 +7,18 @@ import { Textarea } from "../ui/textarea";
 import { FormFieldSchema } from "@/types/form-field-schema";
 
 type ProjectFormData = {
-  project: projectSchema;
+  project: ProjectSchema;
   isDisabled: boolean;
-  projectSetter: React.Dispatch<React.SetStateAction<projectSchema>>;
+  projectSetter: React.Dispatch<React.SetStateAction<ProjectSchema>>;
   submitFunction(e: React.FormEvent<HTMLFormElement>): Promise<void>;
 };
 
-export default function ProjectForm({
-  project,
-  isDisabled,
-  projectSetter,
-  submitFunction,
-}: ProjectFormData) {
+export default function ProjectForm({ project, isDisabled, projectSetter, submitFunction }: ProjectFormData) {
   const formFields: FormFieldSchema[] = [
     {
       label: "Title",
       type: "text",
-      value: project?.title || "",
+      value: project.title || "",
       disabled: isDisabled,
       required: true,
       onChange: (e) => {
@@ -33,7 +28,7 @@ export default function ProjectForm({
     {
       label: "Link",
       type: "text",
-      value: project?.link || "",
+      value: project.link || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -43,7 +38,7 @@ export default function ProjectForm({
     {
       label: "Image link",
       type: "text",
-      value: project?.imageLink || "",
+      value: project.imageLink || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -53,7 +48,7 @@ export default function ProjectForm({
     {
       label: "Skills",
       type: "textarea",
-      value: project?.skills || "",
+      value: project.skills || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -63,7 +58,7 @@ export default function ProjectForm({
     {
       label: "Description",
       type: "textarea",
-      value: project?.description || "",
+      value: project.description || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -73,7 +68,7 @@ export default function ProjectForm({
     {
       label: "Short Description",
       type: "textarea",
-      value: project?.shortDescription || "",
+      value: project.shortDescription || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -94,9 +89,7 @@ export default function ProjectForm({
             checked={project?.isPublished}
             disabled={isDisabled}
           />
-          <Label htmlFor="status-mode">
-            {project?.isPublished ? "Published" : "Draft"}
-          </Label>
+          <Label htmlFor="status-mode">{project?.isPublished ? "Published" : "Draft"}</Label>
         </div>
 
         {formFields.map((field: FormFieldSchema, index: number) => (

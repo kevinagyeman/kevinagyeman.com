@@ -2,7 +2,7 @@ import { InformationData } from "@/types/information-schema";
 import { atom } from "recoil";
 
 const informationData: InformationData = {
-  name: "",
+  id: "",
 };
 
 export const initInformationData: InformationData = informationData;

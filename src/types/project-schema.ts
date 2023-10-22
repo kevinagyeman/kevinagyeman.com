@@ -1,6 +1,6 @@
-export type projectSchema = {
-  id?: string;
-  title: string;
+export type ProjectSchema = {
+  id: string;
+  title?: string;
   shortDescription?: string;
   description?: string;
   imageLink?: string;

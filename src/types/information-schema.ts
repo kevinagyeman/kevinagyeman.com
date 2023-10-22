@@ -1,6 +1,6 @@
 export type InformationData = {
-  id?: string;
-  name: string;
+  id: string;
+  name?: string;
   surname?: string;
   role?: string;
   summary?: string;

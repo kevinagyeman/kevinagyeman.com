@@ -2,15 +2,15 @@ import { projectsListState } from "@/store/projects-store";
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { projectService } from "../../services/project.service";
-import { projectSchema } from "../../types/project-schema";
+import { ProjectSchema } from "../../types/project-schema";
 import { Button } from "../ui/button";
 import ProjectForm from "./project-form.component";
 
 export default function ProjectsAdd() {
-  const [project, setProject] = useState<projectSchema>({
+  const [project, setProject] = useState<ProjectSchema>({
     title: "",
   });
-  const setProjects = useSetRecoilState<projectSchema[]>(projectsListState);
+  const setProjects = useSetRecoilState<ProjectSchema[]>(projectsListState);
 
   const addProject = async (e: React.FormEvent<HTMLFormElement>) => {
     try {

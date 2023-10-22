@@ -3,12 +3,12 @@ import { Copy, Send } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-type InformationProps = {
-  information?: InformationData;
-};
+import { useRecoilValue } from "recoil";
+import { informationDataState } from "@/store/information-store";
 
-const Contact = ({ information }: InformationProps) => {
+const Contact = () => {
   const { t } = useTranslation();
+  const information = useRecoilValue<InformationData>(informationDataState);
 
   const copyText = () => {
     navigator.clipboard.writeText(`${information?.email || ""}`);

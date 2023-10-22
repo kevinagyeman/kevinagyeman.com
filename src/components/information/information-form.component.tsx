@@ -12,17 +12,12 @@ type InformationFormData = {
   submitFunction(e: React.FormEvent<HTMLFormElement>): Promise<void>;
 };
 
-const InformationForm = ({
-  information,
-  isDisabled,
-  informationSetter,
-  submitFunction,
-}: InformationFormData) => {
+const InformationForm = ({ information, isDisabled, informationSetter, submitFunction }: InformationFormData) => {
   const formFields: FormFieldSchema[] = [
     {
       label: "Name",
       type: "text",
-      value: information?.name,
+      value: information.name || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -32,7 +27,7 @@ const InformationForm = ({
     {
       label: "Surname",
       type: "text",
-      value: information?.surname,
+      value: information.surname || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -42,7 +37,7 @@ const InformationForm = ({
     {
       label: "Email",
       type: "text",
-      value: information?.email,
+      value: information.email || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -52,7 +47,7 @@ const InformationForm = ({
     {
       label: "Profile Image Link",
       type: "text",
-      value: information?.profileImageLink,
+      value: information.profileImageLink || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -63,7 +58,7 @@ const InformationForm = ({
     {
       label: "Role",
       type: "text",
-      value: information?.role,
+      value: information.role || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -73,7 +68,7 @@ const InformationForm = ({
     {
       label: "Skills",
       type: "textarea",
-      value: information?.skills,
+      value: information.skills || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -83,7 +78,7 @@ const InformationForm = ({
     {
       label: "Summary",
       type: "textarea",
-      value: information?.summary,
+      value: information.summary || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -93,7 +88,7 @@ const InformationForm = ({
     {
       label: "Additional Information",
       type: "textarea",
-      value: information?.additionalInfo,
+      value: information.additionalInfo || "",
       disabled: isDisabled,
       required: false,
       onChange: (e) => {
@@ -124,7 +119,7 @@ const InformationForm = ({
                 <Label>{field.label}</Label>
                 <Textarea
                   placeholder={field.label}
-                  value={field.value}
+                  value={field?.value}
                   onChange={field.onChange}
                   disabled={field.disabled}
                   rows={14}

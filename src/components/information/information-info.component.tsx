@@ -1,45 +1,24 @@
 import { Button } from "@/components/ui/button";
-import { informationService } from "@/services/information.service";
 import { informationDataState } from "@/store/information-store";
 import { InformationData } from "@/types/information-schema";
-import { splitByLanguage, splitSkills } from "@/utils/utils";
-import { ArrowDownToLine, ArrowLeft } from "lucide-react";
+import { getInformation, splitByLanguage, splitSkills } from "@/utils/utils";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
 
 const InformationInfo = () => {
-  const [information, setInformation] =
-    useRecoilState<InformationData>(informationDataState);
-  // const { t } = useTranslation();
-
-  const getInformation = async () => {
-    try {
-      const data = await informationService.getById();
-      if (data) {
-        const currentInformation: InformationData = {
-          ...data,
-          name: data.name,
-        };
-        setInformation(currentInformation);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const [information, setInformation] = useRecoilState<InformationData>(informationDataState);
 
   useEffect(() => {
-    getInformation();
+    getInformation(setInformation);
   }, []);
 
   return (
     <>
       <div className="flex flex-col space-y-6">
         <div>
-          <img
-            src={information?.profileImageLink}
-            className="h-44 rounded-full"
-          />
+          <img src={information?.profileImageLink} className="h-44 rounded-full" />
         </div>
         <h2 className="text-3xl font-semibold">
           {information.name} {information.surname}
@@ -49,23 +28,20 @@ const InformationInfo = () => {
             {information?.role}
           </code>
         </div>
-        <p className="text-xl text-muted-foreground">
-          {splitByLanguage(`${information?.summary}`)}
-        </p>
-        <p className="text-xl">{information.additionalInfo}</p>
+        <p className="text-xl text-muted-foreground">{splitByLanguage(`${information?.summary}`)}</p>
         <div>
-          {splitSkills(`${information?.skills}`).map(
-            (skill: string, index: number) => (
-              <Badge variant="secondary" className="mr-2 mt-2" key={index}>
-                {skill}
-              </Badge>
-            ),
-          )}
+          {splitSkills(`${information?.skills}`).map((skill: string, index: number) => (
+            <Badge variant="secondary" className="mr-2 mt-2" key={index}>
+              {skill}
+            </Badge>
+          ))}
         </div>
+        <p className="text-xl">{information.additionalInfo}</p>
+
         <div className="flex space-x-2">
           <Button variant={"secondary"} className="w-full" size={"lg"} asChild>
             <a href="/">
-              Scarica CV <ArrowDownToLine className="ml-2 h-5 w-5" />
+              Guarda il CV <ArrowUpRight className="ml-2 h-5 w-5" />
             </a>
           </Button>
           <Button variant={"outline"} size={"lg"} asChild>

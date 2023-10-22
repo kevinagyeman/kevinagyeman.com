@@ -20,11 +20,10 @@ export const informationService = {
 
   getById: async () => {
     try {
-      const data = await getDoc(
-        doc(informationCollection, informationDocumentId),
-      );
+      const data = await getDoc(doc(informationCollection, informationDocumentId));
       if (data.exists()) {
-        return data.data();
+        const result = { ...data.data(), id: data.id };
+        return result;
       }
     } catch (error) {
       console.error(error);

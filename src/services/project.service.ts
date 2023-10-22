@@ -1,4 +1,4 @@
-import { orderBySchema, whereSchema } from "@/types/query-schema";
+import { OrderBySchema, WhereSchema } from "@/types/query-schema";
 import {
   DocumentData,
   QuerySnapshot,
@@ -14,35 +14,25 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { projectSchema } from "../types/project-schema";
+import { ProjectSchema } from "../types/project-schema";
 
 const projectsCollection = collection(db, "/projects");
 
 const mappedProjects = (data: QuerySnapshot<DocumentData, DocumentData>) => {
-  const result: projectSchema[] = data.docs.map((doc) => ({
+  const result: ProjectSchema[] = data.docs.map((doc) => ({
     ...doc.data(),
     id: doc.id,
-    title: doc.data().title,
   }));
   return result;
 };
 
 export const projectService = {
-  getAll: async (orderByValue: orderBySchema, whereValue?: whereSchema) => {
+  getAll: async (orderByValue: OrderBySchema, whereValue?: WhereSchema) => {
     try {
-      const orderByQuery = orderBy(
-        orderByValue.fieldPath,
-        orderByValue.directionStr,
-      );
+      const orderByQuery = orderBy(orderByValue.fieldPath, orderByValue.directionStr);
       if (whereValue) {
-        const whereQuery = where(
-          whereValue.fieldPath,
-          whereValue.opStr,
-          whereValue.value,
-        );
-        const data = await getDocs(
-          query(projectsCollection, whereQuery, orderByQuery),
-        );
+        const whereQuery = where(whereValue.fieldPath, whereValue.opStr, whereValue.value);
+        const data = await getDocs(query(projectsCollection, whereQuery, orderByQuery));
         return mappedProjects(data);
       } else {
         const data = await getDocs(query(projectsCollection, orderByQuery));
@@ -53,7 +43,7 @@ export const projectService = {
     }
   },
 
-  create: async (project: projectSchema) => {
+  create: async (project: ProjectSchema) => {
     try {
       await addDoc(projectsCollection, {
         ...project,
@@ -65,7 +55,7 @@ export const projectService = {
     }
   },
 
-  delete: async (id: string | undefined) => {
+  delete: async (id: string) => {
     try {
       const data = doc(projectsCollection, id);
       await deleteDoc(data);
@@ -74,10 +64,7 @@ export const projectService = {
     }
   },
 
-  update: async (
-    projectId: string | undefined,
-    project: projectSchema | undefined,
-  ) => {
+  update: async (projectId: string, project: ProjectSchema) => {
     try {
       const data = doc(projectsCollection, projectId);
       await updateDoc(data, {

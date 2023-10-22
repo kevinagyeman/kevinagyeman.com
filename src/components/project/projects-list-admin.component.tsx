@@ -1,12 +1,11 @@
 import { projectsListState } from "@/store/projects-store";
-import { orderBySchema, whereSchema } from "@/types/query-schema";
-import { splitSkills } from "@/utils/utils";
+import { OrderBySchema } from "@/types/query-schema";
+import { getProjects, splitSkills } from "@/utils/utils";
 import { ArrowDownUp, Check, FilterX, Search } from "lucide-react";
 import moment from "moment";
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { projectService } from "../../services/project.service";
-import { projectSchema } from "../../types/project-schema";
+import { SetterOrUpdater, useRecoilState } from "recoil";
+import { ProjectSchema } from "../../types/project-schema";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import Divider from "../ui/divider";
@@ -15,32 +14,15 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import DeleteModal from "./projects-delete.component";
 
 const ProjectsListAdmin = () => {
-  const [projects, setProjects] =
-    useRecoilState<projectSchema[]>(projectsListState);
-
-  const getProjects = async (
-    orderByValue: orderBySchema,
-    whereValue?: whereSchema,
-  ) => {
-    try {
-      const data = await projectService.getAll(orderByValue, whereValue);
-      if (data) {
-        setProjects(data);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const [projects, setProjects] = useRecoilState<ProjectSchema[]>(projectsListState);
 
   useEffect(() => {
-    getProjects({
+    getProjects(setProjects, {
       fieldPath: "createdAt",
       directionStr: "desc",
     });
@@ -56,53 +38,18 @@ const ProjectsListAdmin = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline">
-              Title <ArrowDownUp className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Ordine</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() =>
-                  getProjects({
-                    fieldPath: "title",
-                    directionStr: "asc",
-                  })
-                }
-              >
-                <span>Dalla A alla Z </span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() =>
-                  getProjects({
-                    fieldPath: "title",
-                    directionStr: "desc",
-                  })
-                }
-              >
-                <span>Dalla Z alla A</span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
               Status <Search className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Trova</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem
                 onClick={() =>
                   getProjects(
+                    setProjects,
                     {
                       fieldPath: "createdAt",
-                      directionStr: "asc",
+                      directionStr: "desc",
                     },
                     {
                       fieldPath: "isPublished",
@@ -117,6 +64,7 @@ const ProjectsListAdmin = () => {
               <DropdownMenuItem
                 onClick={() =>
                   getProjects(
+                    setProjects,
                     {
                       fieldPath: "createdAt",
                       directionStr: "desc",
@@ -134,79 +82,19 @@ const ProjectsListAdmin = () => {
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              Updated At <ArrowDownUp className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Ordine</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() =>
-                  getProjects({
-                    fieldPath: "updatedAt",
-                    directionStr: "asc",
-                  })
-                }
-              >
-                <span>Dal meno recente</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() =>
-                  getProjects({
-                    fieldPath: "updatedAt",
-                    directionStr: "desc",
-                  })
-                }
-              >
-                <span>Dal più recente</span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              Created At <ArrowDownUp className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Ordine</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() =>
-                  getProjects({
-                    fieldPath: "createdAt",
-                    directionStr: "asc",
-                  })
-                }
-              >
-                <span>Dal meno recente</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() =>
-                  getProjects({
-                    fieldPath: "createdAt",
-                    directionStr: "desc",
-                  })
-                }
-              >
-                <span>Dal più recente</span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
+        <FilterButton
+          buttonLabel={"Title"}
+          orderBy={{ fieldPath: "title" }}
+          projectsSetter={setProjects}
+          descLabel="Dalla Z alla A"
+          ascLabel="Dalla A alla Z"
+        />
+        <FilterButton buttonLabel={"Updated At"} orderBy={{ fieldPath: "updatedAt" }} projectsSetter={setProjects} />
+        <FilterButton buttonLabel={"Created At"} orderBy={{ fieldPath: "createdAt" }} projectsSetter={setProjects} />
         <Button
           variant="outline"
           onClick={() =>
-            getProjects({
+            getProjects(setProjects, {
               fieldPath: "createdAt",
               directionStr: "desc",
             })
@@ -217,11 +105,8 @@ const ProjectsListAdmin = () => {
       </div>
       <Divider title={"Projects"} />
 
-      {projects.map((project: projectSchema, index: number) => (
-        <div
-          className="mb-4 flex flex-col space-y-2 rounded-lg border p-6"
-          key={index}
-        >
+      {projects.map((project: ProjectSchema, index: number) => (
+        <div className="mb-4 flex flex-col space-y-2 rounded-lg border p-6" key={index}>
           <div>
             {project.isPublished ? (
               <Badge variant="secondary">Published</Badge>
@@ -230,18 +115,14 @@ const ProjectsListAdmin = () => {
             )}
           </div>
           <p className="text-l font-semibold">{project.title}</p>
-          <p className="text-sm text-muted-foreground">
-            {project.shortDescription || "-"}
-          </p>
+          <p className="text-sm text-muted-foreground">{project.shortDescription || "-"}</p>
           <div className="flex flex-wrap gap-x-3 gap-y-0">
-            {splitSkills(`${project.skills}`, 3).map(
-              (skill: string, index: number) => (
-                <small key={index} className="flex items-center gap-1">
-                  <Check className="h-3 w-3" />
-                  {skill}
-                </small>
-              ),
-            )}
+            {splitSkills(`${project.skills}`, 3).map((skill: string, index: number) => (
+              <small key={index} className="flex items-center gap-1">
+                <Check className="h-3 w-3" />
+                {skill}
+              </small>
+            ))}
           </div>
           <p className="text-xs text-muted-foreground">
             Updated At: {moment(project.updatedAt).format("DD/MM/YYYY H:mm")}
@@ -252,7 +133,7 @@ const ProjectsListAdmin = () => {
             <Button variant={"secondary"} className="w-full" asChild>
               <a href={`/dashboard/project-edit/${project.id}`}>View Project</a>
             </Button>
-            {project.id && <DeleteModal projectId={project.id} />}
+            <DeleteModal projectId={project.id} />
           </div>
         </div>
       ))}
@@ -261,3 +142,49 @@ const ProjectsListAdmin = () => {
 };
 
 export default ProjectsListAdmin;
+
+type FilterButton = {
+  buttonLabel: string;
+  orderBy: OrderBySchema;
+  ascLabel?: string;
+  descLabel?: string;
+  projectsSetter: SetterOrUpdater<ProjectSchema[]>;
+};
+
+const FilterButton = ({ buttonLabel, orderBy, descLabel, ascLabel, projectsSetter }: FilterButton) => {
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline">
+            {buttonLabel} <ArrowDownUp className="ml-2 h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              onClick={() =>
+                getProjects(projectsSetter, {
+                  fieldPath: orderBy.fieldPath,
+                  directionStr: "asc",
+                })
+              }
+            >
+              <span>{ascLabel ? ascLabel : "Dal meno recente"}</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                getProjects(projectsSetter, {
+                  fieldPath: orderBy.fieldPath,
+                  directionStr: "desc",
+                })
+              }
+            >
+              <span>{descLabel ? descLabel : "Dal più recente"}</span>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+};
