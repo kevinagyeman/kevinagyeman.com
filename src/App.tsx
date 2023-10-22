@@ -20,10 +20,10 @@ import { ProjectSchema } from "./types/project-schema";
 import { getInformation, getProjects } from "./utils/utils";
 
 const App = () => {
-  const admin = useContext(AuthContext);
-
   const setInformation = useSetRecoilState<InformationData>(informationDataState);
   const setProjects = useSetRecoilState<ProjectSchema[]>(projectsListState);
+  const isAdminLogged = localStorage.getItem("admin");
+  const admin = useContext(AuthContext);
 
   useEffect(() => {
     getInformation(setInformation);
@@ -45,18 +45,18 @@ const App = () => {
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Navbar admin={admin} />
-
         <div className="container max-w-[500px]">
           <Routes>
             <Route index element={<Index />} />
-            {admin && <Route path="/dashboard" element={<Dashboard />} />}
-            {admin && <Route path="/dashboard/project-add" element={<ProjectAdd />} />}
-            {admin && <Route path="/dashboard/project-edit/:id" element={<ProjectEdit />} />}
-            {admin && <Route path="/dashboard/information-edit" element={<InformationEdit />} />}
-            {!admin && <Route path="/login" element={<Login />} />}
+            {isAdminLogged && <Route path="/dashboard" element={<Dashboard />} />}
+            {isAdminLogged && <Route path="/dashboard/project-add" element={<ProjectAdd />} />}
+            {isAdminLogged && <Route path="/dashboard/project-edit/:id" element={<ProjectEdit />} />}
+            {isAdminLogged && <Route path="/dashboard/information-edit" element={<InformationEdit />} />}
+            {!isAdminLogged && <Route path="/login" element={<Login />} />}
             <Route path="/project/:id" element={<Project />} />
             <Route path="/information" element={<Information />} />
-            <Route path="*" element={"Pagina non trovata"} />
+            <Route path="/information" element={<Index />} />
+            <Route path="*" element={<Index />} />
           </Routes>
         </div>
         <Footer />

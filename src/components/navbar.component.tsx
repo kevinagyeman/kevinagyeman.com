@@ -60,6 +60,7 @@ export default function Navbar({ admin }: NavbarProps) {
                     <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                   )}
                 </Disclosure.Button>
+                <ThemeChanger logoSetter={setLogoSrc} />
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
@@ -76,7 +77,9 @@ export default function Navbar({ admin }: NavbarProps) {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <ThemeChanger logoSetter={setLogoSrc} />
+                <div className="hidden sm:block">
+                  <ThemeChanger logoSetter={setLogoSrc} />
+                </div>
                 <LanguageSelector />
                 <IconAdmin admin={admin} />
               </div>
@@ -124,7 +127,7 @@ const ThemeChanger = ({ logoSetter }: ThemeChangerProps) => {
   };
 
   return (
-    <Button variant="outline" size="icon" onClick={changeTheme}>
+    <Button variant="ghost" size="icon" onClick={changeTheme}>
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
     </Button>
@@ -144,6 +147,7 @@ const IconAdmin = ({ admin }: IconAdminProps) => {
   const signOut = async () => {
     try {
       await auth.signOut();
+      localStorage.removeItem("admin");
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -154,23 +158,23 @@ const IconAdmin = ({ admin }: IconAdminProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {admin ? (
-          <img className="ml-2 h-8 w-8 rounded-full" src={profileImage} alt="profile" />
+          <img className="h-8 w-8 rounded-full" src={profileImage} alt="profile" />
         ) : (
-          <div className="ml-2 h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-900"></div>
+          <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-900"></div>
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>
           {admin ? (
             <>
-              <DropdownMenuItem onClick={() => signOut()}>
-                <a href="#">Logout</a>
+              <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer">
+                Logout
               </DropdownMenuItem>
             </>
           ) : (
             <>
-              <DropdownMenuItem onClick={() => (window.location.href = "/login")}>
-                <a href="#">Login</a>
+              <DropdownMenuItem onClick={() => (window.location.href = "/login")} className="cursor-pointer">
+                Login
               </DropdownMenuItem>
             </>
           )}
@@ -196,7 +200,7 @@ const LanguageSelector = () => {
       }}
       value={language}
     >
-      <SelectTrigger className="ml-2 w-[65px]">
+      <SelectTrigger className="w-[65px] border-none">
         <SelectValue placeholder="Select a a language" />
       </SelectTrigger>
       <SelectContent>

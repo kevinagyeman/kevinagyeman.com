@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { auth } from "@/firebase";
 import { AdminData } from "@/types/admin-schema";
 import { FormFieldSchema } from "@/types/form-field-schema";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { UserCredential, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -37,8 +37,11 @@ const Login = () => {
   const signIn = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      await signInWithEmailAndPassword(auth, admin.email, admin.password);
-      navigate("/dashboard");
+      const login: UserCredential = await signInWithEmailAndPassword(auth, admin.email, admin.password);
+      if (login.user.uid) {
+        localStorage.setItem("admin", login.user.uid);
+        navigate("/dashboard");
+      }
     } catch (e) {
       console.error(e);
     }

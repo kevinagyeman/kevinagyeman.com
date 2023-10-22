@@ -4,9 +4,11 @@ import { useParams } from "react-router-dom";
 export default function Project() {
   const { id } = useParams();
 
-  return (
-    <>
-      <ProjectsInfo projectId={id} />
-    </>
-  );
+  if (id) {
+    return (
+      <>
+        <ProjectsInfo projectId={id} />
+      </>
+    );
+  }
 }

@@ -2,28 +2,38 @@ import { Button } from "@/components/ui/button";
 import { projectDataState } from "@/store/projects-store";
 import { ProjectSchema } from "@/types/project-schema";
 import { getSingleProject, splitByLanguage, splitSkills } from "@/utils/utils";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { Badge } from "../ui/badge";
+import { ArrowLeft, ArrowUpRight, MoveLeft } from "lucide-react";
+import { ReactElement, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useRecoilState } from "recoil";
+import SkeletonLoader from "../skeleton.component";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Badge } from "../ui/badge";
 
 type ProjectInfoProps = {
-  projectId: any;
+  projectId: string;
 };
 
 export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
   const [project, setProject] = useRecoilState<ProjectSchema>(projectDataState);
   const { t } = useTranslation();
+  const [projectAlert, setProjectAlert] = useState<ReactElement>(<SkeletonLoader />);
+
+  const projectDelayFetch = () => {
+    setTimeout(() => {
+      setProjectAlert(<ProjectNotFound />);
+    }, 2000);
+  };
 
   useEffect(() => {
+    projectDelayFetch();
     getSingleProject(projectId, setProject);
   }, []);
 
   return (
     <>
-      {project.id === "" ? (
-        "progetto non trovato"
+      {!project.id ? (
+        projectAlert
       ) : (
         <>
           <div className="flex flex-col space-y-8">
@@ -60,3 +70,21 @@ export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
     </>
   );
 }
+
+const ProjectNotFound = () => {
+  return (
+    <>
+      <Alert>
+        <AlertTitle className="text-xl">Progetto non trovato</AlertTitle>
+        <AlertDescription className="text-l text-muted-foreground">
+          Il link che hai non porta a nessun progetto, torna alla home
+        </AlertDescription>
+      </Alert>
+      <Button size={"lg"} asChild className="mt-5 w-full">
+        <a href="/">
+          <MoveLeft className="mr-2" /> Torna alla home
+        </a>
+      </Button>
+    </>
+  );
+};
