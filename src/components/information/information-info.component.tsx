@@ -6,9 +6,11 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
+import { useTranslation } from "react-i18next";
 
 const InformationInfo = () => {
   const [information, setInformation] = useRecoilState<InformationData>(informationDataState);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getInformation(setInformation);
@@ -28,7 +30,7 @@ const InformationInfo = () => {
             {information?.role}
           </code>
         </div>
-        <p className="text-xl text-muted-foreground">{splitByLanguage(`${information?.summary}`)}</p>
+        <p className=" text-xl text-muted-foreground">{splitByLanguage(`${information?.summary}`)}</p>
         <div>
           {splitSkills(`${information?.skills}`).map((skill: string, index: number) => (
             <Badge variant="secondary" className="mr-2 mt-2" key={index}>
@@ -36,15 +38,17 @@ const InformationInfo = () => {
             </Badge>
           ))}
         </div>
-        <p className="text-xl">{information.additionalInfo}</p>
+        <p className=" text-xl">{splitByLanguage(`${information.additionalInfo}`)}</p>
 
         <div className="flex space-x-2">
-          <Button variant={"secondary"} className="w-full" size={"lg"} asChild>
-            <a href="/">
-              Guarda il CV <ArrowUpRight className="ml-2 h-5 w-5" />
-            </a>
-          </Button>
-          <Button variant={"outline"} size={"lg"} asChild>
+          {information.additionalLink && (
+            <Button variant={"secondary"} className="w-full" size={"lg"} asChild>
+              <a href={information.additionalLink}>
+                {t("readCv")} <ArrowUpRight className="ml-2 h-5 w-5" />
+              </a>
+            </Button>
+          )}
+          <Button variant={"outline"} size={"lg"} asChild className="ml-auto">
             <a href="/">
               <ArrowLeft className="h-5 w-5" />
             </a>

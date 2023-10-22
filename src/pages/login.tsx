@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth } from "@/firebase";
 import { AdminData } from "@/types/admin-schema";
+import { FormFieldSchema } from "@/types/form-field-schema";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,13 +15,32 @@ const Login = () => {
   });
   const navigate = useNavigate();
 
+  const formFields: FormFieldSchema[] = [
+    {
+      label: "Email",
+      type: "text",
+      required: true,
+      onChange: (e) => {
+        setUser({ ...admin, email: e.target.value });
+      },
+    },
+    {
+      label: "Password",
+      type: "password",
+      required: true,
+      onChange: (e) => {
+        setUser({ ...admin, password: e.target.value });
+      },
+    },
+  ];
+
   const signIn = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       await signInWithEmailAndPassword(auth, admin.email, admin.password);
       navigate("/dashboard");
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -28,37 +48,21 @@ const Login = () => {
     <>
       <div className="flex  w-full flex-col items-center justify-center align-middle">
         <div className="w-80  rounded-lg border p-6">
-          <h3 className="mb-3 scroll-m-20 text-2xl font-semibold tracking-tight">
-            Login
-          </h3>
+          <h3 className="mb-3 scroll-m-20 text-2xl font-semibold tracking-tight">Login</h3>
           <form onSubmit={(e) => signIn(e)}>
-            <div className="mb-2">
-              <Label>Email</Label>
-              <Input
-                type="email"
-                placeholder="Email"
-                name="Email"
-                onChange={(e) => {
-                  setUser({ ...admin, email: e.target.value });
-                }}
-              />
-            </div>
-            <div className="mb-2">
-              <Label>password</Label>
-              <Input
-                type="text"
-                placeholder="Password"
-                name="Password"
-                onChange={(e) => {
-                  setUser({ ...admin, password: e.target.value });
-                }}
-              />
-            </div>
-            <Button
-              type="submit"
-              className="mt-3 w-full"
-              disabled={!admin.email || !admin.password}
-            >
+            {formFields.map((field: FormFieldSchema, index: number) => (
+              <div className="my-5" key={index}>
+                <Label>{field.label}</Label>
+                <Input
+                  required={field.required}
+                  type={field.type}
+                  placeholder={field.label}
+                  onChange={field.onChange}
+                  disabled={field.disabled}
+                />
+              </div>
+            ))}
+            <Button type="submit" className="mt-3 w-full">
               Login
             </Button>
           </form>

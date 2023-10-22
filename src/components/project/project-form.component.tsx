@@ -56,16 +56,6 @@ export default function ProjectForm({ project, isDisabled, projectSetter, submit
       },
     },
     {
-      label: "Description",
-      type: "textarea",
-      value: project.description || "",
-      disabled: isDisabled,
-      required: false,
-      onChange: (e) => {
-        projectSetter({ ...project, description: e.target.value });
-      },
-    },
-    {
       label: "Short Description",
       type: "textarea",
       value: project.shortDescription || "",
@@ -73,6 +63,16 @@ export default function ProjectForm({ project, isDisabled, projectSetter, submit
       required: false,
       onChange: (e) => {
         projectSetter({ ...project, shortDescription: e.target.value });
+      },
+    },
+    {
+      label: "Description",
+      type: "textarea",
+      value: project.description || "",
+      disabled: isDisabled,
+      required: false,
+      onChange: (e) => {
+        projectSetter({ ...project, description: e.target.value });
       },
     },
   ];

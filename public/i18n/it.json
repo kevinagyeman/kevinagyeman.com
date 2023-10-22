@@ -7,15 +7,6 @@
     "title": "Progetti",
     "sentence": "Un elenco dei miei progetti e delle mie esperienze lavorative"
   },
-  "informationForm": {
-    "name": "Nome",
-    "surname": "Cognome",
-    "role": "Ruolo",
-    "summary": "Sommario",
-    "profileImageLink": "Link immagine del profilo",
-    "skills": "Skills",
-    "additionalInfo": "Informazioni aggiuntive"
-  },
   "footer": {
     "credit": "Fatto da Me | © "
   },
@@ -23,5 +14,5 @@
     "contactButton": "Contatti",
     "readMoreButton": "leggi di più"
   },
-  "projectsSheetButton": "Back to projects"
+  "readCv": "Scopri di più"
 }

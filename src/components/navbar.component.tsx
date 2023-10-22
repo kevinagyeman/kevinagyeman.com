@@ -31,7 +31,7 @@ export default function Navbar({ admin }: NavbarProps) {
         { name: "Contacts", href: "/#contacts", current: true },
         { name: "Dashboard", href: "/dashboard", current: false },
         { name: "Edit Project", href: "/dashboard", current: false },
-        { name: "Edit Information", href: "/information-edit", current: false },
+        { name: "Edit Information", href: "/dashboard/information-edit", current: false },
       ]
     : [
         { name: "Home", href: "/", current: true },

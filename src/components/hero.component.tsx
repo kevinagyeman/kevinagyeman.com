@@ -25,7 +25,7 @@ const Hero = () => {
         <h1 className="text-5xl font-extrabold">
           {information?.name} {information?.surname}
         </h1>
-        <p className="text-l text-muted-foreground lg:text-xl">
+        <p className="text-l line-clamp-2 text-muted-foreground lg:text-xl">
           {splitByLanguage(`${information?.summary}`)}
         </p>
         <div>
