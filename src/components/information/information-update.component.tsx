@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import { Button } from "../ui/button";
 import InformationForm from "./information-form.component";
 import { getInformation } from "@/utils/utils";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function InformationUpdate() {
   const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
@@ -53,9 +53,9 @@ export default function InformationUpdate() {
           Update
         </Button>
         <Button variant="outline" size={"icon"} className="ml-auto w-[50px]" asChild>
-          <a href="/dashboard">
+          <Link to="/dashboard">
             <ArrowLeft className="h-4 w-4" />
-          </a>
+          </Link>
         </Button>
       </div>
       <InformationForm

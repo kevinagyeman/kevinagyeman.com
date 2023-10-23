@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import Divider from "../ui/divider";
+import { Link } from "react-router-dom";
 
 const InformationElement = () => {
   const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
@@ -17,7 +18,7 @@ const InformationElement = () => {
   return (
     <>
       <Button variant="secondary" className="w-full" size={"lg"} asChild>
-        <a href="/dashboard/information-edit">Edit information</a>
+        <Link to="/dashboard/information-edit">Edit information</Link>
       </Button>
       <Divider title={"Info"} />
       <div className="flex flex-col space-y-4">

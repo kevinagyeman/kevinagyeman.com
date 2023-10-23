@@ -4,7 +4,7 @@ import { projectService } from "../../services/project.service";
 import { ProjectSchema } from "../../types/project-schema";
 import { Button } from "../ui/button";
 import ProjectForm from "./project-form.component";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 export default function ProjectsAdd() {
@@ -36,9 +36,9 @@ export default function ProjectsAdd() {
           Create
         </Button>
         <Button variant="outline" size={"icon"} className="ml-auto w-[50px]" asChild>
-          <a href="/dashboard">
+          <Link to="/dashboard">
             <ArrowLeft className="h-4 w-4" />
-          </a>
+          </Link>
         </Button>
       </div>
       <ProjectForm isDisabled={false} projectSetter={setProject} submitFunction={addProject} project={project} />

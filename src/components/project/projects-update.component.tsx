@@ -7,7 +7,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "../ui/button";
 import ProjectForm from "./project-form.component";
 import { getSingleProject } from "@/utils/utils";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProjectNotFound from "./project-not-found.component";
 import SkeletonLoader from "../skeleton.component";
 
@@ -83,9 +83,9 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
               Update
             </Button>
             <Button variant="outline" size={"icon"} className="ml-auto w-[50px]" asChild>
-              <a href="/dashboard">
+              <Link to="/dashboard">
                 <ArrowLeft className="h-4 w-4" />
-              </a>
+              </Link>
             </Button>
           </div>
           <ProjectForm

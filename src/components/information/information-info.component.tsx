@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const InformationInfo = () => {
   const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
@@ -43,15 +44,15 @@ const InformationInfo = () => {
         <div className="flex space-x-2">
           {information.additionalLink && (
             <Button variant={"secondary"} className="w-full" size={"lg"} asChild>
-              <a href={information.additionalLink} target="_blank">
+              <Link to={information.additionalLink} target="_blank">
                 {t("readCv")} <ArrowUpRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
           )}
           <Button variant={"outline"} size={"lg"} asChild className="ml-auto">
-            <a href="/">
+            <Link to="/">
               <ArrowLeft className="h-5 w-5" />
-            </a>
+            </Link>
           </Button>
         </div>
       </div>

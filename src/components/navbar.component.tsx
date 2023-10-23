@@ -7,7 +7,7 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Moon, Sun } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isAdminLoggedDataState } from "../store/admin-store";
 import { Button } from "./ui/button";
@@ -64,7 +64,7 @@ export default function Navbar() {
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <Button asChild variant={"ghost"} key={item.name}>
-                        <a href={item.href}>{item.name}</a>
+                        <Link to={item.href}>{item.name}</Link>
                       </Button>
                     ))}
                   </div>
@@ -82,17 +82,16 @@ export default function Navbar() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
+              {navigation.map((item, index: number) => (
+                <Link
+                  to={item.href}
+                  key={index}
                   className={
                     "text-light hover:text-light block rounded-md px-3 py-2 text-base font-medium hover:bg-zinc-800"
                   }
                 >
                   {item.name}
-                </Disclosure.Button>
+                </Link>
               ))}
             </div>
           </Disclosure.Panel>

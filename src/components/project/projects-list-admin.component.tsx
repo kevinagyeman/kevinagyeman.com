@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import DeleteModal from "./projects-delete.component";
+import { Link } from "react-router-dom";
 
 const ProjectsListAdmin = () => {
   const [projects, setProjects] = useRecoilState<ProjectSchema[]>(projectsListState);
@@ -44,7 +45,7 @@ const ProjectsListAdmin = () => {
   return (
     <>
       <Button variant="secondary" className="w-full" size={"lg"} asChild>
-        <a href={`/dashboard/project-add`}>Add New Project</a>
+        <Link to={`/dashboard/project-add`}>Add New Project</Link>
       </Button>
       <Divider title={"Filters"} />
       <div className="flex flex-wrap justify-center gap-2">
@@ -144,7 +145,7 @@ const ProjectsListAdmin = () => {
           </p>
           <div className="flex gap-x-3 pt-3">
             <Button variant={"secondary"} className="w-full" asChild>
-              <a href={`/dashboard/project-edit/${project.id}`}>View Project</a>
+              <Link to={`/dashboard/project-edit/${project.id}`}>View Project</Link>
             </Button>
             <DeleteModal projectId={project.id} />
           </div>

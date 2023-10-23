@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import SkeletonLoader from "../skeleton.component";
 import { Badge } from "../ui/badge";
 import ProjectNotFound from "./project-not-found.component";
+import { Link } from "react-router-dom";
 
 type ProjectInfoProps = {
   projectId: string;
@@ -53,15 +54,15 @@ export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
             <div className="flex space-x-2">
               {project.link && (
                 <Button variant={"secondary"} className="w-full" size={"lg"} asChild>
-                  <a href={project.link} target="_blank">
+                  <Link to={project.link} target="_blank">
                     {t("hero.readMoreButton")} <ArrowUpRight className="ml-2 h-5 w-5" />
-                  </a>
+                  </Link>
                 </Button>
               )}
               <Button variant={"outline"} size={"lg"} asChild>
-                <a href="/">
+                <Link to="/">
                   <ArrowLeft className="h-5 w-5" />
-                </a>
+                </Link>
               </Button>
             </div>
           </div>

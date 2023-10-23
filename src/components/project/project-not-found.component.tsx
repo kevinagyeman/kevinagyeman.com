@@ -1,6 +1,7 @@
 import { MoveLeft } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 export default function ProjectNotFound() {
   return (
@@ -12,9 +13,9 @@ export default function ProjectNotFound() {
         </AlertDescription>
       </Alert>
       <Button size={"lg"} asChild className="mt-5 w-full">
-        <a href="/">
+        <Link to="/">
           <MoveLeft className="mr-2" /> Torna alla home
-        </a>
+        </Link>
       </Button>
     </>
   );

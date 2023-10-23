@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { ProjectSchema } from "../../types/project-schema";
+import { Link } from "react-router-dom";
 
 export default function ProjectsListUser() {
   const { t } = useTranslation();
@@ -32,10 +33,10 @@ export default function ProjectsListUser() {
       </h2>
       <p className="text-muted-foreground">{t("projectSection.sentence")}</p>
       {projects?.map((project: ProjectSchema, index: number) => (
-        <a href={`/project/${project.id}`} key={index}>
+        <Link to={`/project/${project.id}`} key={index}>
           <div
             className="my-3 flex 
-        flex-col space-y-3 rounded-lg border p-6 lg:transition lg:ease-in-out lg:hover:scale-110 lg:hover:bg-zinc-100 lg:dark:hover:bg-zinc-900"
+    flex-col space-y-3 rounded-lg border p-6 lg:transition lg:ease-in-out lg:hover:scale-110 lg:hover:bg-zinc-100 lg:dark:hover:bg-zinc-900"
           >
             <div className="flex">
               <h3 className="truncate text-2xl font-semibold">{splitByLanguage(`${project.title}`)}</h3>
@@ -53,7 +54,7 @@ export default function ProjectsListUser() {
               ))}
             </div>
           </div>
-        </a>
+        </Link>
       ))}
     </>
   );

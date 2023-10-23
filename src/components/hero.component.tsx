@@ -8,6 +8,7 @@ import { informationDataState } from "@/store/information-store";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import SkeletonLoader from "./skeleton.component";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -46,16 +47,16 @@ const Hero = () => {
           </div>
           <div>
             <Button className="mr-2" variant={"secondary"} size={"lg"} asChild>
-              <a href="#contacts">
+              <Link to="#contacts">
                 {t("hero.contactButton")}
                 <Send className="ml-2 h-4 w-4" />
-              </a>
+              </Link>
             </Button>
             <Button variant={"outline"} size={"lg"} asChild>
-              <a href="/information">
+              <Link to="/information">
                 {t("hero.readMoreButton")}
                 <ChevronRight className="h-5 w-5" />
-              </a>
+              </Link>
             </Button>
           </div>
         </div>
