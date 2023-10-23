@@ -182,7 +182,15 @@ const IconAdmin = () => {
 };
 
 const LanguageSelector = () => {
-  const [language, setLanguage] = useState<string>(i18n.language);
+  const detectLanguage = (): string => {
+    if (i18n.language === "it" || i18n.language === "it-IT") {
+      return "it-IT";
+    } else {
+      return "en-GB";
+    }
+  };
+
+  const [language, setLanguage] = useState<string>(detectLanguage());
 
   const selectLanguage = (e: string) => {
     const valueSelected = e.valueOf();
