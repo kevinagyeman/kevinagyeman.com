@@ -47,8 +47,8 @@ export const projectService = {
     try {
       await addDoc(projectsCollection, {
         ...project,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
     } catch (error) {
       console.error(error);
@@ -69,7 +69,7 @@ export const projectService = {
       const data = doc(projectsCollection, projectId);
       await updateDoc(data, {
         ...project,
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date(),
       });
     } catch (error) {
       console.error(error);
@@ -80,7 +80,8 @@ export const projectService = {
     try {
       const data = await getDoc(doc(projectsCollection, projectId));
       if (data.exists()) {
-        return data.data();
+        const result = { ...data.data(), id: data.id };
+        return result;
       }
     } catch (error) {
       console.error(error);

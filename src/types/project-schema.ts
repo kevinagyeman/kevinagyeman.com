@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type ProjectSchema = {
   id: string;
   title?: string;
@@ -7,6 +9,6 @@ export type ProjectSchema = {
   link?: string;
   skills?: string;
   isPublished?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
 };

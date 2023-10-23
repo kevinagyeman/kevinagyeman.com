@@ -10,6 +10,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Moon, Sun } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isAdminLoggedDataState } from "../store/admin-store";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -20,22 +22,20 @@ import {
 } from "./ui/dropdown-menu";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
-type NavbarProps = {
-  admin: any;
-};
-
-export default function Navbar({ admin }: NavbarProps) {
-  const navigation = admin
+export default function Navbar() {
+  const isAdminLoggedData = useRecoilValue<boolean>(isAdminLoggedDataState);
+  const navigation = isAdminLoggedData
     ? [
-        { name: "Home", href: "/", current: true },
-        { name: "Contacts", href: "/#contacts", current: true },
-        { name: "Dashboard", href: "/dashboard", current: false },
-        { name: "Edit Project", href: "/dashboard", current: false },
-        { name: "Edit Information", href: "/dashboard/information-edit", current: false },
+        { name: "Home", href: "/" },
+        { name: "Contacts", href: "/#contacts" },
+        { name: "Dashboard", href: "/dashboard" },
+        { name: "Edit Project", href: "/dashboard" },
+        { name: "Add Project", href: "/dashboard/project-add" },
+        { name: "Edit Information", href: "/dashboard/information-edit" },
       ]
     : [
-        { name: "Home", href: "/", current: true },
-        { name: "Contacts", href: "/#contacts", current: true },
+        { name: "Home", href: "/" },
+        { name: "Contacts", href: "/#contacts" },
       ];
 
   const [logoSrc, setLogoSrc] = useState<string>();
@@ -81,7 +81,7 @@ export default function Navbar({ admin }: NavbarProps) {
                   <ThemeChanger logoSetter={setLogoSrc} />
                 </div>
                 <LanguageSelector />
-                <IconAdmin admin={admin} />
+                <IconAdmin />
               </div>
             </div>
           </div>
@@ -96,7 +96,6 @@ export default function Navbar({ admin }: NavbarProps) {
                   className={
                     "text-light hover:text-light block rounded-md px-3 py-2 text-base font-medium hover:bg-zinc-800"
                   }
-                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -134,12 +133,9 @@ const ThemeChanger = ({ logoSetter }: ThemeChangerProps) => {
   );
 };
 
-type IconAdminProps = {
-  admin: any;
-};
-
-const IconAdmin = ({ admin }: IconAdminProps) => {
+const IconAdmin = () => {
   const navigate = useNavigate();
+  const [isAdminLoggedData, setIsAdminLoggedData] = useRecoilState<boolean>(isAdminLoggedDataState);
 
   const profileImage =
     "https://media.licdn.com/dms/image/C4D03AQEavaj22cXyTg/profile-displayphoto-shrink_800_800/0/1537222123446?e=1701907200&v=beta&t=ob0K8RV-VoP54eBQ2px4EQdFruhSNLHNTB6Phbh0qdU";
@@ -148,6 +144,7 @@ const IconAdmin = ({ admin }: IconAdminProps) => {
     try {
       await auth.signOut();
       localStorage.removeItem("admin");
+      setIsAdminLoggedData(false);
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -157,7 +154,7 @@ const IconAdmin = ({ admin }: IconAdminProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {admin ? (
+        {isAdminLoggedData ? (
           <img className="h-8 w-8 rounded-full" src={profileImage} alt="profile" />
         ) : (
           <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-900"></div>
@@ -165,7 +162,7 @@ const IconAdmin = ({ admin }: IconAdminProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>
-          {admin ? (
+          {isAdminLoggedData ? (
             <>
               <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer">
                 Logout
@@ -200,7 +197,7 @@ const LanguageSelector = () => {
       }}
       value={language}
     >
-      <SelectTrigger className="w-[65px] border-none">
+      <SelectTrigger className="w-[65px] border-none bg-transparent">
         <SelectValue placeholder="Select a a language" />
       </SelectTrigger>
       <SelectContent>

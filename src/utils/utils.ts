@@ -1,7 +1,7 @@
 import i18n from "@/i18n";
 import { informationService } from "@/services/information.service";
 import { projectService } from "@/services/project.service";
-import { InformationData } from "@/types/information-schema";
+import { InformationSchema } from "@/types/information-schema";
 import { ProjectSchema } from "@/types/project-schema";
 import { OrderBySchema, WhereSchema } from "@/types/query-schema";
 import { SetterOrUpdater } from "recoil";
@@ -52,11 +52,11 @@ export const getSingleProject = async (projectId: string, projectSetter: SetterO
   }
 };
 
-export const getInformation = async (informationSetter: SetterOrUpdater<InformationData>) => {
+export const getInformation = async (informationSetter: SetterOrUpdater<InformationSchema>) => {
   try {
     const data = await informationService.getById();
     if (data) {
-      const currentInformation: InformationData = {
+      const currentInformation: InformationSchema = {
         ...data,
         id: data.id,
       };

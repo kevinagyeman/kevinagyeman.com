@@ -1,6 +1,6 @@
 import { informationService } from "@/services/information.service";
 import { informationDataState } from "@/store/information-store";
-import { InformationData } from "@/types/information-schema";
+import { InformationSchema } from "@/types/information-schema";
 import { ArrowLeft } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -9,7 +9,7 @@ import InformationForm from "./information-form.component";
 import { getInformation } from "@/utils/utils";
 
 export default function InformationUpdate() {
-  const [information, setInformation] = useRecoilState<InformationData>(informationDataState);
+  const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
 
   const updateInformation = async (e: React.FormEvent<HTMLFormElement>) => {

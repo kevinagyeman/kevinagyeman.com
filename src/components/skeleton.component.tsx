@@ -16,7 +16,7 @@ const SkeletonLoader = () => {
         <Skeleton className="h-8" />
         <Skeleton className="h-8" />
       </div>
-      <div className="mt-8 space-y-2">
+      <div className="my-8 space-y-2">
         <Skeleton className="h-8" />
         <Skeleton className="h-8 w-3/4" />
         <Skeleton className="h-8 w-2/4" />

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { informationDataState } from "@/store/information-store";
-import { InformationData } from "@/types/information-schema";
+import { InformationSchema } from "@/types/information-schema";
 import { getInformation, splitByLanguage, splitSkills } from "@/utils/utils";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useEffect } from "react";
@@ -9,7 +9,7 @@ import { Badge } from "../ui/badge";
 import { useTranslation } from "react-i18next";
 
 const InformationInfo = () => {
-  const [information, setInformation] = useRecoilState<InformationData>(informationDataState);
+  const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
   const { t } = useTranslation();
 
   useEffect(() => {

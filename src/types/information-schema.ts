@@ -1,4 +1,6 @@
-export type InformationData = {
+import { Timestamp } from "firebase/firestore";
+
+export type InformationSchema = {
   id: string;
   name?: string;
   surname?: string;
@@ -9,6 +11,6 @@ export type InformationData = {
   email?: string;
   additionalLink?: string;
   additionalInfo?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
 };

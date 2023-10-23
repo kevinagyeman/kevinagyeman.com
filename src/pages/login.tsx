@@ -2,13 +2,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth } from "@/firebase";
+import { isAdminLoggedDataState } from "@/store/admin-store";
 import { AdminData } from "@/types/admin-schema";
 import { FormFieldSchema } from "@/types/form-field-schema";
 import { UserCredential, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 
 const Login = () => {
+  const setIsAdminLoggedData = useSetRecoilState<boolean>(isAdminLoggedDataState);
   const [admin, setUser] = useState<AdminData>({
     email: "",
     password: "",
@@ -40,6 +43,7 @@ const Login = () => {
       const login: UserCredential = await signInWithEmailAndPassword(auth, admin.email, admin.password);
       if (login.user.uid) {
         localStorage.setItem("admin", login.user.uid);
+        setIsAdminLoggedData(true);
         navigate("/dashboard");
       }
     } catch (e) {
@@ -62,6 +66,7 @@ const Login = () => {
                   placeholder={field.label}
                   onChange={field.onChange}
                   disabled={field.disabled}
+                  autoComplete="on"
                 />
               </div>
             ))}

@@ -1,8 +1,8 @@
 import { projectsListState } from "@/store/projects-store";
 import { OrderBySchema } from "@/types/query-schema";
 import { getProjects, splitSkills } from "@/utils/utils";
+import { Timestamp } from "firebase/firestore";
 import { ArrowDownUp, Check, FilterX, Search } from "lucide-react";
-import moment from "moment";
 import { useEffect } from "react";
 import { SetterOrUpdater, useRecoilState } from "recoil";
 import { ProjectSchema } from "../../types/project-schema";
@@ -20,6 +20,19 @@ import DeleteModal from "./projects-delete.component";
 
 const ProjectsListAdmin = () => {
   const [projects, setProjects] = useRecoilState<ProjectSchema[]>(projectsListState);
+
+  const formatDate = (date: Timestamp | undefined): string | undefined => {
+    if (date) {
+      const dateFormatted = new Date(date.seconds * 1000).toLocaleString([], {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      return dateFormatted;
+    }
+  };
 
   useEffect(() => {
     getProjects(setProjects, {
@@ -125,9 +138,9 @@ const ProjectsListAdmin = () => {
             ))}
           </div>
           <p className="text-xs text-muted-foreground">
-            Updated At: {moment(project.updatedAt).format("DD/MM/YYYY H:mm")}
+            Updated At: {formatDate(project.updatedAt)}
             <br />
-            Created At: {moment(project.createdAt).format("DD/MM/YYYY H:mm")}
+            Created At: {formatDate(project.createdAt)}
           </p>
           <div className="flex gap-x-3 pt-3">
             <Button variant={"secondary"} className="w-full" asChild>

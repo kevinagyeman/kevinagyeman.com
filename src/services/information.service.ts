@@ -1,12 +1,12 @@
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { InformationData } from "../types/information-schema";
+import { InformationSchema } from "../types/information-schema";
 
 const informationCollection = collection(db, "/information");
 const informationDocumentId = "CfbOBq4jIbn0qTeL3hfH";
 
 export const informationService = {
-  update: async (information: InformationData) => {
+  update: async (information: InformationSchema) => {
     try {
       const data = doc(informationCollection, informationDocumentId);
       await updateDoc(data, {

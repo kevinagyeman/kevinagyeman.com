@@ -1,11 +1,11 @@
-import { InformationData } from "@/types/information-schema";
+import { InformationSchema } from "@/types/information-schema";
 import { atom } from "recoil";
 
-const informationData: InformationData = {
+const informationData: InformationSchema = {
   id: "",
 };
 
-export const initInformationData: InformationData = informationData;
+export const initInformationData: InformationSchema = informationData;
 
 export const informationDataState = atom({
   key: "informationDataState",

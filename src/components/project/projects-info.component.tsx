@@ -2,13 +2,13 @@ import { Button } from "@/components/ui/button";
 import { projectDataState } from "@/store/projects-store";
 import { ProjectSchema } from "@/types/project-schema";
 import { getSingleProject, splitByLanguage, splitSkills } from "@/utils/utils";
-import { ArrowLeft, ArrowUpRight, MoveLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { ReactElement, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import SkeletonLoader from "../skeleton.component";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Badge } from "../ui/badge";
+import ProjectNotFound from "./project-not-found.component";
 
 type ProjectInfoProps = {
   projectId: string;
@@ -70,21 +70,3 @@ export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
     </>
   );
 }
-
-const ProjectNotFound = () => {
-  return (
-    <>
-      <Alert>
-        <AlertTitle className="text-xl">Progetto non trovato</AlertTitle>
-        <AlertDescription className="text-l text-muted-foreground">
-          Il link che hai non porta a nessun progetto, torna alla home
-        </AlertDescription>
-      </Alert>
-      <Button size={"lg"} asChild className="mt-5 w-full">
-        <a href="/">
-          <MoveLeft className="mr-2" /> Torna alla home
-        </a>
-      </Button>
-    </>
-  );
-};

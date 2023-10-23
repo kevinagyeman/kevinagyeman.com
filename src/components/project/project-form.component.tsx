@@ -1,10 +1,10 @@
+import { FormFieldSchema } from "@/types/form-field-schema";
 import { ProjectSchema } from "@/types/project-schema";
 import React from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { Textarea } from "../ui/textarea";
-import { FormFieldSchema } from "@/types/form-field-schema";
 
 type ProjectFormData = {
   project: ProjectSchema;

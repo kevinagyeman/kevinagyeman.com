@@ -1,13 +1,19 @@
 import { informationDataState } from "@/store/information-store";
-import { InformationData } from "@/types/information-schema";
-import { splitSkills } from "@/utils/utils";
-import { useRecoilValue } from "recoil";
+import { InformationSchema } from "@/types/information-schema";
+import { getInformation, splitSkills } from "@/utils/utils";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import Divider from "../ui/divider";
 
 const InformationElement = () => {
-  const information = useRecoilValue<InformationData>(informationDataState);
+  const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
+
+  useEffect(() => {
+    getInformation(setInformation);
+  }, []);
+
   return (
     <>
       <Button variant="secondary" className="w-full" size={"lg"} asChild>

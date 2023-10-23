@@ -1,13 +1,29 @@
 import { projectsListState } from "@/store/projects-store";
-import { splitByLanguage, splitSkills } from "@/utils/utils";
+import { getProjects, splitByLanguage, splitSkills } from "@/utils/utils";
 import { ArrowUpRight, Check } from "lucide-react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { ProjectSchema } from "../../types/project-schema";
 
 export default function ProjectsListUser() {
   const { t } = useTranslation();
-  const projects = useRecoilValue<ProjectSchema[]>(projectsListState);
+  const [projects, setProjects] = useRecoilState<ProjectSchema[]>(projectsListState);
+
+  useEffect(() => {
+    getProjects(
+      setProjects,
+      {
+        fieldPath: "createdAt",
+        directionStr: "desc",
+      },
+      {
+        fieldPath: "isPublished",
+        opStr: "==",
+        value: true,
+      },
+    );
+  }, []);
 
   return (
     <>

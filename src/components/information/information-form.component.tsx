@@ -1,14 +1,14 @@
 import { FormFieldSchema } from "@/types/form-field-schema";
-import { InformationData } from "@/types/information-schema";
+import { InformationSchema } from "@/types/information-schema";
 import React from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 
 type InformationFormData = {
-  information: InformationData;
+  information: InformationSchema;
   isDisabled: boolean;
-  informationSetter: React.Dispatch<React.SetStateAction<InformationData>>;
+  informationSetter: React.Dispatch<React.SetStateAction<InformationSchema>>;
   submitFunction(e: React.FormEvent<HTMLFormElement>): Promise<void>;
 };
 
