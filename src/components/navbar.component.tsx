@@ -202,10 +202,10 @@ const LanguageSelector = () => {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="it">
+          <SelectItem value="it-IT">
             <img src={flagItaly} className="h-4 w-4" />
           </SelectItem>
-          <SelectItem value="en">
+          <SelectItem value="en-GB">
             <img src={flagUK} className="h-4 w-4" />
           </SelectItem>
         </SelectGroup>
