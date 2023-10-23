@@ -7,16 +7,19 @@ import { useRecoilState } from "recoil";
 import { Button } from "../ui/button";
 import InformationForm from "./information-form.component";
 import { getInformation } from "@/utils/utils";
+import { useNavigate } from "react-router-dom";
 
 export default function InformationUpdate() {
   const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   const updateInformation = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       await informationService.update(information);
       setIsInputDisabled(true);
+      navigate("/dashboard");
     } catch (e) {
       console.log(e);
     }
