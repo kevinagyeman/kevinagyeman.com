@@ -23,5 +23,10 @@
     "contactButton": "Contacts",
     "readMoreButton": "Read more"
   },
-  "readCv": "Read more"
+  "readCv": "Read more",
+  "navigationMenu": {
+    "home": "Home",
+    "aboutMe": "About",
+    "contacts": "Contacts"
+  }
 }

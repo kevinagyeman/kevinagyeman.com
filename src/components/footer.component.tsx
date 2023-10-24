@@ -1,4 +1,4 @@
-import { Github } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
@@ -19,7 +19,7 @@ const Footer = () => {
             </Button>
             <Button variant="ghost" size="icon" className="rounded-full" asChild>
               <Link to="https://www.linkedin.com/in/kevinagyeman/" target="_blank">
-                <Github className="h-4 w-4" />
+                <Linkedin className="h-4 w-4" />
               </Link>
             </Button>
           </div>

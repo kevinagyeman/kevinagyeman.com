@@ -12,7 +12,12 @@
   },
   "hero": {
     "contactButton": "Contatti",
-    "readMoreButton": "leggi di più"
+    "readMoreButton": "Leggi di più"
   },
-  "readCv": "Scopri di più"
+  "readCv": "Scopri di più",
+  "navigationMenu": {
+    "home": "Home",
+    "aboutMe": "Chi sono",
+    "contacts": "Contatti"
+  }
 }

@@ -32,9 +32,9 @@ const InformationInfo = () => {
           </code>
         </div>
         <p className=" text-xl text-muted-foreground">{splitByLanguage(`${information?.summary}`)}</p>
-        <div>
+        <div className="flex flex-wrap gap-3">
           {splitSkills(`${information?.skills}`).map((skill: string, index: number) => (
-            <Badge variant="secondary" className="mr-2 mt-2" key={index}>
+            <Badge variant="secondary" key={index}>
               {skill}
             </Badge>
           ))}

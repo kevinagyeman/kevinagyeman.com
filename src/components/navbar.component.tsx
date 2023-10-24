@@ -1,41 +1,34 @@
-import flagItaly from "@/assets/img/italy.png";
-import flagUK from "@/assets/img/united-kingdom.png";
 import { useTheme } from "@/components/ui/theme-provider";
-import { auth } from "@/firebase";
-import i18n from "@/i18n";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Moon, Sun } from "lucide-react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { isAdminLoggedDataState } from "../store/admin-store";
+import IconAdmin from "./icon-admin";
+import LanguageSelector from "./language-selector";
+import ThemeChanger from "./theme-changer";
 import { Button } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const isAdminLoggedData = useRecoilValue<boolean>(isAdminLoggedDataState);
+
+  const userNavigation = [
+    { name: `${t("navigationMenu.home")}`, href: "/" },
+    { name: `${t("navigationMenu.aboutMe")}`, href: "/information" },
+    { name: `${t("navigationMenu.contacts")}`, href: "#contacts" },
+  ];
 
   const navigation = isAdminLoggedData
     ? [
-        { name: "Home", href: "/" },
-        { name: "Contacts", href: "/#contacts" },
+        ...userNavigation,
         { name: "Dashboard", href: "/dashboard" },
         { name: "Edit Project", href: "/dashboard" },
         { name: "Add Project", href: "/dashboard/project-add" },
         { name: "Edit Information", href: "/dashboard/information-edit" },
       ]
-    : [
-        { name: "Home", href: "/" },
-        { name: "Contacts", href: "/#contacts" },
-      ];
+    : userNavigation;
 
   return (
     <Disclosure as="nav" className="sticky top-0 z-50 mb-5 border-b bg-white/80 backdrop-blur-sm dark:bg-zinc-950/80">
@@ -58,7 +51,9 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <Logo />
+                  <Link to="/">
+                    <Logo />
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -79,7 +74,6 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item, index: number) => (
@@ -90,7 +84,7 @@ export default function Navbar() {
                     "text-light hover:text-light block rounded-md px-3 py-2 text-base font-medium hover:bg-zinc-800"
                   }
                 >
-                  {item.name}
+                  <Disclosure.Button>{item.name}</Disclosure.Button>
                 </Link>
               ))}
             </div>
@@ -100,114 +94,6 @@ export default function Navbar() {
     </Disclosure>
   );
 }
-
-const ThemeChanger = () => {
-  const { theme, setTheme } = useTheme();
-
-  const changeTheme = () => {
-    if (theme === "dark") {
-      setTheme("light");
-    } else {
-      setTheme("dark");
-    }
-  };
-
-  return (
-    <Button variant="ghost" size="icon" onClick={changeTheme}>
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-    </Button>
-  );
-};
-
-const IconAdmin = () => {
-  const navigate = useNavigate();
-  const [isAdminLoggedData, setIsAdminLoggedData] = useRecoilState<boolean>(isAdminLoggedDataState);
-
-  const profileImage =
-    "https://media.licdn.com/dms/image/C4D03AQEavaj22cXyTg/profile-displayphoto-shrink_800_800/0/1537222123446?e=1701907200&v=beta&t=ob0K8RV-VoP54eBQ2px4EQdFruhSNLHNTB6Phbh0qdU";
-
-  const signOut = async () => {
-    try {
-      await auth.signOut();
-      localStorage.removeItem("admin");
-      setIsAdminLoggedData(false);
-      navigate("/");
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        {isAdminLoggedData ? (
-          <img className="h-8 w-8 rounded-full" src={profileImage} alt="profile" />
-        ) : (
-          <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-900"></div>
-        )}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuGroup>
-          {isAdminLoggedData ? (
-            <>
-              <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer">
-                Logout
-              </DropdownMenuItem>
-            </>
-          ) : (
-            <>
-              <DropdownMenuItem onClick={() => (window.location.href = "/login")} className="cursor-pointer">
-                Login
-              </DropdownMenuItem>
-            </>
-          )}
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
-
-const LanguageSelector = () => {
-  const detectLanguage = (): string => {
-    if (i18n.language === "it" || i18n.language === "it-IT") {
-      return "it-IT";
-    } else {
-      return "en-GB";
-    }
-  };
-
-  const [language, setLanguage] = useState<string>(detectLanguage());
-
-  const selectLanguage = (e: string) => {
-    const valueSelected = e.valueOf();
-    i18n.changeLanguage(valueSelected);
-    setLanguage(valueSelected);
-  };
-
-  return (
-    <Select
-      onValueChange={(e) => {
-        selectLanguage(e);
-      }}
-      value={language}
-    >
-      <SelectTrigger className="w-[65px] border-none bg-transparent">
-        <SelectValue placeholder="Select a a language" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectItem value="it-IT">
-            <img src={flagItaly} className="h-4 w-4" />
-          </SelectItem>
-          <SelectItem value="en-GB">
-            <img src={flagUK} className="h-4 w-4" />
-          </SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  );
-};
 
 const Logo = () => {
   const { theme } = useTheme();

@@ -32,21 +32,21 @@ const Hero = () => {
               {information?.role}
             </code>
           </div>
-          <h1 className="text-5xl font-extrabold">
+          <h1 className="text-4xl font-extrabold lg:text-5xl">
             {information?.name} {information?.surname}
           </h1>
           <p className="text-l line-clamp-2 text-muted-foreground lg:text-xl">
             {splitByLanguage(`${information?.summary}`)}
           </p>
-          <div>
+          <div className="flex flex-wrap gap-3">
             {splitSkills(`${information?.skills}`, 5).map((skill, index) => (
-              <Badge variant="secondary" className="mr-2" key={index}>
+              <Badge variant="secondary" key={index}>
                 {skill}
               </Badge>
             ))}
           </div>
-          <div>
-            <Button className="mr-2" variant={"secondary"} size={"lg"} asChild>
+          <div className="flex flex-wrap gap-3">
+            <Button variant={"secondary"} size={"lg"} asChild>
               <Link to="#contacts">
                 {t("hero.contactButton")}
                 <Send className="ml-2 h-4 w-4" />
