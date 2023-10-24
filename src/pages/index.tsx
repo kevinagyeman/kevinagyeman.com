@@ -2,7 +2,7 @@ import Contact from "@/components/contact.component";
 import Hero from "@/components/hero.component";
 import ProjectsListUser from "@/components/project/projects-list-user.component";
 
-const Index = () => {
+export default function Index() {
   return (
     <>
       <section id="home">
@@ -11,11 +11,9 @@ const Index = () => {
       <section id="projects">
         <ProjectsListUser />
       </section>
-      <section id="contact">
+      <section id="contacts">
         <Contact />
       </section>
     </>
   );
-};
-
-export default Index;
+}

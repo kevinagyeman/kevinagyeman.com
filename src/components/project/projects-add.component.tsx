@@ -1,33 +1,32 @@
-import { projectDataState, projectsListState } from "@/store/projects-store";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { initProjectData, projectDataState } from "@/store/projects-store";
+import { ArrowLeft } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { projectService } from "../../services/project.service";
 import { ProjectSchema } from "../../types/project-schema";
 import { Button } from "../ui/button";
 import ProjectForm from "./project-form.component";
-import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 export default function ProjectsAdd() {
   const [project, setProject] = useRecoilState<ProjectSchema>(projectDataState);
-  const setProjects = useSetRecoilState<ProjectSchema[]>(projectsListState);
   const navigate = useNavigate();
 
   const addProject = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       await projectService.create(project);
-      const data = await projectService.getAll({
-        fieldPath: "createdAt",
-        directionStr: "desc",
-      });
-      if (data) {
-        setProjects(data);
-        navigate("/dashboard");
-      }
+      navigate("/dashboard");
     } catch (e) {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      setProject(initProjectData);
+    };
+  }, []);
 
   return (
     <>

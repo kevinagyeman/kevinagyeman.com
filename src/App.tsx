@@ -20,7 +20,7 @@ const App = () => {
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Navbar />
-        <div className="container max-w-[500px]">
+        <div className="container max-w-lg">
           <Routes>
             <Route index element={<Index />} />
             {isAdminLogged && <Route path="/dashboard" element={<Dashboard />} />}

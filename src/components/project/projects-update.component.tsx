@@ -1,24 +1,23 @@
 import { projectService } from "@/services/project.service";
-import { projectDataState, projectsListState } from "@/store/projects-store";
+import { initProjectData, projectDataState } from "@/store/projects-store";
 import { ProjectSchema } from "@/types/project-schema";
+import { getSingleProject } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 import React, { ReactElement, useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import SkeletonLoader from "../skeleton.component";
 import { Button } from "../ui/button";
 import ProjectForm from "./project-form.component";
-import { getSingleProject } from "@/utils/utils";
-import { Link, useNavigate } from "react-router-dom";
 import ProjectNotFound from "./project-not-found.component";
-import SkeletonLoader from "../skeleton.component";
 
 type ProjectId = {
   projectId: any;
 };
 
-const ProjectsUpdate = ({ projectId }: ProjectId) => {
+export default function ProjectsUpdate({ projectId }: ProjectId) {
   const [project, setProject] = useRecoilState<ProjectSchema>(projectDataState);
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
-  const setProjects = useSetRecoilState<ProjectSchema[]>(projectsListState);
   const navigate = useNavigate();
   const [projectAlert, setProjectAlert] = useState<ReactElement>(<SkeletonLoader />);
 
@@ -32,19 +31,8 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
     try {
       e.preventDefault();
       await projectService.update(projectId, project);
-      setProjects((prev: ProjectSchema[]) => {
-        return prev.map((projectValue: ProjectSchema) => {
-          if (project.id === projectValue.id) {
-            return {
-              ...projectValue,
-              ...project,
-            };
-          }
-          return projectValue;
-        });
-      });
-      navigate("/dashboard");
       setIsInputDisabled(true);
+      navigate("/dashboard");
     } catch (e) {
       console.log(e);
     }
@@ -62,6 +50,9 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
   useEffect(() => {
     projectDelayFetch();
     getSingleProject(projectId, setProject);
+    return () => {
+      setProject(initProjectData);
+    };
   }, []);
 
   return (
@@ -101,6 +92,4 @@ const ProjectsUpdate = ({ projectId }: ProjectId) => {
       )}
     </>
   );
-};
-
-export default ProjectsUpdate;
+}
