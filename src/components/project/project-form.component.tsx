@@ -20,6 +20,7 @@ export default function ProjectForm({ project, isDisabled, projectSetter, submit
       type: "text",
       value: project.title || "",
       disabled: isDisabled,
+      hint: "italianoENGinglese",
       required: true,
       onChange: (e) => {
         projectSetter({ ...project, title: e.target.value });
