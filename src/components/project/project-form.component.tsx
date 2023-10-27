@@ -50,7 +50,8 @@ export default function ProjectForm({ project, isDisabled, projectSetter, submit
       type: "textarea",
       value: project.skills || "",
       disabled: isDisabled,
-      required: false,
+      required: true,
+      hint: "Separate every skill with ',' - (eg. Skill1, Skill2)",
       onChange: (e) => {
         projectSetter({ ...project, skills: e.target.value });
       },
@@ -60,7 +61,7 @@ export default function ProjectForm({ project, isDisabled, projectSetter, submit
       type: "textarea",
       value: project.shortDescription || "",
       disabled: isDisabled,
-      required: false,
+      required: true,
       onChange: (e) => {
         projectSetter({ ...project, shortDescription: e.target.value });
       },
@@ -93,11 +94,13 @@ export default function ProjectForm({ project, isDisabled, projectSetter, submit
         </div>
 
         {formFields.map((field: FormFieldSchema, index: number) => (
-          <div className="my-5" key={index}>
+          <div className="my-6" key={index}>
             {field.type === "text" ? (
               <>
                 <Label>{field.label}</Label>
+                {field.hint && <p className="text-xs text-muted-foreground">{field.hint}</p>}
                 <Input
+                  className="mt-1"
                   required={field.required}
                   type={field.type}
                   placeholder={field.label}
@@ -109,7 +112,9 @@ export default function ProjectForm({ project, isDisabled, projectSetter, submit
             ) : (
               <>
                 <Label>{field.label}</Label>
+                {field.hint && <p className="text-xs text-muted-foreground">{field.hint}</p>}
                 <Textarea
+                  className="mt-1"
                   placeholder={field.label}
                   value={field.value}
                   onChange={field.onChange}

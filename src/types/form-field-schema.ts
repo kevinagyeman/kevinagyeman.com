@@ -4,9 +4,6 @@ export type FormFieldSchema = {
   value?: string | number | readonly string[];
   disabled?: boolean;
   required?: boolean;
-  onChange(
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
-  ): void;
+  hint?: string;
+  onChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>): void;
 };

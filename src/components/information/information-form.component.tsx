@@ -117,6 +117,7 @@ const InformationForm = ({ information, isDisabled, informationSetter, submitFun
               <>
                 <Label>{field.label}</Label>
                 <Input
+                  className="mt-1"
                   required={field.required}
                   type={field.type}
                   placeholder={field.label}
@@ -129,6 +130,7 @@ const InformationForm = ({ information, isDisabled, informationSetter, submitFun
               <>
                 <Label>{field.label}</Label>
                 <Textarea
+                  className="mt-1"
                   placeholder={field.label}
                   value={field?.value}
                   onChange={field.onChange}

@@ -1,6 +1,6 @@
 import { projectsListState } from "@/store/projects-store";
 import { OrderBySchema } from "@/types/query-schema";
-import { getProjects, splitSkills } from "@/utils/utils";
+import { getProjects, splitByLanguage, splitSkills } from "@/utils/utils";
 import { Timestamp } from "firebase/firestore";
 import { ArrowDownUp, Check, FilterX, Search } from "lucide-react";
 import { useEffect } from "react";
@@ -18,8 +18,11 @@ import {
 } from "../ui/dropdown-menu";
 import DeleteModal from "./projects-delete.component";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ProjectsListAdmin = () => {
+  useTranslation();
+
   const [projects, setProjects] = useRecoilState<ProjectSchema[]>(projectsListState);
 
   const formatDate = (date: Timestamp | undefined): string | undefined => {
@@ -128,8 +131,8 @@ const ProjectsListAdmin = () => {
               <Badge variant="outline">Draft</Badge>
             )}
           </div>
-          <p className="text-l font-semibold">{project.title}</p>
-          <p className="text-sm text-muted-foreground">{project.shortDescription || "-"}</p>
+          <p className="text-l truncate font-semibold">{splitByLanguage(`${project.title}`)}</p>
+          <p className="truncate text-sm text-muted-foreground">{splitByLanguage(`${project.shortDescription}`)}</p>
           <div className="flex flex-wrap gap-x-3 gap-y-0">
             {splitSkills(`${project.skills}`, 3).map((skill: string, index: number) => (
               <small key={index} className="flex items-center gap-1">
