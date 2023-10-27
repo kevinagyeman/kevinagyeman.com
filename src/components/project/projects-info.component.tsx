@@ -40,7 +40,7 @@ export default function ProjectsInfo({ projectId }: ProjectInfoProps) {
           <div className="flex flex-col space-y-8">
             <h2 className="text-3xl font-semibold">{splitByLanguage(`${project.title}`)}</h2>
             <p className="text-xl text-muted-foreground">{splitByLanguage(`${project.shortDescription}`)}</p>
-            {project.imageLink && <img src={project.imageLink} className="w-full rounded-xl" />}
+            {project.imageLink && <img src={project.imageLink} className="w-full" />}
             {project.description && <p className="text-xl">{splitByLanguage(`${project.description}`)}</p>}
             {project?.skills && (
               <div>
