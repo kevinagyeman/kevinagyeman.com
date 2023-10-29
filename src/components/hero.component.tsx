@@ -1,14 +1,14 @@
+import { informationDataState } from "@/store/information-store";
 import { InformationSchema } from "@/types/information-schema";
 import { getInformation, splitByLanguage, splitSkills } from "@/utils/utils";
 import { ChevronRight, Send } from "lucide-react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import SkeletonLoader from "./skeleton.component";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { informationDataState } from "@/store/information-store";
-import { useRecoilState } from "recoil";
-import { useEffect } from "react";
-import SkeletonLoader from "./skeleton.component";
-import { Link } from "react-router-dom";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -47,7 +47,7 @@ const Hero = () => {
           </div>
           <div className="flex flex-wrap gap-3">
             <Button variant={"secondary"} size={"lg"} asChild>
-              <Link to="#contacts">
+              <Link to="/contact">
                 {t("hero.contactButton")}
                 <Send className="ml-2 h-4 w-4" />
               </Link>

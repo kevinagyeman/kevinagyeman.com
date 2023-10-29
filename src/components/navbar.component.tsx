@@ -17,7 +17,7 @@ export default function Navbar() {
   const userNavigation = [
     { name: `${t("navigationMenu.home")}`, href: "/" },
     { name: `${t("navigationMenu.aboutMe")}`, href: "/information" },
-    { name: `${t("navigationMenu.contacts")}`, href: "#contacts" },
+    { name: `${t("navigationMenu.contacts")}`, href: "/contact" },
   ];
 
   const navigation = isAdminLoggedData

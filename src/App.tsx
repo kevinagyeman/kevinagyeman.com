@@ -12,6 +12,7 @@ import Project from "./pages/project";
 import ProjectAdd from "./pages/project-add";
 import ProjectEdit from "./pages/project-edit";
 import { isAdminLoggedDataState } from "./store/admin-store";
+import Contacts from "./pages/contacts";
 
 const App = () => {
   const isAdminLogged = useRecoilValue<boolean>(isAdminLoggedDataState);
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="/project/:id" element={<Project />} />
             <Route path="/information" element={<Information />} />
             <Route path="/information" element={<Index />} />
+            <Route path="/contact" element={<Contacts />} />
             <Route path="*" element={<Index />} />
           </Routes>
         </div>
