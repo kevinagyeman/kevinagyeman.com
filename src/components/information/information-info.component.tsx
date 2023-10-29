@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { informationDataState } from "@/store/information-store";
 import { InformationSchema } from "@/types/information-schema";
-import { getInformation, splitByLanguage, splitSkills } from "@/utils/utils";
+import { getInformation, splitByLanguage } from "@/utils/utils";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { Badge } from "../ui/badge";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import SkillsList from "../skills-list.component";
 
 const InformationInfo = () => {
   const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
@@ -32,13 +32,7 @@ const InformationInfo = () => {
           </code>
         </div>
         <p className=" text-xl text-muted-foreground">{splitByLanguage(`${information?.summary}`)}</p>
-        <div className="flex flex-wrap gap-3">
-          {splitSkills(`${information?.skills}`).map((skill: string, index: number) => (
-            <Badge variant="secondary" key={index}>
-              {skill}
-            </Badge>
-          ))}
-        </div>
+        <SkillsList string={`${information?.skills}`} />
         <p className=" text-xl">{splitByLanguage(`${information.additionalInfo}`)}</p>
 
         <div className="flex space-x-2">

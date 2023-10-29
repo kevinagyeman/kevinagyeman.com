@@ -1,13 +1,13 @@
 import { informationDataState } from "@/store/information-store";
 import { InformationSchema } from "@/types/information-schema";
-import { getInformation, splitByLanguage, splitSkills } from "@/utils/utils";
+import { getInformation, splitByLanguage } from "@/utils/utils";
 import { ChevronRight, Send } from "lucide-react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import SkeletonLoader from "./skeleton.component";
-import { Badge } from "./ui/badge";
+import SkillsList from "./skills-list.component";
 import { Button } from "./ui/button";
 
 const Hero = () => {
@@ -38,13 +38,7 @@ const Hero = () => {
           <p className="text-l line-clamp-2 text-muted-foreground lg:text-xl">
             {splitByLanguage(`${information?.summary}`)}
           </p>
-          <div className="flex flex-wrap gap-3">
-            {splitSkills(`${information?.skills}`, 5).map((skill, index) => (
-              <Badge variant="secondary" key={index}>
-                {skill}
-              </Badge>
-            ))}
-          </div>
+          <SkillsList string={`${information?.skills}`} numberOfSkills={4} />
           <div className="flex flex-wrap gap-3">
             <Button variant={"secondary"} size={"lg"} asChild>
               <Link to="/contact">

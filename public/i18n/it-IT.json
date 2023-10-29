@@ -1,7 +1,8 @@
 {
   "contactCard": {
     "title": "Contatti",
-    "subtitle": "Contattami, puoi mandarmi una mail"
+    "subtitle": "Contattami, puoi mandarmi una mail",
+    "alertEmailCopied": "Email copiata!"
   },
   "projectSection": {
     "title": "Progetti",

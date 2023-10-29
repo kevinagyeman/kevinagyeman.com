@@ -1,7 +1,8 @@
 {
   "contactCard": {
     "title": "Contacts",
-    "subtitle": "Contact me, you can send me an email"
+    "subtitle": "Contact me, you can send me an email",
+    "alertEmailCopied": "Email copied!"
   },
   "projectSection": {
     "title": "Projects",

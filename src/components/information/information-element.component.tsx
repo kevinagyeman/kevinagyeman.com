@@ -1,12 +1,12 @@
 import { informationDataState } from "@/store/information-store";
 import { InformationSchema } from "@/types/information-schema";
-import { getInformation, splitSkills } from "@/utils/utils";
+import { getInformation } from "@/utils/utils";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { Badge } from "../ui/badge";
+import SkillsList from "../skills-list.component";
 import { Button } from "../ui/button";
 import Divider from "../ui/divider";
-import { Link } from "react-router-dom";
 
 const InformationElement = () => {
   const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
@@ -31,14 +31,7 @@ const InformationElement = () => {
         </h4>
         <p>{information?.role}</p>
         <p className="text-muted-foreground">{information?.summary}</p>
-        <div className="flex flex-wrap gap-2">
-          {splitSkills(`${information?.skills}`).map((skill, index) => (
-            <div key={index}>
-              <Badge variant="secondary">{skill}</Badge>
-            </div>
-          ))}
-        </div>
-
+        <SkillsList string={`${information?.skills}`} />
         <p>{information?.additionalInfo || "-"}</p>
       </div>
     </>

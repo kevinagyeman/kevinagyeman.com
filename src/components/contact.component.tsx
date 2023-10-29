@@ -12,7 +12,6 @@ import { Input } from "./ui/input";
 const Contact = () => {
   const { t } = useTranslation();
   const [information, setInformation] = useRecoilState<InformationSchema>(informationDataState);
-
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const copyText = () => {
@@ -37,7 +36,7 @@ const Contact = () => {
         <h2 className="mb-2 text-3xl font-semibold">{t("contactCard.title")}</h2>
         <p className="text-muted-foreground">{t("contactCard.subtitle")}</p>
         <div className="mt-5 flex space-x-2">
-          <Input value={!isCopied ? information?.email || "" : "Email copiata!"} readOnly />
+          <Input value={!isCopied ? information?.email || "" : t("contactCard.alertEmailCopied")} readOnly />
           <Button variant="secondary" className="shrink-0" onClick={() => copyText()}>
             <Copy className="h-4 w-4" />
           </Button>
@@ -46,7 +45,7 @@ const Contact = () => {
           </Button>
         </div>
       </div>
-      <div className="mt-5">
+      <div className="mt-5 flex">
         <Button variant={"outline"} size={"lg"} asChild className="ml-auto">
           <Link to="/">
             <ArrowLeft className="h-5 w-5" />
